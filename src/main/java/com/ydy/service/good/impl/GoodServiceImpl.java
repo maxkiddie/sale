@@ -5,6 +5,7 @@ package com.ydy.service.good.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.ydy.constant.SystemConstant;
 import com.ydy.exception.MyException;
+import com.ydy.exception.ValidateException;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.mapper.SpuDetailMapper;
 import com.ydy.mapper.SpuMapper;
@@ -20,6 +23,7 @@ import com.ydy.model.Sku;
 import com.ydy.model.Spu;
 import com.ydy.model.SpuDetail;
 import com.ydy.service.good.GoodService;
+import com.ydy.utils.ValidateUtil;
 import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.PageVo;
 
@@ -50,12 +54,25 @@ public class GoodServiceImpl implements GoodService {
 		return vo;
 	}
 
+	@Override
+	public PageVo<Sku> selectData(Sku sku, Integer page, Integer size) {
+		PageVo<Sku> vo = new PageVo<Sku>(page, size);
+		Page<Sku> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "sku_id desc");
+		List<Sku> list = skuMapper.select(sku);
+		vo.setTotal(pageBean.getTotal());
+		vo.setList(list);
+		return vo;
+	}
+
 	public Spu saveOrUpdateSpu(Spu spu) {
 		if (spu == null) {
 			throw new NullPointerException("Spu不能为空");
 		}
+		Date now = new Date();
 		if (spu.getSpuId() == null) {
-			spu.setCreateTime(new Date());
+			spu.setCreateTime(now);
+			spu.setUpdateTime(now);
+			spu.setSpuStatus(SystemConstant.SPU_OFF);
 			spuMapper.insertSelective(spu);
 			SpuDetail detail = new SpuDetail();
 			detail.setDetail(spu.getDetail());
@@ -64,7 +81,7 @@ public class GoodServiceImpl implements GoodService {
 		} else {
 			Spu temp = spuMapper.selectByPrimaryKey(spu.getSpuId());
 			if (temp != null) {
-				spu.setUpdateTime(new Date());
+				spu.setUpdateTime(now);
 				spuMapper.updateByPrimaryKeySelective(spu);
 				SpuDetail detail = new SpuDetail();
 				detail.setDetail(spu.getDetail());
@@ -82,13 +99,25 @@ public class GoodServiceImpl implements GoodService {
 		if (sku == null) {
 			throw new NullPointerException("sku不能为空");
 		}
+		// 校验数据有效
+		Map<String, String> validateInfo = ValidateUtil.validateEntity(sku);
+		if (!validateInfo.isEmpty()) {
+			throw new ValidateException(validateInfo);
+		}
+		Spu spu = spuMapper.selectByPrimaryKey(sku.getSpuId());
+		if (spu == null) {
+			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+		}
+		Date now = new Date();
 		if (sku.getSkuId() == null) {
-			sku.setCreateTime(new Date());
+			sku.setCreateTime(now);
+			sku.setUpdateTime(now);
+			sku.setSkuStatus(SystemConstant.SPU_OFF);
 			skuMapper.insertSelective(sku);
 		} else {
 			Sku temp = skuMapper.selectByPrimaryKey(sku.getSkuId());
 			if (temp != null) {
-				sku.setUpdateTime(new Date());
+				sku.setUpdateTime(now);
 				skuMapper.updateByPrimaryKeySelective(sku);
 			} else {
 				throw new MyException(EnumSystem.DATA_NOT_FOUND);

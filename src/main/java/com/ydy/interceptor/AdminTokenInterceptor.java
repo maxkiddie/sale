@@ -17,6 +17,7 @@ import org.springframework.web.method.HandlerMethod;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ydy.annotation.AdminToken;
+import com.ydy.constant.SystemConstant;
 import com.ydy.interceptor.base.BaseInterceptor;
 import com.ydy.model.Admin;
 import com.ydy.utils.TokenUtil;
@@ -57,6 +58,7 @@ public class AdminTokenInterceptor extends BaseInterceptor {
 		}
 		try {
 			Admin admin = TokenUtil.getAdmin(token);// 解释cookie,获取admin信息
+			request.setAttribute(SystemConstant.ADM_TOKEN, admin);
 			// 后续涉及权限等级再完善
 			admin.toString();
 			return true;

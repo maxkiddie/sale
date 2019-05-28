@@ -273,6 +273,7 @@ public class HttpUtil {
 			}
 		} catch (IOException | RuntimeException e) {
 			LOGGER.error(logId, "网络请求异常,url:{},charset:{},message:{}", url, charset, e.getMessage(), e);
+			return null;
 		} finally {
 			try {
 				if (httpClient != null) {

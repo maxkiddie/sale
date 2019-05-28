@@ -24,9 +24,9 @@ public class PathUtil {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		if (filePath.contains("pharmacyStock")) {
+		if (filePath.contains("sale")) {
 			// 截取路径中的jar包名
-			filePath = filePath.substring(0, filePath.lastIndexOf("pharmacyStock"));
+			filePath = filePath.substring(0, filePath.lastIndexOf("sale"));
 		}
 		File file = new File(filePath);
 		return file.getPath().replace("file:", "") + File.separator;

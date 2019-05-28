@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ydy.constant.SystemConstant;
@@ -15,7 +16,7 @@ import com.ydy.utils.VelidateImageUtil;
 @RequestMapping("code")
 public class CodeController {
 
-	@RequestMapping("imgCode")
+	@GetMapping("imgCode")
 	public void imageCode(HttpServletRequest request, HttpServletResponse response) {
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");

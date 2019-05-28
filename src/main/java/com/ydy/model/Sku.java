@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author xuzhaojie
@@ -21,12 +22,17 @@ public class Sku {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long skuId;
+	@NotNull
 	private Long spuId;
 	private String image;
+	@NotNull
 	private String spuSpecs;
+	@NotNull
 	private Integer stock;
+	@NotNull
 	private Long price;
-	private Integer skuStatus;
+	@NotNull
+	private Integer skuStatus = 0;
 	private Date createTime;
 	private Date updateTime;
 

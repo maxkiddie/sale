@@ -14,7 +14,7 @@ public class SystemConstant {
 
 	public static final String MANAGER_DEFAULT_PWD = "123456a";// 管理员cookies
 
-	public static final String COOKIE_ADM_TOKEN = "ADM_TOKEN";// 管理员cookies
+	public static final String ADM_TOKEN = "ADM_TOKEN";// 管理员cookies
 
 	public static final String USER_TOKEN = "USER_TOKEN";// 用户cookies
 
@@ -33,5 +33,9 @@ public class SystemConstant {
 	public static final Short USE_STATUS_ON = 1;
 
 	public static final Short USE_STATUS_OFF = 0;
+	// 状态
+	public static final Integer SPU_ON = 1;
+	
+	public static final Integer SPU_OFF = 0;
 
 }

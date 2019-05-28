@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ydy.constant.SystemConstant;
 import com.ydy.exception.MyException;
+import com.ydy.model.Admin;
 import com.ydy.model.User;
 import com.ydy.vo.ienum.EnumSystem;
 
@@ -27,5 +28,15 @@ public abstract class BaseController {
 			throw new MyException(EnumSystem.USER_CAN_NOT_GET);
 		}
 		return (User) object;
+	}
+	
+	public Admin getAdmin() {
+		ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = sra.getRequest();
+		Object object = request.getAttribute(SystemConstant.ADM_TOKEN);
+		if (object == null) {
+			throw new MyException(EnumSystem.ADMIN_CAN_NOT_GET);
+		}
+		return (Admin) object;
 	}
 }

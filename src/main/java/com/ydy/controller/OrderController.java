@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydy.annotation.AdminToken;
+import com.ydy.annotation.CtrlParam;
 import com.ydy.annotation.UserToken;
 import com.ydy.controller.base.BaseController;
 import com.ydy.dto.OrderDTO;
@@ -20,6 +21,7 @@ import com.ydy.model.Order;
 import com.ydy.model.User;
 import com.ydy.service.order.OrderService;
 import com.ydy.utils.StringUtils;
+import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
 /**
@@ -42,7 +44,7 @@ public class OrderController extends BaseController {
 		PageVo<Order> vo = orderService.selectData(order, page, size);
 		return ResponseEntity.ok(vo);
 	}
-	
+
 	@UserToken
 	@GetMapping("selectByUserId")
 	@ResponseBody
@@ -53,7 +55,7 @@ public class OrderController extends BaseController {
 		PageVo<Order> vo = orderService.selectData(order, page, size);
 		return ResponseEntity.ok(vo);
 	}
-	
+
 	@UserToken
 	@PostMapping("create")
 	@ResponseBody
@@ -64,4 +66,12 @@ public class OrderController extends BaseController {
 		Order order = orderService.createOrder(dto);
 		return ResponseEntity.ok(order);
 	}
+
+	@AdminToken
+	@PostMapping("pay")
+	@ResponseBody
+	public ResponseEntity<BaseVo> pay(@CtrlParam("订单ID") Long orderId) {
+		return ResponseEntity.ok(orderService.updateOrderStatusPay(orderId));
+	}
+
 }

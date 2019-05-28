@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
 		vo.setList(list);
 		return vo;
 	}
-	
+
 	@Override
 	public Long createOrderId() {
 		String idString = "";
@@ -119,7 +119,45 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public BaseVo updateOrderStatus(Long orderId, OrderStatusEnum statusEnum) {
+	public BaseVo updateOrderStatusClosed(Long orderId) {
+		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.CLOSED);
+		orderStatusMapper.updateByPrimaryKeySelective(status);
+		return new ResultVo(EnumSystem.SUSS);
+	}
+
+	@Override
+	public BaseVo updateOrderStatusPay(Long orderId) {
+		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.PAY);
+		orderStatusMapper.updateByPrimaryKeySelective(status);
+		return new ResultVo(EnumSystem.SUSS);
+	}
+
+	@Override
+	public BaseVo updateOrderStatusSend(Long orderId, String shippingName, String shippingCode) {
+		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.SEND);
+		orderStatusMapper.updateByPrimaryKeySelective(status);
+		Order order = new Order();
+		order.setShippingName(shippingName);
+		order.setShippingCode(shippingCode);
+		orderMapper.updateByPrimaryKeySelective(order);
+		return new ResultVo(EnumSystem.SUSS);
+	}
+
+	@Override
+	public BaseVo updateOrderStatusConfirm(Long orderId) {
+		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.CONFIRM);
+		orderStatusMapper.updateByPrimaryKeySelective(status);
+		return new ResultVo(EnumSystem.SUSS);
+	}
+
+	@Override
+	public BaseVo updateOrderStatusComment(Long orderId) {
+		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.COMMENT);
+		orderStatusMapper.updateByPrimaryKeySelective(status);
+		return new ResultVo(EnumSystem.SUSS);
+	}
+
+	private OrderStatus createOrderStatus(Long orderId, OrderStatusEnum statusEnum) {
 		OrderStatus temp = orderStatusMapper.selectByPrimaryKey(orderId);
 		if (temp == null) {
 			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
@@ -130,6 +168,8 @@ public class OrderServiceImpl implements OrderService {
 		Date now = new Date();
 		if (OrderStatusEnum.CLOSED.equals(statusEnum)) {
 			status.setCloseTime(now);
+		} else if (OrderStatusEnum.PAY.equals(statusEnum)) {
+			status.setPaymentTime(now);
 		} else if (OrderStatusEnum.SEND.equals(statusEnum)) {
 			status.setConsignTime(now);
 		} else if (OrderStatusEnum.CONFIRM.equals(statusEnum)) {
@@ -137,8 +177,6 @@ public class OrderServiceImpl implements OrderService {
 		} else if (OrderStatusEnum.COMMENT.equals(statusEnum)) {
 			status.setCommentTime(now);
 		}
-		orderStatusMapper.updateByPrimaryKeySelective(status);
-		return new ResultVo(EnumSystem.SUSS);
+		return status;
 	}
-
 }

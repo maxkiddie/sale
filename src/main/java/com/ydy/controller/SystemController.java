@@ -18,7 +18,7 @@ public class SystemController {
 	public ResponseEntity<JSONObject> version() {
 		JSONObject json = new JSONObject();
 		json.put("time", System.currentTimeMillis());
-		json.put("version", "20190527");
+		json.put("version", "20190528");
 		return ResponseEntity.status(HttpStatus.OK).body(json);
 	}
 }

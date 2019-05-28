@@ -16,6 +16,8 @@ public interface GoodService {
 
 	PageVo<Spu> selectData(Spu spu, Integer page, Integer size);
 
+	PageVo<Sku> selectData(Sku sku, Integer page, Integer size);
+
 	Spu saveOrUpdateSpu(Spu spu);
 
 	Sku saveOrUpdateSku(Sku sku);

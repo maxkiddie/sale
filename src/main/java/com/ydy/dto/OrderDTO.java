@@ -6,6 +6,9 @@ package com.ydy.dto;
 import java.util.List;
 
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.ydy.model.OrderDetail;
 
@@ -19,35 +22,43 @@ public class OrderDTO {
 	/**
 	 * 买家留言
 	 */
+	@NotNull
 	private Long userId;
+	@NotBlank
 	private String buyerNick;
 	private String buyerMessage;
 	/**
 	 * 收货人全名
 	 */
+	@NotBlank
 	private String receiver;
 	/**
 	 * 移动电话
 	 */
+	@NotBlank
 	private String receiverMobile;
 	/**
 	 * 省份
 	 */
+	@NotBlank
 	private String receiverState;
 
 	/**
 	 * 城市
 	 */
+	@NotBlank
 	private String receiverCity;
 
 	/**
 	 * 区/县
 	 */
+	@NotBlank
 	private String receiverDistrict;
 
 	/**
 	 * 收货地址，如：xx路xx号
 	 */
+
 	private String receiverAddress;
 
 	/**

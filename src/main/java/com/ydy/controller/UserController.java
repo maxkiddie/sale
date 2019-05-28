@@ -3,6 +3,8 @@
  */
 package com.ydy.controller;
 
+import java.util.Objects;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.base.Objects;
 import com.ydy.annotation.CheckFormRepeat;
 import com.ydy.annotation.CtrlParam;
 import com.ydy.constant.SystemConstant;
@@ -58,7 +59,10 @@ public class UserController {
 	@PostMapping("register")
 	@CheckFormRepeat
 	@ResponseBody
-	public ResponseEntity<User> register(User user) {
+	public ResponseEntity<User> register(User user, @CtrlParam("二次密码") String repeatpwd) {
+		if (!Objects.equals(repeatpwd, user.getPassword())) {
+			throw new MyException(EnumSystem.PWD_NOT_FIT);
+		}
 		return ResponseEntity.ok(userService.register(user));
 	}
 
@@ -76,13 +80,13 @@ public class UserController {
 			@CtrlParam("验证码") String code, HttpServletRequest request, HttpServletResponse response) {
 		Object redisCode = request.getSession().getAttribute(SystemConstant.SESSION_CODE);
 		if ("1234".equals(code)) {
-		} else if (!Objects.equal(redisCode, code)) {
+		} else if (!Objects.equals(redisCode, code)) {
 			throw new MyException(EnumSystem.CODE_ERROR);
 		}
 		User user = new User(username, password);
 		UserTokenVo vo = userService.checkUser(user);
 		if (vo != null) {
-			Cookie cookie = new Cookie(SystemConstant.COOKIE_ADM_TOKEN, vo.getUtoken());
+			Cookie cookie = new Cookie(SystemConstant.ADM_TOKEN, vo.getUtoken());
 			cookie.setPath("/");
 			response.addCookie(cookie);
 			request.getSession().removeAttribute(SystemConstant.SESSION_CODE);

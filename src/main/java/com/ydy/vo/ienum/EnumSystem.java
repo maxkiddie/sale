@@ -21,10 +21,14 @@ public enum EnumSystem implements IErrorEnum{
 	TOKEN_NOT_EXSIT(1006, "token是必须参数"),
 	USER_TOKEN_NOT_EXSIT(1006, "utoken是必须参数"),
 	USER_CAN_NOT_GET(1006, "系统获取不到用户信息"),
+	ADMIN_CAN_NOT_GET(1007, "系统获取不到管理员信息"),
 	CODE_EXPIRED(1007, "验证码已过期"),
 	CODE_ERROR(1008, "验证码不匹配"),
 	DATA_REPEAT(1009, "表单重复提交"),
-	NO_AUTH(1010, "没权限");
+	NO_AUTH(1010, "没权限"),
+	PWD_NOT_FIT(1010, "两次密码不匹配"),
+	FILE_TYPE_NOT_FIT(1011, "文件类型不匹配"),
+	REMOTE_IP_ERROR(1012, "远程网络出现问题");
 	private Integer code;
 	private String msg;
 

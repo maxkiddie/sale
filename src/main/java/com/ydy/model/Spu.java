@@ -22,7 +22,7 @@ public class Spu {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long spuId;
-	private Integer categoryId;
+	private Integer categoryId = 0;// 未知分类
 	private String name;
 	private String title;
 	private String image;

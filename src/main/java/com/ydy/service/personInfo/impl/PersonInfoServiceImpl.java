@@ -5,6 +5,7 @@ package com.ydy.service.personInfo.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.google.common.base.Objects;
 import com.ydy.exception.MyException;
 import com.ydy.exception.ValidateException;
 import com.ydy.mapper.PersonInfoMapper;
@@ -62,7 +62,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 			if (temp == null) {
 				throw new MyException(EnumSystem.DATA_NOT_FOUND);
 			}
-			if (!Objects.equal(temp.getUserId(), personInfo.getUserId())) {
+			if (!Objects.equals(temp.getUserId(), personInfo.getUserId())) {
 				throw new MyException(EnumSystem.NO_AUTH);
 			}
 			personInfoMapper.updateByPrimaryKeySelective(personInfo);
@@ -78,7 +78,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 		}
 		PersonInfo info = personInfoMapper.selectByPrimaryKey(id);
 		if (info != null) {
-			if (Objects.equal(info.getUserId(), userId)) {
+			if (Objects.equals(info.getUserId(), userId)) {
 				return info;
 			} else {
 				throw new MyException(EnumSystem.NO_AUTH);

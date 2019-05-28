@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ydy.annotation.AdminToken;
 import com.ydy.model.Sku;
 import com.ydy.model.Spu;
 import com.ydy.service.good.GoodService;
@@ -34,14 +35,23 @@ public class GoodController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("select")
+	@GetMapping("selectSpu")
 	@ResponseBody
-	public ResponseEntity<PageVo<Spu>> select(Spu spu, Integer page, Integer size) {
+	public ResponseEntity<PageVo<Spu>> selectSpu(Spu spu, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(spu);
 		PageVo<Spu> vo = goodService.selectData(spu, page, size);
 		return ResponseEntity.ok(vo);
 	}
 
+	@GetMapping("selectSku")
+	@ResponseBody
+	public ResponseEntity<PageVo<Sku>> selectSku(Sku sku, Integer page, Integer size) {
+		StringUtils.setParamEmptyToNull(sku);
+		PageVo<Sku> vo = goodService.selectData(sku, page, size);
+		return ResponseEntity.ok(vo);
+	}
+	
+	@AdminToken
 	@PostMapping("saveSpu")
 	@ResponseBody
 	public ResponseEntity<Spu> saveSpu(Spu spu) {
@@ -50,6 +60,7 @@ public class GoodController {
 		return ResponseEntity.ok(spu);
 	}
 
+	@AdminToken
 	@PostMapping("saveSku")
 	@ResponseBody
 	public ResponseEntity<Sku> saveSku(Sku sku) {
