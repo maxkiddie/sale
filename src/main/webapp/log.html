@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台日志</title>
+</head>
+<script src="/jquery/jquery.min.js"></script>
+<script src="/utils/TimeUtil.js"></script>
+<script src="/utils/HttpUtil.js"></script>
+<script>
+	var curFile = {
+		absolutePath : ""
+	};
+	$(document).ready(function() {
+		openPath(curFile.absolutePath)
+	});
+
+	function openPath(myPath) {
+		$.post("log/getLog", {
+			path : myPath
+		}, function(data, status) {
+			console.log("当前目录:" + myPath);
+			curFile = data;
+			$("#curPath").text(curFile.absolutePath);
+			putSheet(curFile.subList);
+		});
+	}
+
+	function back() {
+		openPath(curFile.parentPath)
+	}
+
+	function openTo(x) {
+		var file = curFile.subList[x];
+		if (file.isFile == 0) {
+			openPath(file.absolutePath);
+		} else {
+			downLoadFile(file.absolutePath);
+		}
+	}
+
+	function downLoadFile(filePath) {
+		window.open('log/download?path=' + encodeURI(filePath));
+	}
+
+	function putSheet(files) {
+		var sheet = $("#sheet");
+		sheet.text("");//清空
+		if (files.length <= 0) {
+			sheet.text("当前是文件");
+		}
+		for (x in files) {
+			li = "<li><a onClick='openTo(" + x + ")'>" + files[x].fileName
+					+ "</a></li>";
+			sheet.append(li);
+		}
+	}
+</script>
+<body>
+	<h1>后台日志</h1>
+	<h2 id="curPath"></h2>
+	 <h4>
+		<a id="back" onClick="back()">上一级</a>
+	</h4> 
+	<ul id="sheet">
+	</ul>
+</body>
+</html>

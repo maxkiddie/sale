@@ -1,0 +1,47 @@
+[onclick] {
+	text-decoration: underline;
+}
+
+#msg {
+	color: red;
+}
+
+#page {
+	text-align: center;
+}
+
+#sheet tr {
+	height: 30px;
+}
+
+#select {
+	margin: 10px 20px 10px 20px;
+}
+
+table, tr, td, th {
+	padding: 0;
+	margin: 0;
+}
+
+#show>table {
+	width: 100%;
+	border-color: #ccc;
+}
+
+#show>table tr {
+	line-height: 30px;
+	border-color: #ccc;
+}
+
+#show>table th, #show>table td {
+	text-align: center;
+	border-color: #ccc;
+}
+
+#show>table tr:nth-child(odd) {
+	
+}
+
+#show>table tr:nth-child(even) {
+	background: #ccc;
+}

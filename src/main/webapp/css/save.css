@@ -1,0 +1,12 @@
+#info>table th, #info>table td {
+	text-align: center;
+	border-color: #ccc;
+}
+
+#msg {
+	color: red;
+}
+
+strong {
+	color: red;
+}

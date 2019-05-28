@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>第三方系统信息</title>
+<link rel="stylesheet" type="text/css" href="/css/save.css" />
+<script src="/jquery/jquery.min.js"></script>
+<script src="/utils/TimeUtil.js"></script>
+<script src="/utils/HttpUtil.js"></script>
+<script>
+	var params = {};
+
+	$(document).ready(function() {
+		getInfo();
+	});
+
+	function init() {
+		$("#msg").text("");
+		$("#error_systemName").text("");
+		$("#error_companyName").text("");
+		$("#error_switchStatus").text("");
+		$("#error_requestLimit").text("");
+		$("#error_clientIp").text("");
+		$("#error_encryptKey").text("");
+	}
+
+	function getInfo() {
+		var urlId = getQueryString("id");
+		if (urlId) {
+			console.log("id=" + urlId);
+			post("/thirdpartySystem/selectSystemById", {
+				id : urlId
+			}, initInfo, err);
+		}
+	}
+
+	function initInfo(data) {
+		if (data.code == 0) {
+			result = data.data;
+			$("#id").val(result.id);
+			$("#systemName").val(result.systemName);
+			$("#companyName").val(result.companyName);
+			$("#switchStatus").val(result.switchStatus);
+			$("#requestLimit").val(result.requestLimit);
+			$("#clientIp").val(result.clientIp);
+			$("#encryptKey").val(result.encryptKey);
+		} else {
+			$("#msg").text(data.msg + "[" + data.code + "]");
+		}
+	}
+
+	function setParams() {
+		params.id = $("#id").val();
+		params.systemName = $("#systemName").val();
+		params.companyName = $("#companyName").val();
+		params.switchStatus = $("#switchStatus").val();
+		params.requestLimit = $("#requestLimit").val();
+		params.clientIp = $("#clientIp").val();
+		params.encryptKey = $("#encryptKey").val();
+	}
+
+	function suss(data) {
+		init();
+		if (data.code == 0) {
+			result = data.data;
+			$("#msg").text(data.msg + "[" + data.code + "]");
+		} else if (data.code == 4003) {
+			$("#msg").text(data.msg + "[" + data.code + "]");
+			setError(data);
+		} else {
+			$("#msg").text(data.msg + "[" + data.code + "]");
+		}
+	}
+
+	function setError(data) {
+		var error = data.data;
+		$("#error_systemName").text(error.systemName);
+		$("#error_companyName").text(error.companyName);
+		$("#error_switchStatus").text(error.switchStatus);
+		$("#error_requestLimit").text(error.requestLimit);
+		$("#error_clientIp").text(error.clientIp);
+		$("#error_encryptKey").text(error.encryptKey);
+	}
+
+	function err(data) {
+		$("#msg").text("网络错误(" + data.status + ")")
+	}
+
+	function save() {
+		setParams();
+		post("/thirdpartySystem/save", params, suss, err);
+	}
+</script>
+</head>
+<body>
+	<h1>
+		<a href="select.html">第三方系统信息</a>
+	</h1>
+
+	<h4 id="msg"></h4>
+	<div id="info">
+		<input id="id" type="hidden" value=""></input>
+		<table>
+			<tr>
+				<td>系统名称:</td>
+				<td><input id="systemName" type="text"></input></td>
+				<td><strong id="error_systemName"></strong></td>
+			</tr>
+			<tr>
+				<td>隶属公司名称:</td>
+				<td><input id="companyName" type="text"></input></td>
+				<td><strong id="error_companyName"></strong></td>
+			</tr>
+			<tr>
+				<td>开关状态:</td>
+				<td><input id="switchStatus" type="number"></input></td>
+				<td><strong id="error_switchStatus"></strong></td>
+			</tr>
+			<tr>
+				<td>访问次数限制:</td>
+				<td><input id="requestLimit" type="number"></input></td>
+				<td><strong id="error_requestLimit"></strong></td>
+			</tr>
+			<tr>
+				<td>IP白名单:</td>
+				<td><input id="clientIp" type="text"></input></td>
+				<td><strong id="error_clientIp"></strong></td>
+			</tr>
+			<tr>
+				<td>加密字串:</td>
+				<td><input id="encryptKey" type="text"></input></td>
+				<td><strong id="error_encryptKey"></strong></td>
+			</tr>
+			<tr>
+				<td><input id="save" type="button" onclick="save()" value="保存"></input></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

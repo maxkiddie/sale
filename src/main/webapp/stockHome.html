@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>药品库存首页</title>
+<style type="text/css">
+li {
+	margin: 10px 5px 10px 5px;
+}
+</style>
+<script src="/jquery/jquery.min.js"></script>
+<script src="/utils/HttpUtil.js"></script>
+<script src="/utils/TimeUtil.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		adminInfo();
+		getVersion();
+	});
+
+	function suss(data) {
+		init();
+		if (data.code == 0) {
+			result = data.data;
+			$("#userText").text($("#username").val());
+			$("#in").css('display', 'none');
+			$("#out").css('display', 'block');
+		} else {
+			$("#msg").text(data.msg + "[" + data.code + "]" + ":" + data.data);
+		}
+	}
+
+	function init() {
+		$("#msg").text("");
+	}
+
+	function err(data) {
+		$("#msg").text("网络错误(" + data.status + ")")
+	}
+
+	var params = {};
+
+	function setParams() {
+		params.username = $("#username").val();
+		params.password = $("#password").val();
+		params.code = $("#code").val();
+	}
+
+	function login() {
+		setParams();
+		post("/admin/login", params, suss, err);
+	}
+
+	function logout() {
+		post("/admin/logout", {}, function(data) {
+			if (data.code == 0) {
+				$("#in").css('display', 'block');
+				$("#out").css('display', 'none');
+			}
+		}, err);
+	}
+
+	function adminInfo() {
+		post("/admin/info", {}, function(data) {
+			if (data.code == 0) {
+				$("#userText").text(data.data.username);
+				$("#in").css('display', 'none');
+				$("#out").css('display', 'block');
+			} else {
+				$("#userText").text("");
+				$("#in").css('display', 'block');
+				$("#out").css('display', 'none');
+				refreshImgCode();
+			}
+		});
+	}
+
+	function refreshImgCode() {
+		$("#codeImg").attr("src",
+				"/code/imgCode?version=" + new Date().getTime());
+	}
+
+	document.onkeydown = function(event) {
+		var e = event || window.event || arguments.callee.caller.arguments[0];
+		if (e && e.keyCode == 13) {
+			$("#login").click();
+		}
+	}
+
+	function getVersion() {
+		var versionParam = {
+			version : new Date().getTime()
+		}
+		post("/system/version", versionParam, versionSuss, err);
+	}
+
+	var remoteTime=0;
+	
+	function versionSuss(data) {
+		if (data.code == 0) {
+			result = data.data;
+			$("#version").text(result.version);
+			remoteTime=result.time;
+			refreshTime();
+			window.setInterval(refreshTime, 1000);
+		} else {
+			$("#msg").text(data.msg + "[" + data.code + "]" + ":" + data.data);
+		}
+	}
+	
+    function refreshTime() {
+    	$("#time").text(timestampToTime(remoteTime));
+    	remoteTime+=1000;
+    }
+</script>
+</head>
+<body>
+	<h1>药品库存首页</h1>
+	<h5>版本    [<strong id="version">未知版本</strong>]  系统时间: <i id="time">未知时间</i></h5>
+	<h3>用户登录</h3>
+	<h4 id="msg" style="color: red;"></h4>
+	<div id="in" style="display: block;">
+		<table>
+			<tr>
+				<td>用户名:</td>
+				<td><input id="username" type="text"></input></td>
+			</tr>
+			<tr>
+				<td>密码:</td>
+				<td><input id="password" type="password"></input></td>
+			</tr>
+			<tr>
+				<td><img id="codeImg" onclick="refreshImgCode()"></img></td>
+				<td><input id="code" type="text"></input></td>
+			</tr>
+			<tr>
+				<td><input id="login" type="button" onclick="login()"
+					value="登录"></input></td>
+			</tr>
+		</table>
+	</div>
+	<div id="out" style="display: none;">
+		<p>
+			您好，<strong id="userText"></strong>!<input onclick="logout()"
+				type="button" value="注销"></input>
+		</p>
+	</div>
+	<ul>
+		<li><a href="/crm/drugCatalog/select.html">药品目录</a></li>
+		<li><a href="/crm/drugMap/select.html">药品匹配</a></li>
+		<li><a href="crm/drugNoMap/select.html">药品不匹配日志</a></li>
+		<li><a href="/crm/drugStock/select.html">药品库存</a></li>
+		<li><a href="/crm/duplicateStock/select.html">药品多映射库存</a></li>
+		<li><a href="/crm/thirdpartySystem/select.html">第三方系统</a></li>
+		<li><a href="/crm/admin/select.html">系统管理员</a></li>
+		<li><a href="log.html">后台日志</a></li>
+	</ul>
+</body>
+</html>

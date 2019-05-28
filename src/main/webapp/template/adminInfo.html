@@ -1,0 +1,87 @@
+<html>
+<div id="in" style="display: block;">
+	<table>
+		<tr>
+			<td>用户名:</td>
+			<td><input id="admin_username" type="text"></input></td>
+			<td>密码:</td>
+			<td><input id="admin_password" type="password"></input></td>
+			<td><img id="codeImg" onclick="refreshImgCode()"></img></td>
+			<td><input id="admin_code" type="text"></input></td>
+			<td><input id="login" type="button" onclick="login()" value="登录"></input></td>
+		</tr>
+	</table>
+</div>
+<div id="out" style="display: none;">
+	<p>
+		您好，<strong id="userText"></strong>!<input onclick="logout()"
+			type="button" value="注销"></input>
+	</p>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		adminInfo();
+	});
+
+	function adminInfo() {
+		post("/admin/info", {}, function(data) {
+			if (data.code == 0) {
+				$("#userText").text(data.data.username);
+				$("#in").css('display', 'none');
+				$("#out").css('display', 'block');
+			} else {
+				$("#userText").text("");
+				$("#in").css('display', 'block');
+				$("#out").css('display', 'none');
+				refreshImgCode();
+			}
+		});
+	}
+
+	var adminParams = {};
+
+	function setAdminParams() {
+		adminParams.username = $("#admin_username").val();
+		adminParams.password = $("#admin_password").val();
+		adminParams.code = $("#admin_code").val();
+	}
+
+	function login() {
+		setAdminParams();
+		post("/admin/login", adminParams, adminSuss, adminErr);
+	}
+
+	function logout() {
+		post("/admin/logout", {}, function(data) {
+			if (data.code == 0) {
+				$("#in").css('display', 'block');
+				$("#out").css('display', 'none');
+			}
+		}, adminErr);
+	}
+
+	function refreshImgCode() {
+		$("#codeImg").attr("src", "/code/imgCode?version=" + new Date().getTime());
+	}
+	
+	function adminSuss(data) {
+		adminInit();
+		if (data.code == 0) {
+			result = data.data;
+			$("#userText").text($("#admin_username").val());
+			$("#in").css('display', 'none');
+			$("#out").css('display', 'block');
+		} else {
+			$("#msg").text(data.msg + "[" + data.code + "]" + ":" + data.data);
+		}
+	}
+
+	function adminInit() {
+		$("#msg").text("");
+	}
+
+	function adminErr(data) {
+		$("#msg").text("网络错误(" + data.status + ")")
+	}
+</script>
+</html>
