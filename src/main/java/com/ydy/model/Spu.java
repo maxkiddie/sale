@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author xuzhaojie
  *
@@ -22,12 +24,23 @@ public class Spu {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long spuId;
-	private Integer categoryId = 0;// 未知分类
+	private Integer categoryId;// 未知分类
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String title;
-	private String image;
+	@NotBlank
+	private String mainImage;
+	private Long minPrice;
+	private Long nowMinPrice;
+	private Long maxPrice;
+	private Long nowMaxPrice;
+	@NotBlank
 	@Transient
 	private String detail;
+	@Transient
+	@NotBlank
+	private String images;
 	private Integer spuStatus;
 	private Date createTime;
 	private Date updateTime;
@@ -37,21 +50,6 @@ public class Spu {
 	 */
 	public Long getSpuId() {
 		return spuId;
-	}
-
-	/**
-	 * @return the detail
-	 */
-	public String getDetail() {
-		return detail;
-	}
-
-	/**
-	 * @param detail
-	 *            the detail to set
-	 */
-	public void setDetail(String detail) {
-		this.detail = detail;
 	}
 
 	/**
@@ -108,18 +106,108 @@ public class Spu {
 	}
 
 	/**
-	 * @return the image
+	 * @return the mainImage
 	 */
-	public String getImage() {
-		return image;
+	public String getMainImage() {
+		return mainImage;
 	}
 
 	/**
-	 * @param image
-	 *            the image to set
+	 * @param mainImage
+	 *            the mainImage to set
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
+	}
+
+	/**
+	 * @return the minPrice
+	 */
+	public Long getMinPrice() {
+		return minPrice;
+	}
+
+	/**
+	 * @param minPrice
+	 *            the minPrice to set
+	 */
+	public void setMinPrice(Long minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	/**
+	 * @return the nowMinPrice
+	 */
+	public Long getNowMinPrice() {
+		return nowMinPrice;
+	}
+
+	/**
+	 * @param nowMinPrice
+	 *            the nowMinPrice to set
+	 */
+	public void setNowMinPrice(Long nowMinPrice) {
+		this.nowMinPrice = nowMinPrice;
+	}
+
+	/**
+	 * @return the maxPrice
+	 */
+	public Long getMaxPrice() {
+		return maxPrice;
+	}
+
+	/**
+	 * @param maxPrice
+	 *            the maxPrice to set
+	 */
+	public void setMaxPrice(Long maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+
+	/**
+	 * @return the nowMaxPrice
+	 */
+	public Long getNowMaxPrice() {
+		return nowMaxPrice;
+	}
+
+	/**
+	 * @param nowMaxPrice
+	 *            the nowMaxPrice to set
+	 */
+	public void setNowMaxPrice(Long nowMaxPrice) {
+		this.nowMaxPrice = nowMaxPrice;
+	}
+
+	/**
+	 * @return the detail
+	 */
+	public String getDetail() {
+		return detail;
+	}
+
+	/**
+	 * @param detail
+	 *            the detail to set
+	 */
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	/**
+	 * @return the images
+	 */
+	public String getImages() {
+		return images;
+	}
+
+	/**
+	 * @param images
+	 *            the images to set
+	 */
+	public void setImages(String images) {
+		this.images = images;
 	}
 
 	/**

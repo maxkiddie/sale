@@ -16,6 +16,7 @@ public class SpuDetail {
 
 	@Id
 	private Long spuId;
+	private String images;
 	private String detail;
 
 	/**
@@ -23,6 +24,21 @@ public class SpuDetail {
 	 */
 	public Long getSpuId() {
 		return spuId;
+	}
+
+	/**
+	 * @return the images
+	 */
+	public String getImages() {
+		return images;
+	}
+
+	/**
+	 * @param images
+	 *            the images to set
+	 */
+	public void setImages(String images) {
+		this.images = images;
 	}
 
 	/**

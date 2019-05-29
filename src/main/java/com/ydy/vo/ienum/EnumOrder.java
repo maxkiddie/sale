@@ -13,6 +13,7 @@ import com.ydy.vo.ienum.base.IErrorEnum;
 public enum EnumOrder implements IErrorEnum {
 	ORDER_DETAIL_EMPTY(8000, "订单条目不能为空"),
 	ORDER_NOT_FOUND(8001, "订单不存在"),
+	ORDER_STATUS_ERROR(8002, "订单流程有误"),
 	ADMIN_NOT_FOUND(9004, "管理员不存在");
 
 	private Integer code;

@@ -9,6 +9,9 @@ import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author xuzhaojie
@@ -32,6 +35,7 @@ public class Order {
 	/**
 	 * 支付类型，1、在线支付，2、货到付款
 	 */
+	@NotNull
 	private Integer paymentType;
 
 	/**
@@ -57,6 +61,7 @@ public class Order {
 	/**
 	 * 用户id
 	 */
+	@NotNull
 	private Long userId;
 
 	/**
@@ -67,6 +72,7 @@ public class Order {
 	/**
 	 * 买家昵称
 	 */
+	@NotBlank
 	private String buyerNick;
 
 	/**
@@ -77,16 +83,24 @@ public class Order {
 	/**
 	 * 收货人全名
 	 */
+	@NotBlank
 	private String receiver;
 
 	/**
 	 * 移动电话
 	 */
+	@NotBlank
 	private String receiverMobile;
 
 	/**
+	 * 国家
+	 */
+	@NotBlank
+	private String receiverCountry;
+	/**
 	 * 省份
 	 */
+	@NotBlank
 	private String receiverState;
 
 	/**
@@ -97,16 +111,19 @@ public class Order {
 	/**
 	 * 区/县
 	 */
+	@NotBlank
 	private String receiverDistrict;
 
 	/**
 	 * 收货地址，如：xx路xx号
 	 */
+	@NotBlank
 	private String receiverAddress;
 
 	/**
 	 * 邮政编码,如：310001
 	 */
+	@NotBlank
 	private String receiverZip;
 
 	@Transient
@@ -203,6 +220,21 @@ public class Order {
 	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	/**
+	 * @return the receiverCountry
+	 */
+	public String getReceiverCountry() {
+		return receiverCountry;
+	}
+
+	/**
+	 * @param receiverCountry
+	 *            the receiverCountry to set
+	 */
+	public void setReceiverCountry(String receiverCountry) {
+		this.receiverCountry = receiverCountry;
 	}
 
 	/**

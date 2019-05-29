@@ -38,7 +38,7 @@ public class PersonInfoController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<PageVo<PersonInfo>> select(PersonInfo info, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(info);
-		PageVo<PersonInfo> vo = personInfoService.selectData(info, page, size);
+		PageVo<PersonInfo> vo = personInfoService.select(info, page, size);
 		return ResponseEntity.ok(vo);
 	}
 	
@@ -49,7 +49,7 @@ public class PersonInfoController extends BaseController {
 		StringUtils.setParamEmptyToNull(info);
 		User user = getUser();
 		info.setUserId(user.getId());
-		PageVo<PersonInfo> vo = personInfoService.selectData(info, page, size);
+		PageVo<PersonInfo> vo = personInfoService.select(info, page, size);
 		return ResponseEntity.ok(vo);
 	}
 

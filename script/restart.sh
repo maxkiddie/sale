@@ -1,7 +1,7 @@
 #!/bin/sh
 ## java env
 
-API_NAME=pharmacyStock-1.0
+API_NAME=sale-1.0
 JAR_NAME=$API_NAME\.jar
 #PID  代表是PID文件
 PID=$API_NAME\.pid

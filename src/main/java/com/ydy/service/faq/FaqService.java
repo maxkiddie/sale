@@ -14,7 +14,9 @@ import com.ydy.vo.other.PageVo;
  */
 public interface FaqService {
 
-	PageVo<Faq> selectData(Faq faq, Integer page, Integer size);
+	PageVo<Faq> select(Faq faq, Integer page, Integer size);
+
+	PageVo<Faq> list(Faq faq, Integer page, Integer size);
 
 	Faq saveOrUpdate(Faq faq);
 

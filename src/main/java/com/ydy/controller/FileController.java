@@ -69,6 +69,7 @@ public class FileController {
 	 * @param response
 	 * @throws UnsupportedEncodingException
 	 */
+	@SuppressWarnings("unused")
 	private void setDownloadFile(String filename, HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 		response.setContentType("application/force-download");// 设置强制下载不打开

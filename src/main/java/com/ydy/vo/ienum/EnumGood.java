@@ -12,6 +12,8 @@ import com.ydy.vo.ienum.base.IErrorEnum;
  */
 public enum EnumGood implements IErrorEnum {
 	SKU_NOT_FOUND(7000, "Sku不存在"),
+	SPU_OFF(7001, "Spu未上架或不存在"),
+	SKU_OFF(7002, "Sku未上架或不存在"),
 	ADMIN_NOT_FOUND(9004, "管理员不存在");
 
 	private Integer code;

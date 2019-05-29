@@ -21,6 +21,7 @@ import com.ydy.annotation.AdminToken;
 import com.ydy.annotation.CheckFormRepeat;
 import com.ydy.annotation.CtrlParam;
 import com.ydy.constant.SystemConstant;
+import com.ydy.controller.base.BaseController;
 import com.ydy.exception.MyException;
 import com.ydy.model.Admin;
 import com.ydy.service.admin.AdminService;
@@ -40,7 +41,7 @@ import com.ydy.vo.token.TokenVo;
  */
 @Controller
 @RequestMapping(value = "admin")
-public class AdminController {
+public class AdminController extends BaseController {
 
 	@Autowired
 	private AdminService adminService;
@@ -57,7 +58,7 @@ public class AdminController {
 	@ResponseBody
 	public ResponseEntity<PageVo<Admin>> select(Admin admin, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(admin);
-		PageVo<Admin> vo = adminService.selectData(admin, page, size);
+		PageVo<Admin> vo = adminService.select(admin, page, size);
 		return ResponseEntity.ok(vo);
 	}
 
@@ -131,6 +132,26 @@ public class AdminController {
 	@ResponseBody
 	public ResponseEntity<Admin> selectById(@CtrlParam("主键") Integer id) {
 		return ResponseEntity.ok(adminService.selectById(id));
+	}
+
+	/**
+	 * 修改管理员密码
+	 * 
+	 * @param response
+	 * @return
+	 */
+	@AdminToken
+	@CheckFormRepeat
+	@PostMapping("/modifyPassword")
+	@ResponseBody
+	public ResponseEntity<BaseVo> modifyPassword(@CtrlParam("原密码") String password,
+			@CtrlParam("新密码") String newPassword, @CtrlParam("密码确认") String confirmPassword) {
+		if (!Objects.equals(newPassword, confirmPassword)) {
+			throw new MyException(EnumSystem.PWD_NOT_FIT);
+		}
+		Admin admin = getAdmin();
+		return ResponseEntity
+				.ok(adminService.modifyPassword(admin.getId(), admin.getUsername(), password, newPassword));
 	}
 
 	/**

@@ -6,16 +6,20 @@ package com.ydy.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydy.annotation.AdminToken;
+import com.ydy.annotation.CtrlParam;
 import com.ydy.model.Sku;
 import com.ydy.model.Spu;
 import com.ydy.service.good.GoodService;
 import com.ydy.utils.StringUtils;
+import com.ydy.vo.SpuVo;
+import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
 /**
@@ -30,27 +34,38 @@ public class GoodController {
 	@Autowired
 	private GoodService goodService;
 
-	/**
-	 * 筛选商品信息
-	 * 
-	 * @return
-	 */
+	@GetMapping("listSpu")
+	@ResponseBody
+	public ResponseEntity<PageVo<Spu>> listSpu(Spu spu, Integer page, Integer size) {
+		StringUtils.setParamEmptyToNull(spu);
+		PageVo<Spu> vo = goodService.list(spu, page, size);
+		return ResponseEntity.ok(vo);
+	}
+
+	@GetMapping("spuDetail")
+	@ResponseBody
+	public ResponseEntity<SpuVo> spuDetail(@CtrlParam("商品ID") Long spuId) {
+		return ResponseEntity.ok(goodService.selectSpuVoById(spuId));
+	}
+
+	@AdminToken
 	@GetMapping("selectSpu")
 	@ResponseBody
 	public ResponseEntity<PageVo<Spu>> selectSpu(Spu spu, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(spu);
-		PageVo<Spu> vo = goodService.selectData(spu, page, size);
+		PageVo<Spu> vo = goodService.select(spu, page, size);
 		return ResponseEntity.ok(vo);
 	}
 
+	@AdminToken
 	@GetMapping("selectSku")
 	@ResponseBody
 	public ResponseEntity<PageVo<Sku>> selectSku(Sku sku, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(sku);
-		PageVo<Sku> vo = goodService.selectData(sku, page, size);
+		PageVo<Sku> vo = goodService.select(sku, page, size);
 		return ResponseEntity.ok(vo);
 	}
-	
+
 	@AdminToken
 	@PostMapping("saveSpu")
 	@ResponseBody
@@ -68,4 +83,19 @@ public class GoodController {
 		sku = goodService.saveOrUpdateSku(sku);
 		return ResponseEntity.ok(sku);
 	}
+
+	@AdminToken
+	@DeleteMapping("deleteSpu")
+	@ResponseBody
+	public ResponseEntity<BaseVo> deleteSpu(@CtrlParam("spuId") Long spuId) {
+		return ResponseEntity.ok(goodService.deleteSpu(spuId));
+	}
+
+	@AdminToken
+	@DeleteMapping("deleteSku")
+	@ResponseBody
+	public ResponseEntity<BaseVo> statusSpu(@CtrlParam("skuId") Long skuId) {
+		return ResponseEntity.ok(goodService.deleteSku(skuId));
+	}
+
 }

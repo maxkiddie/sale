@@ -78,6 +78,10 @@ public class DateUtil {
 		return df.format(date);
 	}
 
+	public static String getDateStrByDateFormat(Date date) {
+		return df_full.get().format(date);
+	}
+
 	// 获取当前Date
 	public static Date getCurrentDate() {
 		Instant instant = Instant.now();

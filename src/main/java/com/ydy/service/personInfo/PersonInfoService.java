@@ -12,7 +12,7 @@ import com.ydy.vo.other.PageVo;
  *         2019年5月28日 上午8:38:20
  */
 public interface PersonInfoService {
-	PageVo<PersonInfo> selectData(PersonInfo personInfo, Integer page, Integer size);
+	PageVo<PersonInfo> select(PersonInfo personInfo, Integer page, Integer size);
 
 	PersonInfo saveOrUpdate(PersonInfo personInfo);
 

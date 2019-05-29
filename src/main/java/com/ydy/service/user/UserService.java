@@ -14,7 +14,7 @@ import com.ydy.vo.token.UserTokenVo;
  */
 public interface UserService {
 
-	PageVo<User> selectData(User user, Integer page, Integer size);
+	PageVo<User> select(User user, Integer page, Integer size);
 
 	User register(User user);
 

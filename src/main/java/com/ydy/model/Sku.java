@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,15 +25,19 @@ public class Sku {
 	private Long skuId;
 	@NotNull
 	private Long spuId;
-	private String image;
+	@NotNull
+	private String mainImage;
 	@NotNull
 	private String spuSpecs;
 	@NotNull
+	@Min(value = 0)
 	private Integer stock;
 	@NotNull
+	@Min(value = 0)
 	private Long price;
 	@NotNull
-	private Integer skuStatus = 0;
+	@Min(value = 0)
+	private Long nowPrice;
 	private Date createTime;
 	private Date updateTime;
 
@@ -41,6 +46,21 @@ public class Sku {
 	 */
 	public Long getSkuId() {
 		return skuId;
+	}
+
+	/**
+	 * @return the nowPrice
+	 */
+	public Long getNowPrice() {
+		return nowPrice;
+	}
+
+	/**
+	 * @param nowPrice
+	 *            the nowPrice to set
+	 */
+	public void setNowPrice(Long nowPrice) {
+		this.nowPrice = nowPrice;
 	}
 
 	/**
@@ -67,18 +87,18 @@ public class Sku {
 	}
 
 	/**
-	 * @return the image
+	 * @return the mainImage
 	 */
-	public String getImage() {
-		return image;
+	public String getMainImage() {
+		return mainImage;
 	}
 
 	/**
-	 * @param image
-	 *            the image to set
+	 * @param mainImage
+	 *            the mainImage to set
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
 	}
 
 	/**
@@ -124,21 +144,6 @@ public class Sku {
 	 */
 	public void setPrice(Long price) {
 		this.price = price;
-	}
-
-	/**
-	 * @return the skuStatus
-	 */
-	public Integer getSkuStatus() {
-		return skuStatus;
-	}
-
-	/**
-	 * @param skuStatus
-	 *            the skuStatus to set
-	 */
-	public void setSkuStatus(Integer skuStatus) {
-		this.skuStatus = skuStatus;
 	}
 
 	/**

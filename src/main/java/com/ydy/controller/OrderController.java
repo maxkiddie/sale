@@ -41,7 +41,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<PageVo<Order>> select(Order order, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(order);
-		PageVo<Order> vo = orderService.selectData(order, page, size);
+		PageVo<Order> vo = orderService.select(order, page, size);
 		return ResponseEntity.ok(vo);
 	}
 
@@ -52,7 +52,7 @@ public class OrderController extends BaseController {
 		StringUtils.setParamEmptyToNull(order);
 		User user = getUser();
 		order.setUserId(user.getId());
-		PageVo<Order> vo = orderService.selectData(order, page, size);
+		PageVo<Order> vo = orderService.select(order, page, size);
 		return ResponseEntity.ok(vo);
 	}
 
@@ -67,11 +67,24 @@ public class OrderController extends BaseController {
 		return ResponseEntity.ok(order);
 	}
 
-	@AdminToken
 	@PostMapping("pay")
 	@ResponseBody
 	public ResponseEntity<BaseVo> pay(@CtrlParam("订单ID") Long orderId) {
 		return ResponseEntity.ok(orderService.updateOrderStatusPay(orderId));
 	}
 
+	@AdminToken
+	@PostMapping("send")
+	@ResponseBody
+	public ResponseEntity<BaseVo> send(@CtrlParam("订单ID") Long orderId, @CtrlParam("物流名称") String shippingName,
+			@CtrlParam("物流单号") String shippingCode) {
+		return ResponseEntity.ok(orderService.updateOrderStatusSend(orderId, shippingName, shippingCode));
+	}
+
+	@UserToken
+	@PostMapping("confirm")
+	@ResponseBody
+	public ResponseEntity<BaseVo> confirm(@CtrlParam("订单ID") Long orderId) {
+		return ResponseEntity.ok(orderService.updateOrderStatusConfirm(orderId, getUser().getId()));
+	}
 }

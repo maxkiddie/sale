@@ -18,7 +18,6 @@ import com.ydy.model.OrderDetail;
  *         2019年5月27日 下午4:42:21
  */
 public class OrderDTO {
-	private Integer paymentType;
 	/**
 	 * 买家留言
 	 */
@@ -27,6 +26,8 @@ public class OrderDTO {
 	@NotBlank
 	private String buyerNick;
 	private String buyerMessage;
+	@NotNull
+	private Integer paymentType;
 	/**
 	 * 收货人全名
 	 */
@@ -37,6 +38,11 @@ public class OrderDTO {
 	 */
 	@NotBlank
 	private String receiverMobile;
+	/**
+	 * 国家
+	 */
+	@NotBlank
+	private String receiverCountry;
 	/**
 	 * 省份
 	 */
@@ -58,12 +64,13 @@ public class OrderDTO {
 	/**
 	 * 收货地址，如：xx路xx号
 	 */
-
+	@NotBlank
 	private String receiverAddress;
 
 	/**
 	 * 邮政编码,如：310001
 	 */
+	@NotBlank
 	private String receiverZip;
 
 	@Transient
@@ -247,6 +254,21 @@ public class OrderDTO {
 	 */
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+
+	/**
+	 * @return the receiverCountry
+	 */
+	public String getReceiverCountry() {
+		return receiverCountry;
+	}
+
+	/**
+	 * @param receiverCountry
+	 *            the receiverCountry to set
+	 */
+	public void setReceiverCountry(String receiverCountry) {
+		this.receiverCountry = receiverCountry;
 	}
 
 }

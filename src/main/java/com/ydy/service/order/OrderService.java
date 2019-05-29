@@ -3,8 +3,12 @@
  */
 package com.ydy.service.order;
 
+import java.util.Date;
+import java.util.List;
+
 import com.ydy.dto.OrderDTO;
 import com.ydy.model.Order;
+import com.ydy.model.OrderStatus;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
@@ -15,19 +19,23 @@ import com.ydy.vo.other.PageVo;
  */
 public interface OrderService {
 
-	PageVo<Order> selectData(Order order, Integer page, Integer size);
+	PageVo<Order> select(Order order, Integer page, Integer size);
 
 	Long createOrderId();
 
 	Order createOrder(OrderDTO dto);
 
 	BaseVo updateOrderStatusClosed(Long orderId);
+	
+	BaseVo updateOrderStatusListClosed(List<OrderStatus> list);
 
 	BaseVo updateOrderStatusPay(Long orderId);
 
-	BaseVo updateOrderStatusSend(Long orderId,String shippingName,String shippingCode);
+	BaseVo updateOrderStatusSend(Long orderId, String shippingName, String shippingCode);
 
-	BaseVo updateOrderStatusConfirm(Long orderId);
+	BaseVo updateOrderStatusConfirm(Long orderId, Long userId);
 
 	BaseVo updateOrderStatusComment(Long orderId);
+
+	List<OrderStatus> selectStatusCommit(Date createTime);
 }

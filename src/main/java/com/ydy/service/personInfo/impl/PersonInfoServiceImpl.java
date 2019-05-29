@@ -35,7 +35,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 	private PersonInfoMapper personInfoMapper;
 
 	@Override
-	public PageVo<PersonInfo> selectData(PersonInfo personInfo, Integer page, Integer size) {
+	public PageVo<PersonInfo> select(PersonInfo personInfo, Integer page, Integer size) {
 		PageVo<PersonInfo> vo = new PageVo<PersonInfo>(page, 1000);
 		Page<PersonInfo> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "id desc");
 		List<PersonInfo> list = personInfoMapper.select(personInfo);

@@ -32,11 +32,20 @@ public class FaqController {
 	@Autowired
 	private FaqService faqService;
 
+	@GetMapping("list")
+	@ResponseBody
+	public ResponseEntity<PageVo<Faq>> list(Faq faq, Integer page, Integer size) {
+		StringUtils.setParamEmptyToNull(faq);
+		PageVo<Faq> vo = faqService.list(faq, page, size);
+		return ResponseEntity.ok(vo);
+	}
+
+	@AdminToken
 	@GetMapping("select")
 	@ResponseBody
 	public ResponseEntity<PageVo<Faq>> select(Faq faq, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(faq);
-		PageVo<Faq> vo = faqService.selectData(faq, page, size);
+		PageVo<Faq> vo = faqService.select(faq, page, size);
 		return ResponseEntity.ok(vo);
 	}
 

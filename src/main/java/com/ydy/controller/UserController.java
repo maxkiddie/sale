@@ -52,7 +52,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<PageVo<User>> select(User user, Integer page, Integer size) {
 		StringUtils.setParamEmptyToNull(user);
-		PageVo<User> vo = userService.selectData(user, page, size);
+		PageVo<User> vo = userService.select(user, page, size);
 		return ResponseEntity.ok(vo);
 	}
 

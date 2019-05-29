@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydy.mapper.SpuMapper">
+	<select id="selectSpuById" resultType="com.ydy.vo.SpuVo">
+		select
+		s.spu_id,category_id,name,title,main_image,min_price,now_min_price,max_price,max_now_price,spu_status,create_time,update_time,d.detail,d.images
+		from spu s inner join spu_detail d on s.spu_id=d.spu_id
+		<where>
+			<if test="spuId!=null">
+				and s.spu_id=#{spuId}
+			</if>
+			<if test="spuStatus!=null">
+				and s.spu_status=#{spuStatus}
+			</if>
+		</where>
+	</select>
+</mapper>

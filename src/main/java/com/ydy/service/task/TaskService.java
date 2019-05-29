@@ -10,5 +10,5 @@ package com.ydy.service.task;
  */
 public interface TaskService {
 
-	public void stockUploadCheckTask();
+	public void orderClose();
 }

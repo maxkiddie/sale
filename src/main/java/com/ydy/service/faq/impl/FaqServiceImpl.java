@@ -36,8 +36,18 @@ public class FaqServiceImpl implements FaqService {
 	private FaqMapper faqMapper;
 
 	@Override
-	public PageVo<Faq> selectData(Faq faq, Integer page, Integer size) {
-		PageVo<Faq> vo = new PageVo<Faq>(page, 1000);
+	public PageVo<Faq> select(Faq faq, Integer page, Integer size) {
+		PageVo<Faq> vo = new PageVo<Faq>(page, size);
+		Page<Faq> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "id desc");
+		List<Faq> list = faqMapper.select(faq);
+		vo.setTotal(pageBean.getTotal());
+		vo.setList(list);
+		return vo;
+	}
+
+	@Override
+	public PageVo<Faq> list(Faq faq, Integer page, Integer size) {
+		PageVo<Faq> vo = new PageVo<Faq>(page, size);
 		Page<Faq> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "inx asc");
 		List<Faq> list = faqMapper.select(faq);
 		vo.setTotal(pageBean.getTotal());

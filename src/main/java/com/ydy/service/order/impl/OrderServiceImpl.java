@@ -5,6 +5,8 @@ package com.ydy.service.order.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.ydy.constant.OrderStatusEnum;
 import com.ydy.dto.OrderDTO;
 import com.ydy.exception.MyException;
+import com.ydy.exception.ValidateException;
 import com.ydy.mapper.OrderDetailMapper;
 import com.ydy.mapper.OrderMapper;
 import com.ydy.mapper.OrderStatusMapper;
@@ -26,6 +29,7 @@ import com.ydy.model.OrderStatus;
 import com.ydy.model.Sku;
 import com.ydy.service.order.OrderService;
 import com.ydy.utils.DateUtil;
+import com.ydy.utils.ValidateUtil;
 import com.ydy.vo.ienum.EnumGood;
 import com.ydy.vo.ienum.EnumOrder;
 import com.ydy.vo.ienum.EnumSystem;
@@ -52,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
 	private SkuMapper skuMapper;
 
 	@Override
-	public PageVo<Order> selectData(Order order, Integer page, Integer size) {
+	public PageVo<Order> select(Order order, Integer page, Integer size) {
 		PageVo<Order> vo = new PageVo<Order>(page, size);
 		Page<Order> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "id desc");
 		List<Order> list = orderMapper.select(order);
@@ -76,6 +80,11 @@ public class OrderServiceImpl implements OrderService {
 		if (CollectionUtils.isEmpty(details)) {
 			throw new MyException(EnumOrder.ORDER_DETAIL_EMPTY);
 		}
+		// 校验数据有效
+		Map<String, String> validateInfo = ValidateUtil.validateEntity(dto);
+		if (!validateInfo.isEmpty()) {
+			throw new ValidateException(validateInfo);
+		}
 		Long total = 0L;
 		Sku sku = null;
 		Long orderId = createOrderId();
@@ -87,6 +96,7 @@ public class OrderServiceImpl implements OrderService {
 			detail.setOrderId(orderId);
 			detail.setTitle(sku.getSpuSpecs());
 			detail.setPrice(sku.getPrice());
+			detail.setImage(sku.getMainImage());
 			total = total + (sku.getPrice() * detail.getNum());
 		}
 		Date now = new Date();
@@ -103,6 +113,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setBuyerRate(0);
 		order.setReceiver(dto.getReceiver());
 		order.setReceiverMobile(dto.getReceiverMobile());
+		order.setReceiverCountry(dto.getReceiverCountry());
 		order.setReceiverState(dto.getReceiverState());
 		order.setReceiverCity(dto.getReceiverCity());
 		order.setReceiverDistrict(dto.getReceiverDistrict());
@@ -126,6 +137,22 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public BaseVo updateOrderStatusListClosed(List<OrderStatus> list) {
+		Date now = new Date();
+		for (OrderStatus status : list) {
+			status.setCloseTime(now);
+			status.setOrderStatus(OrderStatusEnum.CLOSED.getCode());
+			status.setCommentTime(null);
+			status.setConsignTime(null);
+			status.setCreateTime(null);
+			status.setEndTime(null);
+			status.setPaymentTime(null);
+			orderStatusMapper.updateByPrimaryKeySelective(status);
+		}
+		return new ResultVo(EnumSystem.SUSS);
+	}
+
+	@Override
 	public BaseVo updateOrderStatusPay(Long orderId) {
 		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.PAY);
 		orderStatusMapper.updateByPrimaryKeySelective(status);
@@ -144,7 +171,14 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public BaseVo updateOrderStatusConfirm(Long orderId) {
+	public BaseVo updateOrderStatusConfirm(Long orderId, Long userId) {
+		Order order = orderMapper.selectByPrimaryKey(orderId);
+		if (order == null) {
+			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+		}
+		if (!Objects.equals(userId, order.getUserId())) {
+			throw new MyException(EnumSystem.NO_AUTH);
+		}
 		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.CONFIRM);
 		orderStatusMapper.updateByPrimaryKeySelective(status);
 		return new ResultVo(EnumSystem.SUSS);
@@ -169,14 +203,32 @@ public class OrderServiceImpl implements OrderService {
 		if (OrderStatusEnum.CLOSED.equals(statusEnum)) {
 			status.setCloseTime(now);
 		} else if (OrderStatusEnum.PAY.equals(statusEnum)) {
+			if (!Objects.equals(OrderStatusEnum.COMMIT.getCode(), temp.getOrderStatus())) {
+				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+			}
 			status.setPaymentTime(now);
 		} else if (OrderStatusEnum.SEND.equals(statusEnum)) {
+			if (!Objects.equals(OrderStatusEnum.PAY.getCode(), temp.getOrderStatus())) {
+				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+			}
 			status.setConsignTime(now);
 		} else if (OrderStatusEnum.CONFIRM.equals(statusEnum)) {
+			if (!Objects.equals(OrderStatusEnum.SEND.getCode(), temp.getOrderStatus())) {
+				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+			}
 			status.setEndTime(now);
 		} else if (OrderStatusEnum.COMMENT.equals(statusEnum)) {
+			if (!Objects.equals(OrderStatusEnum.CONFIRM.getCode(), temp.getOrderStatus())) {
+				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+			}
 			status.setCommentTime(now);
 		}
 		return status;
+	}
+
+	@Override
+	public List<OrderStatus> selectStatusCommit(Date createTime) {
+		PageHelper.startPage(1, 200, "order_id asc");
+		return orderStatusMapper.selectStatusCommit(OrderStatusEnum.COMMIT.getCode(), createTime);
 	}
 }

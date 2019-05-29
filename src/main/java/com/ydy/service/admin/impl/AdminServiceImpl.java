@@ -3,6 +3,7 @@ package com.ydy.service.admin.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
 	private AdminMapper adminMapper;
 
 	@Override
-	public PageVo<Admin> selectData(Admin admin, Integer page, Integer size) {
+	public PageVo<Admin> select(Admin admin, Integer page, Integer size) {
 		PageVo<Admin> vo = new PageVo<Admin>(page, size);
 		Page<Admin> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "id desc");
 		List<Admin> list = adminMapper.selectData(admin);
@@ -106,6 +107,26 @@ public class AdminServiceImpl implements AdminService {
 			log.info("修改管理员信息成功:" + admin.getUsername());
 		}
 		return admin;
+	}
+
+	@Override
+	public BaseVo modifyPassword(Integer id, String username, String password, String newPassword) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		Admin admin = adminMapper.selectByPrimaryKey(id);
+		if (admin == null) {
+			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+		}
+		if (!(Objects.equals(username, admin.getUsername())
+				&& Objects.equals(Md5Util.getMD5(password), admin.getPassword()))) {
+			throw new MyException(EnumAdmin.PWD_ERROR);
+		}
+		Admin update = new Admin();
+		update.setId(id);
+		update.setPassword(Md5Util.getMD5(newPassword));
+		adminMapper.updateByPrimaryKeySelective(update);
+		return new ResultVo();
 	}
 
 	@Override

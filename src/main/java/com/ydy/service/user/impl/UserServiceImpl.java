@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public PageVo<User> selectData(User user, Integer page, Integer size) {
+	public PageVo<User> select(User user, Integer page, Integer size) {
 		PageVo<User> vo = new PageVo<User>(page, size);
 		Page<User> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "id desc");
 		List<User> list = userMapper.select(user);

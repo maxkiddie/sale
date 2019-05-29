@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author xuzhaojie
@@ -19,11 +22,13 @@ public class Faq {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@NotBlank
 	private String ask;
+	@NotBlank
 	private String answer;
-	private String type = "normal";
-	private Integer inx = 0;
+	private String type;
+	@NotNull
+	private Integer inx;
 
 	/**
 	 * @return the type

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydy.mapper.AdminMapper">
+
+	<select id="selectData" resultType="com.ydy.model.Admin">
+		select
+		id,username,realname,email,phone,use_status,reg_time
+		from admin
+		<where>
+			<if test="username!=null">
+				and username LIKE CONCAT('%', '${username}', '%')
+			</if>
+			<if test="realname!=null">
+				and realname LIKE CONCAT('%', '${realname}', '%')
+			</if>
+			<if test="email!=null">
+				and email LIKE CONCAT('%', '${email}', '%')
+			</if>
+			<if test="phone!=null">
+				and phone LIKE CONCAT('%', '${phone}', '%')
+			</if>
+			<if test="useStatus!=null">
+				and use_status=#{useStatus}
+			</if>
+		</where>
+	</select>
+
+	<select id="exsitUsername" resultType="java.lang.Integer">
+		select
+		count(1)
+		from (select
+		id from admin where username=#{username} limit 1) a
+	</select>
+
+	<select id="checkAdminByUsernameAndPwd" resultType="com.ydy.model.Admin">
+		select
+		id,username,use_status
+		from admin where username=#{username} and
+		password=#{password} limit 1
+	</select>
+
+	<select id="selectCountByIdAndUsername" resultType="java.lang.Integer">
+		select
+		count(1)
+		from
+		(select id from admin where id=#{id} and
+		username=#{username} limit 1) a
+	</select>
+
+</mapper>
