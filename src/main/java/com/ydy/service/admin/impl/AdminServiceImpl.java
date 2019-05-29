@@ -116,7 +116,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 		Admin admin = adminMapper.selectByPrimaryKey(id);
 		if (admin == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumAdmin.DATA_NOT_FOUND);
 		}
 		if (!(Objects.equals(username, admin.getUsername())
 				&& Objects.equals(Md5Util.getMD5(password), admin.getPassword()))) {
@@ -174,7 +174,7 @@ public class AdminServiceImpl implements AdminService {
 		if (admin != null) {
 			return admin;
 		} else {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumAdmin.DATA_NOT_FOUND);
 		}
 	}
 

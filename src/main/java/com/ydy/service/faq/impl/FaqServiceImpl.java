@@ -18,7 +18,7 @@ import com.ydy.mapper.FaqMapper;
 import com.ydy.model.Faq;
 import com.ydy.service.faq.FaqService;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumSystem;
+import com.ydy.vo.ienum.EnumFaq;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -71,7 +71,7 @@ public class FaqServiceImpl implements FaqService {
 		} else {// 根据id更新信息
 			Faq temp = faqMapper.selectByPrimaryKey(faq.getId());
 			if (temp == null) {
-				throw new MyException(EnumSystem.DATA_NOT_FOUND);
+				throw new MyException(EnumFaq.DATA_NOT_FOUND);
 			}
 			faqMapper.updateByPrimaryKeySelective(faq);
 		}
@@ -85,10 +85,22 @@ public class FaqServiceImpl implements FaqService {
 		}
 		Faq temp = faqMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumFaq.DATA_NOT_FOUND);
 		}
 		faqMapper.deleteByPrimaryKey(id);
 		return new ResultVo();
+	}
+
+	@Override
+	public Faq selectById(Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		Faq temp = faqMapper.selectByPrimaryKey(id);
+		if (temp == null) {
+			throw new MyException(EnumFaq.DATA_NOT_FOUND);
+		}
+		return temp;
 	}
 
 }

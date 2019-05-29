@@ -93,4 +93,16 @@ public class UserServiceImpl implements UserService {
 		userMapper.insertSelective(user);
 		return user;
 	}
+
+	@Override
+	public User selectById(Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		User temp = userMapper.selectByPrimaryKey(id);
+		if (temp == null) {
+			throw new MyException(EnumUser.DATA_NOT_FOUND);
+		}
+		return temp;
+	}
 }

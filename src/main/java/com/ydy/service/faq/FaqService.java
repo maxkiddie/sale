@@ -21,4 +21,6 @@ public interface FaqService {
 	Faq saveOrUpdate(Faq faq);
 
 	BaseVo delete(Long id);
+	
+	Faq selectById(Long id);
 }

@@ -16,7 +16,7 @@ public enum EnumSystem implements IErrorEnum{
 	PARAM_ERROR(1001, "参数缺失"),
 	PARAM_FORMAT_ERROR(1002, "参数格式错误"),
 	DATA_NOT_MATCH(1003, "数据填写有误"),
-	DATA_NOT_FOUND(1004, "找不到数据"),
+	DATA_NOT_FOUND111(1004, "找不到数据"),
 	TOKEN_NOT_MATCH(1005, "token不匹配"),
 	TOKEN_NOT_EXSIT(1006, "token是必须参数"),
 	USER_TOKEN_NOT_EXSIT(1006, "utoken是必须参数"),

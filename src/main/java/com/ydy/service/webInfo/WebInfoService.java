@@ -20,4 +20,6 @@ public interface WebInfoService {
 	WebInfo saveOrUpdate(WebInfo webInfo);
 
 	BaseVo delete(Long id);
+	
+	WebInfo selectById(Long id);
 }

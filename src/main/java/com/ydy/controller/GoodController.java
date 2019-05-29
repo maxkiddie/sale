@@ -98,4 +98,10 @@ public class GoodController {
 		return ResponseEntity.ok(goodService.deleteSku(skuId));
 	}
 
+	@AdminToken
+	@GetMapping("selectSkuById")
+	@ResponseBody
+	public ResponseEntity<Sku> selectSkuById(@CtrlParam("skuId") Long skuId) {
+		return ResponseEntity.ok(goodService.selectSkuById(skuId));
+	}
 }

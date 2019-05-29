@@ -1,0 +1,74 @@
+spring:
+    profiles:
+#只要修改active即可修改启动环境
+        active: prod
+    resources:
+        #访问静态资源目录
+        static-locations: ${web_loaction}
+    http:
+        multipart:
+            maxFileSize: 10Mb
+            maxRequestSize: 10Mb
+    datasource:
+        name: test
+        url: ${mysql_url}
+        username: ${mysql_username}
+        password: ${mysql_pwd}
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat
+        maxActive: 50
+        initialSize: 10
+        minIdle: 10
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+    redis:
+      host: ${redis_ip}
+      port: ${redis_port}
+      pool:
+        max-idle: 100
+        min-idle: 8
+        max-active: 1000
+        max-wait: 3000
+        
+mybatis:
+    mapper-locations: classpath:mapping/*.xml
+    type-aliases-package: com.ydy.model
+    configuration:
+         map-underscore-to-camel-case: true
+  
+mapper:
+    mappers: com.ydy.basic.BaseMapper
+    identity: MYSQL
+    
+#pagehelper
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+    
+server:
+    port: ${server_port}
+    max-http-header-size: 4048576
+    tomcat:
+        accesslog:
+          buffered: true
+          #directory: /home/data/pharmacyStock/logs
+          directory: e:/stocklogs
+          enabled: true
+          file-date-format: .yyyy-MM-dd
+          pattern: common
+          prefix: tomcat
+          rename-on-rotate: false
+          request-attributes-enabled: false
+          rotate: true
+          suffix: .log

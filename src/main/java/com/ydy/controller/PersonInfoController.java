@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydy.annotation.AdminToken;
+import com.ydy.annotation.CtrlParam;
 import com.ydy.annotation.UserToken;
 import com.ydy.controller.base.BaseController;
 import com.ydy.model.PersonInfo;
@@ -41,7 +42,7 @@ public class PersonInfoController extends BaseController {
 		PageVo<PersonInfo> vo = personInfoService.select(info, page, size);
 		return ResponseEntity.ok(vo);
 	}
-	
+
 	@UserToken
 	@GetMapping("selectByUserId")
 	@ResponseBody
@@ -63,4 +64,10 @@ public class PersonInfoController extends BaseController {
 		return ResponseEntity.ok(info);
 	}
 
+	@UserToken
+	@GetMapping("selectById")
+	@ResponseBody
+	public ResponseEntity<PersonInfo> selectById(@CtrlParam("id") Long id) {
+		return ResponseEntity.ok(personInfoService.selectById(id, getUser().getId()));
+	}
 }

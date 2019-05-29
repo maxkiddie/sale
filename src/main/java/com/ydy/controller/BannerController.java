@@ -73,4 +73,11 @@ public class BannerController {
 	public ResponseEntity<BaseVo> delete(@CtrlParam("id") Long id) {
 		return ResponseEntity.ok(bannerService.delete(id));
 	}
+
+	@AdminToken
+	@GetMapping("selectById")
+	@ResponseBody
+	public ResponseEntity<Banner> selectById(@CtrlParam("id") Long id) {
+		return ResponseEntity.ok(bannerService.selectById(id));
+	}
 }

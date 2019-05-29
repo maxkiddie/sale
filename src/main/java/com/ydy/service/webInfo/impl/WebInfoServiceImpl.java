@@ -19,7 +19,7 @@ import com.ydy.mapper.WebInfoMapper;
 import com.ydy.model.WebInfo;
 import com.ydy.service.webInfo.WebInfoService;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumSystem;
+import com.ydy.vo.ienum.EnumWebInfo;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -66,7 +66,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		} else {// 根据id更新信息
 			WebInfo temp = webInfoMapper.selectByPrimaryKey(webInfo.getId());
 			if (temp == null) {
-				throw new MyException(EnumSystem.DATA_NOT_FOUND);
+				throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
 			}
 			webInfo.setUpdateTime(now);
 			webInfoMapper.updateByPrimaryKeySelective(webInfo);
@@ -81,7 +81,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		}
 		WebInfo temp = webInfoMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		webInfoMapper.deleteByPrimaryKey(id);
 		return new ResultVo();
@@ -94,9 +94,21 @@ public class WebInfoServiceImpl implements WebInfoService {
 		info.setType(type);
 		info = webInfoMapper.selectOne(info);
 		if (info == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		return info;
+	}
+
+	@Override
+	public WebInfo selectById(Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		WebInfo temp = webInfoMapper.selectByPrimaryKey(id);
+		if (temp == null) {
+			throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
+		}
+		return temp;
 	}
 
 }

@@ -15,6 +15,7 @@ public enum EnumAdmin implements IErrorEnum {
 	PWD_ERROR(9001, "用户名密码错误"),
 	CAN_NOT_USE_STATUS(9002, "用户状态不可用"),
 	USERNAME_EXSIT(9003, "用户名已存在"),
+	DATA_NOT_FOUND(9004,"找不到管理员"),
 	ADMIN_NOT_FOUND(9004, "管理员不存在");
 
 	private Integer code;

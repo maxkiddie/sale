@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ import com.ydy.model.Sku;
 import com.ydy.service.order.OrderService;
 import com.ydy.utils.DateUtil;
 import com.ydy.utils.ValidateUtil;
+import com.ydy.vo.OrderVo;
 import com.ydy.vo.ienum.EnumGood;
 import com.ydy.vo.ienum.EnumOrder;
 import com.ydy.vo.ienum.EnumSystem;
@@ -164,6 +166,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.SEND);
 		orderStatusMapper.updateByPrimaryKeySelective(status);
 		Order order = new Order();
+		order.setOrderId(orderId);
 		order.setShippingName(shippingName);
 		order.setShippingCode(shippingCode);
 		orderMapper.updateByPrimaryKeySelective(order);
@@ -174,7 +177,7 @@ public class OrderServiceImpl implements OrderService {
 	public BaseVo updateOrderStatusConfirm(Long orderId, Long userId) {
 		Order order = orderMapper.selectByPrimaryKey(orderId);
 		if (order == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(userId, order.getUserId())) {
 			throw new MyException(EnumSystem.NO_AUTH);
@@ -230,5 +233,56 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderStatus> selectStatusCommit(Date createTime) {
 		PageHelper.startPage(1, 200, "order_id asc");
 		return orderStatusMapper.selectStatusCommit(OrderStatusEnum.COMMIT.getCode(), createTime);
+	}
+
+	@Override
+	public OrderVo selectById(Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		Order order = orderMapper.selectByPrimaryKey(id);
+		if (order == null) {
+			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+		}
+		OrderVo vo = new OrderVo();
+		BeanUtils.copyProperties(order, vo);
+		OrderStatus status = orderStatusMapper.selectByPrimaryKey(order.getOrderId());
+		if (status == null) {
+			throw new MyException(EnumOrder.ORDER_STATUS_NOT_FOUND);
+		}
+		vo.setOrderStatus(status);
+		vo.setStatus(status.getOrderStatus());
+		OrderDetail detail = new OrderDetail();
+		detail.setOrderId(order.getOrderId());
+		List<OrderDetail> list = orderDetailMapper.select(detail);
+		vo.setOrderDetails(list);
+		return vo;
+	}
+
+	@Override
+	public OrderVo selectById(Long id, Long userId) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		Order order = orderMapper.selectByPrimaryKey(id);
+		if (order == null) {
+			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+		}
+		if (!Objects.equals(userId, order.getUserId())) {
+			throw new MyException(EnumSystem.NO_AUTH);
+		}
+		OrderVo vo = new OrderVo();
+		BeanUtils.copyProperties(order, vo);
+		OrderStatus status = orderStatusMapper.selectByPrimaryKey(order.getOrderId());
+		if (status == null) {
+			throw new MyException(EnumOrder.ORDER_STATUS_NOT_FOUND);
+		}
+		vo.setOrderStatus(status);
+		vo.setStatus(status.getOrderStatus());
+		OrderDetail detail = new OrderDetail();
+		detail.setOrderId(order.getOrderId());
+		List<OrderDetail> list = orderDetailMapper.select(detail);
+		vo.setOrderDetails(list);
+		return vo;
 	}
 }

@@ -17,4 +17,6 @@ public interface PersonInfoService {
 	PersonInfo saveOrUpdate(PersonInfo personInfo);
 
 	PersonInfo selectById(Long id,Long userId);
+	
+	PersonInfo selectById(Long id);
 }

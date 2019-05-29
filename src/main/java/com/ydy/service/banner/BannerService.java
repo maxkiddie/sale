@@ -23,4 +23,6 @@ public interface BannerService {
 	BaseVo status(Long id);
 
 	BaseVo delete(Long id);
+
+	Banner selectById(Long id);
 }

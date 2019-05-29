@@ -9,6 +9,7 @@ import java.util.List;
 import com.ydy.dto.OrderDTO;
 import com.ydy.model.Order;
 import com.ydy.model.OrderStatus;
+import com.ydy.vo.OrderVo;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
@@ -26,7 +27,7 @@ public interface OrderService {
 	Order createOrder(OrderDTO dto);
 
 	BaseVo updateOrderStatusClosed(Long orderId);
-	
+
 	BaseVo updateOrderStatusListClosed(List<OrderStatus> list);
 
 	BaseVo updateOrderStatusPay(Long orderId);
@@ -38,4 +39,8 @@ public interface OrderService {
 	BaseVo updateOrderStatusComment(Long orderId);
 
 	List<OrderStatus> selectStatusCommit(Date createTime);
+
+	OrderVo selectById(Long id);
+
+	OrderVo selectById(Long id, Long userId);
 }

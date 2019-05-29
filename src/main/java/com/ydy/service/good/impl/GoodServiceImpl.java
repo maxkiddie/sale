@@ -18,9 +18,11 @@ import com.github.pagehelper.PageHelper;
 import com.ydy.constant.SystemConstant;
 import com.ydy.exception.MyException;
 import com.ydy.exception.ValidateException;
+import com.ydy.mapper.ReductionMapper;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.mapper.SpuDetailMapper;
 import com.ydy.mapper.SpuMapper;
+import com.ydy.model.Reduction;
 import com.ydy.model.Sku;
 import com.ydy.model.Spu;
 import com.ydy.model.SpuDetail;
@@ -28,7 +30,6 @@ import com.ydy.service.good.GoodService;
 import com.ydy.utils.ValidateUtil;
 import com.ydy.vo.SpuVo;
 import com.ydy.vo.ienum.EnumGood;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -46,7 +47,8 @@ public class GoodServiceImpl implements GoodService {
 	private SpuMapper spuMapper;
 	@Autowired
 	private SpuDetailMapper spuDetailMapper;
-
+	@Autowired
+	private ReductionMapper reductionMapper;
 	@Autowired
 	private SkuMapper skuMapper;
 
@@ -140,7 +142,7 @@ public class GoodServiceImpl implements GoodService {
 				detail.setImages(spu.getImages());
 				spuDetailMapper.updateByPrimaryKeySelective(detail);
 			} else {
-				throw new MyException(EnumSystem.DATA_NOT_FOUND);
+				throw new MyException(EnumGood.SPU_NOT_FOUND);
 			}
 		}
 		return spu;
@@ -158,7 +160,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu spu = spuMapper.selectByPrimaryKey(sku.getSpuId());
 		if (spu == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumGood.SPU_NOT_FOUND);
 		}
 		Date now = new Date();
 		if (sku.getSkuId() == null) {
@@ -171,7 +173,7 @@ public class GoodServiceImpl implements GoodService {
 				sku.setUpdateTime(now);
 				skuMapper.updateByPrimaryKeySelective(sku);
 			} else {
-				throw new MyException(EnumSystem.DATA_NOT_FOUND);
+				throw new MyException(EnumGood.SKU_NOT_FOUND);
 			}
 		}
 		Sku example = new Sku();
@@ -220,7 +222,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu temp = spuMapper.selectByPrimaryKey(spuId);
 		if (temp == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumGood.SPU_NOT_FOUND);
 		}
 		Spu spu = new Spu();
 		spu.setSpuId(spuId);
@@ -240,13 +242,16 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu temp = spuMapper.selectByPrimaryKey(spuId);
 		if (temp == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumGood.SPU_NOT_FOUND);
 		}
 		spuMapper.deleteByPrimaryKey(spuId);
 		spuDetailMapper.deleteByPrimaryKey(spuId);
 		Sku sku = new Sku();
 		sku.setSpuId(spuId);
 		skuMapper.delete(sku);
+		Reduction red = new Reduction();
+		red.setSpuId(spuId);
+		reductionMapper.delete(red);
 		return new ResultVo();
 	}
 
@@ -257,14 +262,29 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Sku temp = skuMapper.selectByPrimaryKey(skuId);
 		if (temp == null) {
-			throw new MyException(EnumSystem.DATA_NOT_FOUND);
+			throw new MyException(EnumGood.SKU_NOT_FOUND);
 		}
 		skuMapper.deleteByPrimaryKey(skuId);
 		Sku example = new Sku();
 		example.setSpuId(temp.getSpuId());
 		List<Sku> listSku = skuMapper.select(example);
 		spuMapper.updateByPrimaryKeySelective(computePrice(temp.getSpuId(), listSku));
+		Reduction red = new Reduction();
+		red.setSkuId(skuId);
+		reductionMapper.delete(red);
 		return new ResultVo();
+	}
+
+	@Override
+	public Sku selectSkuById(Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		Sku temp = skuMapper.selectByPrimaryKey(id);
+		if (temp == null) {
+			throw new MyException(EnumGood.SKU_NOT_FOUND);
+		}
+		return temp;
 	}
 
 }

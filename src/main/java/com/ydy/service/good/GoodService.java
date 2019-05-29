@@ -36,4 +36,5 @@ public interface GoodService {
 
 	BaseVo deleteSku(Long skuId);
 
+	Sku selectSkuById(Long id);
 }

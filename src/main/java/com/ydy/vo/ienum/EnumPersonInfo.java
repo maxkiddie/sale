@@ -10,18 +10,14 @@ import com.ydy.vo.ienum.base.IErrorEnum;
  *
  *         2018年11月12日 上午9:41:48
  */
-public enum EnumGood implements IErrorEnum {
-	SKU_NOT_FOUND(7000, "Sku不存在"),
-	SPU_NOT_FOUND(7000, "Spu不存在"),
-	SPU_OFF(7001, "Spu未上架或不存在"),
-	SKU_OFF(7002, "Sku未上架或不存在"),
-	SPU_SKU_NOT_RELATION(7003, "SPU,SKU不存在关联关系"),
+public enum EnumPersonInfo implements IErrorEnum {
+	DATA_NOT_FOUND(9004,"找不到人物信息"),
 	ADMIN_NOT_FOUND(9004, "管理员不存在");
 
 	private Integer code;
 	private String msg;
 
-	private EnumGood(int code, String msg) {
+	private EnumPersonInfo(int code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}

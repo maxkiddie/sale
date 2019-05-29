@@ -21,6 +21,7 @@ import com.ydy.model.Order;
 import com.ydy.model.User;
 import com.ydy.service.order.OrderService;
 import com.ydy.utils.StringUtils;
+import com.ydy.vo.OrderVo;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
@@ -86,5 +87,20 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<BaseVo> confirm(@CtrlParam("订单ID") Long orderId) {
 		return ResponseEntity.ok(orderService.updateOrderStatusConfirm(orderId, getUser().getId()));
+	}
+
+	@AdminToken
+	@GetMapping("selectById")
+	@ResponseBody
+	public ResponseEntity<OrderVo> selectById(@CtrlParam("订单ID") Long orderId) {
+		return ResponseEntity.ok(orderService.selectById(orderId));
+	}
+
+	@UserToken
+	@GetMapping("selectUserOrderById")
+	@ResponseBody
+	public ResponseEntity<OrderVo> selectUserOrderById(@CtrlParam("订单ID") Long orderId) {
+		User user = getUser();
+		return ResponseEntity.ok(orderService.selectById(orderId, user.getId()));
 	}
 }

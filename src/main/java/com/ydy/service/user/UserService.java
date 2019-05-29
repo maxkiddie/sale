@@ -19,4 +19,6 @@ public interface UserService {
 	User register(User user);
 
 	UserTokenVo checkUser(User user);
+	
+	User selectById(Long id);
 }
