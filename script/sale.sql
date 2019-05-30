@@ -11,7 +11,7 @@
  Target Server Version : 50557
  File Encoding         : 65001
 
- Date: 30/05/2019 17:58:18
+ Date: 30/05/2019 20:52:36
 */
 
 SET NAMES utf8mb4;
@@ -60,7 +60,7 @@ CREATE TABLE `banner`  (
 -- ----------------------------
 -- Records of banner
 -- ----------------------------
-INSERT INTO `banner` VALUES (4, 'banner名字', 'http://baidu.com', NULL, NULL, '图片', '2016-08-01 10:20:30', '2016-08-02 10:20:30', 1, 0, '2019-05-30 11:44:35');
+INSERT INTO `banner` VALUES (4, 'banner名字', 'http://baidu.com', NULL, NULL, '图片', '2016-08-01 10:20:30', '2020-07-26 10:20:30', 1, 0, '2019-05-30 11:44:35');
 
 -- ----------------------------
 -- Table structure for faq
@@ -72,13 +72,14 @@ CREATE TABLE `faq`  (
   `answer` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `inx` tinyint(3) NOT NULL,
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of faq
 -- ----------------------------
-INSERT INTO `faq` VALUES (6, '我的问题', '回答了', 0, NULL);
+INSERT INTO `faq` VALUES (6, '我的问题', '回答了', 0, NULL, '2019-05-30 20:08:51');
 
 -- ----------------------------
 -- Table structure for o_order
@@ -180,22 +181,23 @@ CREATE TABLE `person_info`  (
   `picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `signature` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `additional` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of person_info
 -- ----------------------------
-INSERT INTO `person_info` VALUES (5, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (6, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (7, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (8, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (9, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (10, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (11, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (12, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (13, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
-INSERT INTO `person_info` VALUES (14, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (5, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (6, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (7, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (8, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (9, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (10, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (11, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (12, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (13, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
+INSERT INTO `person_info` VALUES (14, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL, '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for r_order_person

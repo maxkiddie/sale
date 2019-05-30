@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,7 @@ import com.ydy.vo.other.ResultVo;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
-
+	private final static Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 	@Autowired
 	private OrderMapper orderMapper;
 	@Autowired
@@ -113,6 +115,7 @@ public class OrderServiceImpl implements OrderService {
 		for (ItemDTO item : bill.getItems()) {
 			sku = skuMapper.selectByPrimaryKey(item.getSkuId());
 			if (sku == null) {
+				log.info("找不到SKU信息:" + item.getSkuId());
 				throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 			}
 			Reduction reduction = null;
@@ -197,6 +200,7 @@ public class OrderServiceImpl implements OrderService {
 		status.setCreateTime(now);
 		status.setOrderStatus(status.getOrderStatus());
 		orderStatusMapper.insertSelective(status);
+		log.info("创建订单成功:" + orderId);
 		return order;
 	}
 
@@ -227,6 +231,7 @@ public class OrderServiceImpl implements OrderService {
 	public BaseVo updateOrderStatusPay(Long orderId) {
 		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.PAY);
 		orderStatusMapper.updateByPrimaryKeySelective(status);
+		log.info("订单支付成功:" + orderId);
 		return new ResultVo(EnumSystem.SUSS);
 	}
 
@@ -239,6 +244,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setShippingName(shippingName);
 		order.setShippingCode(shippingCode);
 		orderMapper.updateByPrimaryKeySelective(order);
+		log.info("订单发货成功:" + orderId);
 		return new ResultVo(EnumSystem.SUSS);
 	}
 
@@ -246,13 +252,16 @@ public class OrderServiceImpl implements OrderService {
 	public BaseVo updateOrderStatusConfirm(Long orderId, Long userId) {
 		Order order = orderMapper.selectByPrimaryKey(orderId);
 		if (order == null) {
+			log.info("订单支付成功:" + orderId);
 			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(userId, order.getUserId())) {
+			log.info(userId + "用户没权限操作订单:" + orderId);
 			throw new BusinessException(EnumSystem.NO_AUTH);
 		}
 		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.CONFIRM);
 		orderStatusMapper.updateByPrimaryKeySelective(status);
+		log.info("订单确认收货成功:" + orderId);
 		return new ResultVo(EnumSystem.SUSS);
 	}
 
@@ -266,6 +275,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderStatus createOrderStatus(Long orderId, OrderStatusEnum statusEnum) {
 		OrderStatus temp = orderStatusMapper.selectByPrimaryKey(orderId);
 		if (temp == null) {
+			log.info("找不到订单信息:" + orderId);
 			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		OrderStatus status = new OrderStatus();
@@ -311,6 +321,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(id);
 		if (order == null) {
+			log.info("找不到订单信息:" + id);
 			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		orderMapper.deleteByPrimaryKey(id);
@@ -318,6 +329,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setOrderId(id);
 		orderDetailMapper.delete(orderDetail);
+		log.info("删除订单成功:" + id);
 		return new ResultVo();
 	}
 
@@ -328,9 +340,11 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(orderId);
 		if (order == null) {
+			log.info("找不到订单信息:" + orderId);
 			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(order.getUserId(), userId)) {
+			log.info(userId + "用户没权限操作订单:" + orderId);
 			throw new BusinessException(EnumSystem.NO_AUTH);
 		}
 		orderMapper.deleteByPrimaryKey(orderId);
@@ -338,6 +352,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setOrderId(orderId);
 		orderDetailMapper.delete(orderDetail);
+		log.info("删除订单成功:" + orderId);
 		return new ResultVo();
 	}
 
@@ -348,12 +363,14 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(id);
 		if (order == null) {
+			log.info("找不到订单信息:" + id);
 			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(order, vo);
 		OrderStatus status = orderStatusMapper.selectByPrimaryKey(order.getOrderId());
 		if (status == null) {
+			log.info("找不到订单状态信息:" + id);
 			throw new DataNotFoundException(EnumOrder.ORDER_STATUS_NOT_FOUND);
 		}
 		vo.setOrderStatus(status);
@@ -372,15 +389,18 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(id);
 		if (order == null) {
+			log.info("找不到订单信息:" + id);
 			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(userId, order.getUserId())) {
+			log.info(userId + "用户没权限操作订单:" + id);
 			throw new BusinessException(EnumSystem.NO_AUTH);
 		}
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(order, vo);
 		OrderStatus status = orderStatusMapper.selectByPrimaryKey(order.getOrderId());
 		if (status == null) {
+			log.info("找不到状态信息:" + id);
 			throw new DataNotFoundException(EnumOrder.ORDER_STATUS_NOT_FOUND);
 		}
 		vo.setOrderStatus(status);

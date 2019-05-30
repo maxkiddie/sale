@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +47,7 @@ import tk.mybatis.mapper.entity.Example;
 @Service
 @Transactional
 public class GoodServiceImpl implements GoodService {
-
+	private final static Logger log = LoggerFactory.getLogger(GoodServiceImpl.class);
 	@Autowired
 	private SpuMapper spuMapper;
 	@Autowired
@@ -157,19 +159,21 @@ public class GoodServiceImpl implements GoodService {
 			detail.setSpuId(spu.getSpuId());
 			detail.setImages(spu.getImages());
 			spuDetailMapper.insertSelective(detail);
+			log.info("新增SPU成功:" + spu.getSpuId());
 		} else {
 			Spu temp = spuMapper.selectByPrimaryKey(spu.getSpuId());
-			if (temp != null) {
-				spu.setUpdateTime(now);
-				spuMapper.updateByPrimaryKeySelective(spu);
-				SpuDetail detail = new SpuDetail();
-				detail.setDetail(spu.getDetail());
-				detail.setSpuId(spu.getSpuId());
-				detail.setImages(spu.getImages());
-				spuDetailMapper.updateByPrimaryKeySelective(detail);
-			} else {
+			if (temp == null) {
+				log.info("找不到SPU:" + spu.getSpuId());
 				throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 			}
+			spu.setUpdateTime(now);
+			spuMapper.updateByPrimaryKeySelective(spu);
+			SpuDetail detail = new SpuDetail();
+			detail.setDetail(spu.getDetail());
+			detail.setSpuId(spu.getSpuId());
+			detail.setImages(spu.getImages());
+			spuDetailMapper.updateByPrimaryKeySelective(detail);
+			log.info("保存SPU成功:" + spu.getSpuId());
 		}
 		return spu;
 	}
@@ -186,6 +190,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu spu = spuMapper.selectByPrimaryKey(sku.getSpuId());
 		if (spu == null) {
+			log.info("找不到SPU:" + sku.getSpuId());
 			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		Date now = new Date();
@@ -195,20 +200,28 @@ public class GoodServiceImpl implements GoodService {
 			skuMapper.insertSelective(sku);
 		} else {
 			Sku temp = skuMapper.selectByPrimaryKey(sku.getSkuId());
-			if (temp != null) {
-				sku.setUpdateTime(now);
-				skuMapper.updateByPrimaryKeySelective(sku);
-			} else {
+			if (temp == null) {
+				log.info("找不到SKU:" + sku.getSkuId());
 				throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 			}
+			sku.setUpdateTime(now);
+			skuMapper.updateByPrimaryKeySelective(sku);
 		}
 		Sku example = new Sku();
 		example.setSpuId(spu.getSpuId());
 		List<Sku> listSku = skuMapper.select(example);
 		spuMapper.updateByPrimaryKeySelective(computePrice(spu.getSpuId(), listSku));
+		log.info("保存SKU成功:" + sku.getSkuId());
 		return sku;
 	}
 
+	/**
+	 * 重新计算spu最大价格，最小价格
+	 * 
+	 * @param spuId
+	 * @param list
+	 * @return
+	 */
 	private Spu computePrice(Long spuId, List<Sku> list) {
 		Spu updateSpu = new Spu();
 		updateSpu.setSpuId(spuId);
@@ -248,16 +261,21 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu temp = spuMapper.selectByPrimaryKey(spuId);
 		if (temp == null) {
+			log.info("找不到SPU:" + spuId);
 			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		Spu spu = new Spu();
 		spu.setSpuId(spuId);
+		StringBuilder builder = new StringBuilder();
 		if (Objects.equals(SystemConstant.SPU_ON, temp.getSpuStatus())) {
 			spu.setSpuStatus(SystemConstant.SPU_OFF);
+			builder.append("Spu下架成功:").append(spuId);
 		} else {
 			spu.setSpuStatus(SystemConstant.SPU_ON);
+			builder.append("Spu上架成功:").append(spuId);
 		}
 		spuMapper.updateByPrimaryKeySelective(spu);
+		log.info(builder.toString());
 		return new ResultVo();
 	}
 
@@ -268,6 +286,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu temp = spuMapper.selectByPrimaryKey(spuId);
 		if (temp == null) {
+			log.info("找不到SPU:" + spuId);
 			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		spuMapper.deleteByPrimaryKey(spuId);
@@ -278,6 +297,7 @@ public class GoodServiceImpl implements GoodService {
 		Reduction red = new Reduction();
 		red.setSpuId(spuId);
 		reductionMapper.delete(red);
+		log.info("删除SPU成功:" + spuId);
 		return new ResultVo();
 	}
 
@@ -288,6 +308,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Sku temp = skuMapper.selectByPrimaryKey(skuId);
 		if (temp == null) {
+			log.info("找不到SKU:" + skuId);
 			throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 		}
 		skuMapper.deleteByPrimaryKey(skuId);
@@ -298,6 +319,7 @@ public class GoodServiceImpl implements GoodService {
 		Reduction red = new Reduction();
 		red.setSkuId(skuId);
 		reductionMapper.delete(red);
+		log.info("删除SKU成功:" + skuId);
 		return new ResultVo();
 	}
 

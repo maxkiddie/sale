@@ -3,9 +3,12 @@
  */
 package com.ydy.service.faq.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,7 @@ import com.ydy.vo.other.ResultVo;
 @Transactional
 public class FaqServiceImpl implements FaqService {
 
+	private final static Logger log = LoggerFactory.getLogger(FaqServiceImpl.class);
 	@Autowired
 	private FaqMapper faqMapper;
 
@@ -67,13 +71,16 @@ public class FaqServiceImpl implements FaqService {
 		}
 		// 新增信息
 		if (faq.getId() == null) {
+			faq.setCreateTime(new Date());
 			faqMapper.insertSelective(faq);
+			log.info("新增FAQ成功:" + faq.getId());
 		} else {// 根据id更新信息
 			Faq temp = faqMapper.selectByPrimaryKey(faq.getId());
 			if (temp == null) {
 				throw new DataNotFoundException(EnumFaq.DATA_NOT_FOUND);
 			}
 			faqMapper.updateByPrimaryKeySelective(faq);
+			log.info("更新FAQ成功:" + faq.getId());
 		}
 		return faq;
 	}
@@ -88,6 +95,7 @@ public class FaqServiceImpl implements FaqService {
 			throw new DataNotFoundException(EnumFaq.DATA_NOT_FOUND);
 		}
 		faqMapper.deleteByPrimaryKey(id);
+		log.info("删除FAQ成功:" + id);
 		return new ResultVo();
 	}
 

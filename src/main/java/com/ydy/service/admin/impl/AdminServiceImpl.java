@@ -117,10 +117,12 @@ public class AdminServiceImpl implements AdminService {
 		}
 		Admin admin = adminMapper.selectByPrimaryKey(id);
 		if (admin == null) {
+			log.info("找不到管理信息:" + id);
 			throw new DataNotFoundException(EnumAdmin.DATA_NOT_FOUND);
 		}
 		if (!(Objects.equals(username, admin.getUsername())
 				&& Objects.equals(Md5Util.getMD5(password), admin.getPassword()))) {
+			log.error("用户名密码不匹配:" + id);
 			throw new BusinessException(EnumAdmin.PWD_ERROR);
 		}
 		Admin update = new Admin();
@@ -139,6 +141,7 @@ public class AdminServiceImpl implements AdminService {
 			temp.setId(id);
 			temp.setPassword(Md5Util.getMD5("123456a"));// 设置初始密码
 			adminMapper.updateByPrimaryKeySelective(temp);
+			log.info("设置初始密码成功:" + admin.getUsername());
 			vo = new ResultVo(EnumSystem.SUSS);
 		} else {
 			throw new DataNotFoundException(EnumAdmin.ADMIN_NOT_FOUND);

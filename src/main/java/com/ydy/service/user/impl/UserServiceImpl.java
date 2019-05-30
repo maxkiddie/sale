@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
 		UserTokenVo vo = new UserTokenVo();
 		vo.setUtoken(token);
 		vo.setTimestamp(System.currentTimeMillis());
+		log.info("用户登录成功:" + user.getUsername());
 		return vo;
 	}
 
@@ -92,6 +93,7 @@ public class UserServiceImpl implements UserService {
 		user.setRegTime(new Date());
 		user.setUseStatus(SystemConstant.USE_STATUS_ON);
 		userMapper.insertSelective(user);
+		log.info("注册用户成功:" + user.getUsername());
 		return user;
 	}
 
@@ -102,6 +104,7 @@ public class UserServiceImpl implements UserService {
 		}
 		User temp = userMapper.selectByPrimaryKey(id);
 		if (temp == null) {
+			log.info("找不到用户信息:" + id);
 			throw new DataNotFoundException(EnumUser.DATA_NOT_FOUND);
 		}
 		return temp;

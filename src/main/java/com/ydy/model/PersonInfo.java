@@ -59,6 +59,8 @@ public class PersonInfo {
 	private String signature;
 	private String additional;
 
+	private Date createTime;
+
 	/**
 	 * @return the id
 	 */
@@ -72,6 +74,21 @@ public class PersonInfo {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the createTime
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * @param createTime
+	 *            the createTime to set
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	/**

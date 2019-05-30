@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +34,7 @@ import com.ydy.vo.other.ResultVo;
 @Service
 @Transactional
 public class WebInfoServiceImpl implements WebInfoService {
-
+	private final static Logger log = LoggerFactory.getLogger(WebInfoServiceImpl.class);
 	@Autowired
 	private WebInfoMapper webInfoMapper;
 
@@ -63,6 +65,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 			webInfo.setCreateTime(now);
 			webInfo.setUpdateTime(now);
 			webInfoMapper.insertSelective(webInfo);
+			log.info("新增网页信息成功:" + webInfo.getId());
 		} else {// 根据id更新信息
 			WebInfo temp = webInfoMapper.selectByPrimaryKey(webInfo.getId());
 			if (temp == null) {
@@ -70,6 +73,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 			}
 			webInfo.setUpdateTime(now);
 			webInfoMapper.updateByPrimaryKeySelective(webInfo);
+			log.info("保存网页信息成功:" + webInfo.getId());
 		}
 		return webInfo;
 	}
@@ -81,9 +85,11 @@ public class WebInfoServiceImpl implements WebInfoService {
 		}
 		WebInfo temp = webInfoMapper.selectByPrimaryKey(id);
 		if (temp == null) {
+			log.info("找不到网页信息:" + id);
 			throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		webInfoMapper.deleteByPrimaryKey(id);
+		log.info("删除网页信息成功:" + id);
 		return new ResultVo();
 	}
 
@@ -91,9 +97,10 @@ public class WebInfoServiceImpl implements WebInfoService {
 	public WebInfo selectWebInfoByType(String type) {
 		PageHelper.startPage(1, 1);
 		WebInfo info = new WebInfo();
-		info.setType(type);
+		info.setType(type.toUpperCase());
 		info = webInfoMapper.selectOne(info);
 		if (info == null) {
+			log.info("找不到网页信息:" + type);
 			throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		return info;
@@ -106,6 +113,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		}
 		WebInfo temp = webInfoMapper.selectByPrimaryKey(id);
 		if (temp == null) {
+			log.info("找不到网页信息:" + id);
 			throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		return temp;

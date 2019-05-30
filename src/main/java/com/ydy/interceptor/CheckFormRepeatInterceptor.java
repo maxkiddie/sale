@@ -65,7 +65,6 @@ public class CheckFormRepeatInterceptor extends BaseInterceptor {
 			out = response.getWriter();
 			BaseVo vo = new ResultVo(EnumSystem.DATA_REPEAT);
 			out.append(JSONObject.toJSONString(vo));
-			log.error("token被篡改");
 			return false;
 		}
 	}

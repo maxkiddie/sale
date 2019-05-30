@@ -26,7 +26,7 @@ import com.ydy.utils.IpUtil;
 @Component
 public class LogFilter extends BaseFilter {
 
-	public final static String REQUEST_ID = "Q_ID";
+	public final static String REQUEST_ID = "Q";
 	private final static Logger log = LoggerFactory.getLogger(LogFilter.class);
 
 	@Override

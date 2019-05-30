@@ -55,11 +55,11 @@ public class ParamInterceptor extends BaseInterceptor {
 						errorVo.setErrorEnum(EnumSystem.PARAM_ERROR);
 					}
 					if ("".equals(annotation.value())) {
-						errorVo.putError(paramNames[i], paramNames[i] + "是必要参数;");
+						errorVo.putError(paramNames[i], paramNames[i] + "不能为空;");
 					} else {
-						errorVo.putError(paramNames[i], annotation.value() + "(" + paramNames[i] + ")是必要参数;");
+						errorVo.putError(paramNames[i], annotation.value() + "(" + paramNames[i] + ")不能为空;");
 					}
-					log.error(request.getRequestURI().toString() + "->" + paramNames[i] + "是必要参数");
+					log.error(request.getRequestURI().toString() + "->" + paramNames[i] + "不能为空");
 				}
 			}
 			i++;

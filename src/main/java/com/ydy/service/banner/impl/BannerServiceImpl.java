@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,8 @@ import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
 
+import tk.mybatis.mapper.entity.Example;
+
 /**
  * @author xuzhaojie
  *
@@ -35,7 +39,7 @@ import com.ydy.vo.other.ResultVo;
 @Service
 @Transactional
 public class BannerServiceImpl implements BannerService {
-
+	private final static Logger log = LoggerFactory.getLogger(BannerServiceImpl.class);
 	@Autowired
 	private BannerMapper bannerMapper;
 
@@ -53,8 +57,13 @@ public class BannerServiceImpl implements BannerService {
 	public PageVo<Banner> list(Banner banner, Integer page, Integer size) {
 		PageVo<Banner> vo = new PageVo<Banner>(page, size);
 		Page<Banner> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "inx asc");
-		banner.setUseStatus(SystemConstant.USE_STATUS_ON);
-		List<Banner> list = bannerMapper.select(banner);
+		Date now = new Date();
+		Example example = new Example(Banner.class);
+		Example.Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("useStatus", SystemConstant.USE_STATUS_ON);
+		criteria.andLessThan("startTime", now);
+		criteria.andGreaterThan("endTime", now);
+		List<Banner> list = bannerMapper.selectByExample(example);
 		vo.setTotal(pageBean.getTotal());
 		vo.setList(list);
 		return vo;
@@ -75,12 +84,15 @@ public class BannerServiceImpl implements BannerService {
 			banner.setUseStatus(SystemConstant.USE_STATUS_OFF);
 			banner.setCreateTime(new Date());
 			bannerMapper.insertSelective(banner);
+			log.info("新增banner成功：" + banner.getId());
 		} else {// 根据id更新信息
 			Banner temp = bannerMapper.selectByPrimaryKey(banner.getId());
 			if (temp == null) {
+				log.info("找不到banner信息：" + banner.getId());
 				throw new DataNotFoundException(EnumBanner.DATA_NOT_FOUND);
 			}
 			bannerMapper.updateByPrimaryKeySelective(banner);
+			log.info("更新banner成功：" + banner.getId());
 		}
 		return banner;
 	}
@@ -92,9 +104,11 @@ public class BannerServiceImpl implements BannerService {
 		}
 		Banner temp = bannerMapper.selectByPrimaryKey(id);
 		if (temp == null) {
+			log.info("找不到banner信息：" + id);
 			throw new DataNotFoundException(EnumBanner.DATA_NOT_FOUND);
 		}
 		bannerMapper.deleteByPrimaryKey(id);
+		log.info("删除banner成功：" + id);
 		return new ResultVo();
 	}
 
@@ -105,16 +119,21 @@ public class BannerServiceImpl implements BannerService {
 		}
 		Banner temp = bannerMapper.selectByPrimaryKey(id);
 		if (temp == null) {
+			log.info("找不到banner信息：" + id);
 			throw new DataNotFoundException(EnumBanner.DATA_NOT_FOUND);
 		}
 		Banner banner = new Banner();
 		banner.setId(id);
+		StringBuilder builder = new StringBuilder();
 		if (Objects.equals(SystemConstant.USE_STATUS_ON, temp.getUseStatus())) {
 			banner.setUseStatus(SystemConstant.USE_STATUS_OFF);
+			builder.append("Banner下架成功:").append(id);
 		} else {
 			banner.setUseStatus(SystemConstant.USE_STATUS_ON);
+			builder.append("Banner上架成功:").append(id);
 		}
 		bannerMapper.updateByPrimaryKeySelective(banner);
+		log.info(builder.toString());
 		return new ResultVo();
 	}
 

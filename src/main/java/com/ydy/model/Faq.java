@@ -3,6 +3,8 @@
  */
 package com.ydy.model;
 
+import java.util.Date;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,22 @@ public class Faq {
 	private String type;
 	@NotNull
 	private Integer inx;
+	private Date createTime;
+
+	/**
+	 * @return the createTime
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * @param createTime
+	 *            the createTime to set
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 	/**
 	 * @return the type
