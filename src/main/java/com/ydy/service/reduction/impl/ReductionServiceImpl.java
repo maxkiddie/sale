@@ -105,6 +105,18 @@ public class ReductionServiceImpl implements ReductionService {
 	}
 
 	@Override
+	public PageVo<Reduction> selectByskuId(Long skuId, Integer page, Integer size) {
+		PageVo<Reduction> vo = new PageVo<Reduction>(page, size);
+		Page<Reduction> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "limit_num desc");
+		Reduction reduction = new Reduction();
+		reduction.setSkuId(skuId);
+		List<Reduction> list = reductionMapper.select(reduction);
+		vo.setTotal(pageBean.getTotal());
+		vo.setList(list);
+		return vo;
+	}
+
+	@Override
 	public Reduction selectById(Long id) {
 		if (id == null) {
 			throw new NullPointerException();

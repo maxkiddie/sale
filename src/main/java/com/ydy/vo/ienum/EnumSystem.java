@@ -28,6 +28,7 @@ public enum EnumSystem implements IErrorEnum{
 	NO_AUTH(1010, "没权限"),
 	PWD_NOT_FIT(1010, "两次密码不匹配"),
 	FILE_TYPE_NOT_FIT(1011, "文件类型不匹配"),
+	CODE_PRD_ERROR(1011, "系统错误,获取后台验证码"),
 	REMOTE_IP_ERROR(1012, "远程网络出现问题");
 	private Integer code;
 	private String msg;

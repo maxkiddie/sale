@@ -13,6 +13,8 @@ package com.ydy.constant;
 public class SystemConstant {
 
 	public static final String MANAGER_DEFAULT_PWD = "123456a";// 管理员cookies
+	
+	public static final String DEFAULT_CODE = "1234";// 管理员cookies
 
 	public static final String ADM_TOKEN = "ADM_TOKEN";// 管理员cookies
 

@@ -1,0 +1,1769 @@
+{
+	"info": {
+		"_postman_id": "0d0e241f-a45d-4d41-857a-77cb59efb0f4",
+		"name": "Sale",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "good",
+			"item": [
+				{
+					"name": "保存商品信息",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/saveSpu?name=IPhoneX&title=苹果手机便宜卖&detail=苹果手机详情富文本&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&mainImage=图片&images=图片;图片;图片",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"saveSpu"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "商品id，有则更改，无则新增",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "IPhoneX",
+									"description": "商品名称"
+								},
+								{
+									"key": "title",
+									"value": "苹果手机便宜卖",
+									"description": "商品子标题"
+								},
+								{
+									"key": "detail",
+									"value": "苹果手机详情富文本",
+									"description": "商品详情"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+									"description": "管理员token"
+								},
+								{
+									"key": "mainImage",
+									"value": "图片",
+									"description": "图片地址"
+								},
+								{
+									"key": "images",
+									"value": "图片;图片;图片",
+									"description": ";隔开"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "保存子商品信息",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/saveSku?spuId=13&spuSpecs=苹果手机黑色64G&stock=999&price=249900&nowPrice=199900&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&mainImage=主图",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"saveSku"
+							],
+							"query": [
+								{
+									"key": "skuId",
+									"value": "",
+									"description": "商品skuId，有则更改，无则新增",
+									"disabled": true
+								},
+								{
+									"key": "spuId",
+									"value": "13",
+									"description": "商品spuId，必填"
+								},
+								{
+									"key": "spuSpecs",
+									"value": "苹果手机黑色64G",
+									"description": "sku描述"
+								},
+								{
+									"key": "stock",
+									"value": "999",
+									"description": "库存"
+								},
+								{
+									"key": "price",
+									"value": "249900",
+									"description": "价格，单位:分"
+								},
+								{
+									"key": "nowPrice",
+									"value": "199900"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+									"description": "管理员token"
+								},
+								{
+									"key": "mainImage",
+									"value": "主图",
+									"description": "图片地址"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "后台筛选商品信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/selectSpu?page=1&size=10&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"selectSpu"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "后台筛选某个商品的子商品信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/selectSku?spuId=13&page=1&size=10&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"selectSku"
+							],
+							"query": [
+								{
+									"key": "spuId",
+									"value": "13",
+									"description": "查找某个spu下的sku列表"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户筛选商品",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/listSpu?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"listSpu"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查询商品详情",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/spuDetail?spuId=13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"spuDetail"
+							],
+							"query": [
+								{
+									"key": "spuId",
+									"value": "13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spu商品上架下架",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/statusSpu?spuId=13&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"statusSpu"
+							],
+							"query": [
+								{
+									"key": "spuId",
+									"value": "13"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除子商品",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/deleteSku?skuId=10&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"deleteSku"
+							],
+							"query": [
+								{
+									"key": "skuId",
+									"value": "10"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除主商品",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/deleteSpu?spuId=12&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"deleteSpu"
+							],
+							"query": [
+								{
+									"key": "spuId",
+									"value": "12"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "子商品Sku信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/selectSkuById?skuId=11&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"selectSkuById"
+							],
+							"query": [
+								{
+									"key": "skuId",
+									"value": "11"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "筛选商品带优惠信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/good/listWithReduction?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"good",
+								"listWithReduction"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "后台订单筛选",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查看订单列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/selectByUserId?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"selectByUserId"
+							],
+							"query": [
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"skuId\": 11,\n            \"num\": 4,\n            \"reductionId\": 3\n        }\n    ],\n    \"paymentType\": 1,\n    \"postFee\": 500,\n    \"buyerMessage\": \"一定要做好\",\n    \"receiver\": \"徐则林\",\n    \"receiverMobile\": \"+8615088132421\",\n    \"receiverCountry\": \"中国\",\n    \"receiverState\": \"广东省\",\n    \"receiverDistrict\": \"增城区\",\n    \"receiverCity\": \"广州市\",\n    \"receiverAddress\": \"荔城街府佑路1号\",\n    \"receiverZip\": \"511300\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost/order/create?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"create"
+							],
+							"query": [
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+									"description": "用户token"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "支付订单",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/pay?orderId=201905301056433031",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"pay"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905301056433031"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单发货",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/send?orderId=201905301056433031&shippingName=顺丰快递&shippingCode=123465123456789&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"send"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905301056433031",
+									"description": "订单号"
+								},
+								{
+									"key": "shippingName",
+									"value": "顺丰快递",
+									"description": "物流名称"
+								},
+								{
+									"key": "shippingCode",
+									"value": "123465123456789",
+									"description": "物流单号"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单确认收货",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/confirm?orderId=201905301056433031&utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905301056433031"
+								},
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查看订单信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/selectById?orderId=201905301056433031&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"selectById"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905301056433031"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查看订单信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/selectUserOrderById?orderId=201905301056433031&utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"selectUserOrderById"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905301056433031"
+								},
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "账单计算",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"skuId\": 11,\n            \"num\": 4,\n            \"reductionId\":3\n        }\n    ],\n    \"paymentType\": 1,\n    \"postFee\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost/order/bill?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"bill"
+							],
+							"query": [
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单删除",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/delete?orderId=201905291031322270&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905291031322270"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户删除订单",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/order/deleteUserOrderById?orderId=201905291031322270&utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"deleteUserOrderById"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "201905291031322270"
+								},
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "faq",
+			"item": [
+				{
+					"name": "FAQ筛选",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/faq/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"faq",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "保存FAQ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/faq/save?ask=我的问题&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU&answer=回答了&inx=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"faq",
+								"save"
+							],
+							"query": [
+								{
+									"key": "ask",
+									"value": "我的问题",
+									"description": "问题"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU",
+									"description": "管理员token"
+								},
+								{
+									"key": "answer",
+									"value": "回答了",
+									"description": "回答"
+								},
+								{
+									"key": "id",
+									"value": "3",
+									"description": "非必填，有则更新，无则新增",
+									"disabled": true
+								},
+								{
+									"key": "inx",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除FAQ",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/faq/delete?id=5&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"faq",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5",
+									"description": "问题id"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU",
+									"description": "管理员token"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查找FAQ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/faq/list?page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"faq",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "faq信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/faq/selectById?id=6&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"faq",
+								"selectById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/user/login?username=kiddie&password=123456a&code=1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "kiddie",
+									"description": "用户名"
+								},
+								{
+									"key": "password",
+									"value": "123456a",
+									"description": "密码"
+								},
+								{
+									"key": "code",
+									"value": "1234",
+									"description": "验证码"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/user/register?username=wenjiayi&password=123456&realname=徐则林&repeatpwd=123456&email=531592003@qq.com&phone=+8615088132421&code=1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"user",
+								"register"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "wenjiayi",
+									"description": "用户名"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"description": "密码"
+								},
+								{
+									"key": "realname",
+									"value": "徐则林",
+									"description": "昵称"
+								},
+								{
+									"key": "repeatpwd",
+									"value": "123456",
+									"description": "确认密码"
+								},
+								{
+									"key": "email",
+									"value": "531592003@qq.com",
+									"description": "邮箱，非必填"
+								},
+								{
+									"key": "phone",
+									"value": "+8615088132421",
+									"description": "手机，非必填"
+								},
+								{
+									"key": "code",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "personinfo",
+			"item": [
+				{
+					"name": "保存人物信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Xu\",\n    \"middleName\": \"Zhao\",\n    \"lastName\": \"Jie\",\n    \"birthDate\":1559007566000,\n    \"state\":123,\n    \"stateName\":\"Guangdong\",\n    \"heightFeet\":20,\n    \"heightInches\":30,\n    \"weight\":54,\n    \"eyes\":\"Blue\",\n    \"hair\":\"Black\",\n    \"gender\":1,\n    \"address1\":\"Guangdong\",\n    \"address2\":\"ddddddd\",\n    \"city\":\"guangzhou\",\n    \"zip\":\"511300\",\n    \"picture\":\"图片0\",\n    \"signature\":\"签名\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost/personInfo/save?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"personInfo",
+								"save"
+							],
+							"query": [
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "后台查询人物信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/personInfo/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"personInfo",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg3MzYxNywiaWF0IjoxNTU5MDA5NjE3fQ.huEhbMR_r3SKu3RJGzdcxEn42R79J54cMEU_Hc1FXBU"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查询个人信息目录",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/personInfo/selectByUserId?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"personInfo",
+								"selectByUserId"
+							],
+							"query": [
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查找人物信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/personInfo/selectById?id=5&utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"personInfo",
+								"selectById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5"
+								},
+								{
+									"key": "utoken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "管理员登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/admin/login?username=admin&password=1234&code=1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"admin",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "1234"
+								},
+								{
+									"key": "code",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户名密码修改",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/admin/modifyPassword?password=1234&newPassword=123456a&confirmPassword=123456a&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6ImFkbWluIiwiZXhwIjoxNTYwMDUxNjkyLCJpYXQiOjE1NTkxODc2OTJ9.5VxzVTgdsg_DXrJz7XLMl6-oZgygEUZFOgPTnikkwsg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"admin",
+								"modifyPassword"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "1234"
+								},
+								{
+									"key": "newPassword",
+									"value": "123456a"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "123456a"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6ImFkbWluIiwiZXhwIjoxNTYwMDUxNjkyLCJpYXQiOjE1NTkxODc2OTJ9.5VxzVTgdsg_DXrJz7XLMl6-oZgygEUZFOgPTnikkwsg"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "banner",
+			"item": [
+				{
+					"name": "banner后台筛选",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/banner/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"banner",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "banner保存",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/banner/save?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&image=图片&inx=0&name=banner名字&startTime=2016-08-01 10:20:30&endTime=2016-08-02 10:20:30&url=http://baidu.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"banner",
+								"save"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "image",
+									"value": "图片"
+								},
+								{
+									"key": "inx",
+									"value": "0"
+								},
+								{
+									"key": "name",
+									"value": "banner名字"
+								},
+								{
+									"key": "startTime",
+									"value": "2016-08-01 10:20:30"
+								},
+								{
+									"key": "endTime",
+									"value": "2016-08-02 10:20:30"
+								},
+								{
+									"key": "url",
+									"value": "http://baidu.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "banner删除",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/banner/delete?id=2&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"banner",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "首页banner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/banner/list?page=1&szie=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"banner",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "szie",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "banner上下架",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/banner/status?id=4&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"banner",
+								"status"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "banner信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/banner/selectById?id=4&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"banner",
+								"selectById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "图片",
+			"item": [
+				{
+					"name": "上传图片",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost/file/imgUpload?file=文件二进制",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"file",
+								"imgUpload"
+							],
+							"query": [
+								{
+									"key": "file",
+									"value": "文件二进制"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "上传图片",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {}
+								},
+								"url": "http://localhost/file/imgUpload"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 May 2019 03:05:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1000,\n    \"msg\": \"系统异常\",\n    \"errors\": {\n        \"error\": \"/file/imgUpload出现异常:Current request is not a multipart request\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "网页信息",
+			"item": [
+				{
+					"name": "保存网页信息",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/webInfo/save?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&name=怎么支付&detail=发发发烦烦烦付付反反复复付fffffffff&type=howtopay",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"webInfo",
+								"save"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "name",
+									"value": "怎么支付"
+								},
+								{
+									"key": "detail",
+									"value": "发发发烦烦烦付付反反复复付fffffffff"
+								},
+								{
+									"key": "type",
+									"value": "howtopay"
+								},
+								{
+									"key": "id",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "后台删除网页信息",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/webInfo/delete?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"webInfo",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除网页信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/webInfo/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"webInfo",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "关于我们",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/webInfo/aboutUs"
+					},
+					"response": []
+				},
+				{
+					"name": "howToPay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/webInfo/howToPay"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "优惠信息",
+			"item": [
+				{
+					"name": "保存优惠信息",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/reduction/save?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&spuId=13&skuId=11&limitNum=3&price=149900&name=优惠很大&detail=3部手机每部1499",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"reduction",
+								"save"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "spuId",
+									"value": "13"
+								},
+								{
+									"key": "skuId",
+									"value": "11"
+								},
+								{
+									"key": "limitNum",
+									"value": "3"
+								},
+								{
+									"key": "price",
+									"value": "149900"
+								},
+								{
+									"key": "name",
+									"value": "优惠很大"
+								},
+								{
+									"key": "detail",
+									"value": "3部手机每部1499"
+								},
+								{
+									"key": "id",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除优惠信息",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/reduction/delete?id=1&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"reduction",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查找优惠信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/reduction/selectById?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"reduction",
+								"selectById"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "后台筛选优惠信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/reduction/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"reduction",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查找子商品优惠信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/reduction/selectBySkuId?skuId=11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"reduction",
+								"selectBySkuId"
+							],
+							"query": [
+								{
+									"key": "skuId",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

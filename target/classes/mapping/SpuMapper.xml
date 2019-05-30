@@ -3,7 +3,7 @@
 <mapper namespace="com.ydy.mapper.SpuMapper">
 	<select id="selectSpuById" resultType="com.ydy.vo.SpuVo">
 		select
-		s.spu_id,category_id,name,title,main_image,min_price,now_min_price,max_price,max_now_price,spu_status,create_time,update_time,d.detail,d.images
+		s.spu_id,category_id,name,title,main_image,min_price,now_min_price,max_price,now_max_price,spu_status,create_time,update_time,d.detail,d.images
 		from spu s inner join spu_detail d on s.spu_id=d.spu_id
 		<where>
 			<if test="spuId!=null">

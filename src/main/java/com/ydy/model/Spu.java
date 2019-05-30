@@ -4,6 +4,7 @@
 package com.ydy.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,6 +45,23 @@ public class Spu {
 	private Integer spuStatus;
 	private Date createTime;
 	private Date updateTime;
+	@Transient
+	private List<Reduction> reductions;
+
+	/**
+	 * @return the reductions
+	 */
+	public List<Reduction> getReductions() {
+		return reductions;
+	}
+
+	/**
+	 * @param reductions
+	 *            the reductions to set
+	 */
+	public void setReductions(List<Reduction> reductions) {
+		this.reductions = reductions;
+	}
 
 	/**
 	 * @return the spuId

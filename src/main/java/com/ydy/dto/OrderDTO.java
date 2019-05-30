@@ -6,7 +6,6 @@ package com.ydy.dto;
 import java.util.List;
 
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,17 +16,13 @@ import com.ydy.model.OrderDetail;
  *
  *         2019年5月27日 下午4:42:21
  */
-public class OrderDTO {
+public class OrderDTO extends BillDTO{
 	/**
 	 * 买家留言
 	 */
-	@NotNull
-	private Long userId;
 	@NotBlank
 	private String buyerNick;
 	private String buyerMessage;
-	@NotNull
-	private Integer paymentType;
 	/**
 	 * 收货人全名
 	 */
@@ -77,40 +72,10 @@ public class OrderDTO {
 	private List<OrderDetail> orderDetails;
 
 	/**
-	 * @return the paymentType
-	 */
-	public Integer getPaymentType() {
-		return paymentType;
-	}
-
-	/**
-	 * @param paymentType
-	 *            the paymentType to set
-	 */
-	public void setPaymentType(Integer paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	/**
 	 * @return the buyerMessage
 	 */
 	public String getBuyerMessage() {
 		return buyerMessage;
-	}
-
-	/**
-	 * @return the userId
-	 */
-	public Long getUserId() {
-		return userId;
-	}
-
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	/**

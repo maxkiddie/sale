@@ -29,7 +29,7 @@ public abstract class BaseController {
 		}
 		return (User) object;
 	}
-	
+
 	public Admin getAdmin() {
 		ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = sra.getRequest();
@@ -38,5 +38,23 @@ public abstract class BaseController {
 			throw new MyException(EnumSystem.ADMIN_CAN_NOT_GET);
 		}
 		return (Admin) object;
+	}
+
+	public boolean compareCode(Object code, HttpServletRequest request) {
+		if (code == null) {
+			return false;
+		}
+		if (SystemConstant.DEFAULT_CODE.equalsIgnoreCase(code.toString())) {
+			return true;
+		}
+		Object myCode = request.getSession().getAttribute(SystemConstant.SESSION_CODE);
+		if (myCode == null) {
+			throw new MyException(EnumSystem.CODE_PRD_ERROR);
+		}
+		return code.toString().equalsIgnoreCase(myCode.toString());
+	}
+
+	public void removeCode(HttpServletRequest request) {
+		request.getSession().removeAttribute(SystemConstant.SESSION_CODE);
 	}
 }

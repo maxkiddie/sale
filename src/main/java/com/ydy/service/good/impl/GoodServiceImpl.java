@@ -74,6 +74,25 @@ public class GoodServiceImpl implements GoodService {
 	}
 
 	@Override
+	public PageVo<Spu> listWithReduction(Spu spu, Integer page, Integer size) {
+		PageVo<Spu> vo = new PageVo<Spu>(page, size);
+		Page<Spu> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "spu_id desc");
+		spu.setSpuStatus(SystemConstant.SPU_ON);
+		List<Spu> list = spuMapper.select(spu);
+		vo.setTotal(pageBean.getTotal());
+		if (!CollectionUtils.isEmpty(list)) {
+			Reduction reduction = new Reduction();
+			for (Spu data : list) {
+				reduction.setSpuId(data.getSpuId());
+				data.setReductions(reductionMapper.select(reduction));
+			}
+		}
+		vo.setList(list);
+		return vo;
+
+	}
+
+	@Override
 	public PageVo<Sku> select(Sku sku, Integer page, Integer size) {
 		PageVo<Sku> vo = new PageVo<Sku>(page, size);
 		Page<Sku> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "sku_id desc");

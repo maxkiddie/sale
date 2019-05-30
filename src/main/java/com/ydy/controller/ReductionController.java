@@ -58,6 +58,12 @@ public class ReductionController {
 		return ResponseEntity.ok(reductionService.delete(id));
 	}
 
+	@GetMapping("selectBySkuId")
+	@ResponseBody
+	public ResponseEntity<PageVo<Reduction>> selectByskuId(@CtrlParam("skuId") Long skuId, Integer page, Integer size) {
+		return ResponseEntity.ok(reductionService.selectByskuId(skuId, page, size));
+	}
+
 	@AdminToken
 	@GetMapping("selectById")
 	@ResponseBody

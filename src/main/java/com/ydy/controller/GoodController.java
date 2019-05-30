@@ -42,6 +42,14 @@ public class GoodController {
 		return ResponseEntity.ok(vo);
 	}
 
+	@GetMapping("listWithReduction")
+	@ResponseBody
+	public ResponseEntity<PageVo<Spu>> listWithReduction(Spu spu, Integer page, Integer size) {
+		StringUtils.setParamEmptyToNull(spu);
+		PageVo<Spu> vo = goodService.listWithReduction(spu, page, size);
+		return ResponseEntity.ok(vo);
+	}
+
 	@GetMapping("spuDetail")
 	@ResponseBody
 	public ResponseEntity<SpuVo> spuDetail(@CtrlParam("商品ID") Long spuId) {
@@ -92,10 +100,10 @@ public class GoodController {
 	}
 
 	@AdminToken
-	@DeleteMapping("deleteSku")
+	@PostMapping("statusSpu")
 	@ResponseBody
-	public ResponseEntity<BaseVo> statusSpu(@CtrlParam("skuId") Long skuId) {
-		return ResponseEntity.ok(goodService.deleteSku(skuId));
+	public ResponseEntity<BaseVo> statusSpu(@CtrlParam("spuId") Long spuId) {
+		return ResponseEntity.ok(goodService.statusSpu(spuId));
 	}
 
 	@AdminToken

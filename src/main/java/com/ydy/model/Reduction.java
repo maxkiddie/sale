@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *         2019年5月29日 下午6:00:21
  */
 @Table(name = "reduction")
-public class Reduction {
+public class Reduction implements Comparable<Reduction> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -156,6 +156,11 @@ public class Reduction {
 	 */
 	public void setLimitNum(Integer limitNum) {
 		this.limitNum = limitNum;
+	}
+
+	@Override
+	public int compareTo(Reduction r) {
+		return this.limitNum - r.getLimitNum();
 	}
 
 }

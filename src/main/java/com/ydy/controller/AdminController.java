@@ -74,9 +74,7 @@ public class AdminController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<TokenVo> login(@CtrlParam("用户名") String username, @CtrlParam("密码") String password,
 			@CtrlParam("验证码") String code, HttpServletRequest request, HttpServletResponse response) {
-		Object redisCode = request.getSession().getAttribute(SystemConstant.SESSION_CODE);
-		if ("1234".equals(code)) {
-		} else if (!Objects.equals(redisCode, code)) {
+		if (!compareCode(code, request)) {
 			throw new MyException(EnumSystem.CODE_ERROR);
 		}
 		Admin admin = new Admin(username, password);

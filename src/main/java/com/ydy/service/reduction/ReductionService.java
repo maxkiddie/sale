@@ -16,10 +16,11 @@ public interface ReductionService {
 
 	PageVo<Reduction> select(Reduction reduction, Integer page, Integer size);
 
-
 	Reduction saveOrUpdate(Reduction reduction);
 
 	BaseVo delete(Long id);
+
+	PageVo<Reduction> selectByskuId(Long skuId, Integer page, Integer size);
 
 	Reduction selectById(Long id);
 }

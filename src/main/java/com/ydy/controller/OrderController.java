@@ -6,6 +6,7 @@ package com.ydy.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import com.ydy.annotation.AdminToken;
 import com.ydy.annotation.CtrlParam;
 import com.ydy.annotation.UserToken;
 import com.ydy.controller.base.BaseController;
+import com.ydy.dto.BillDTO;
 import com.ydy.dto.OrderDTO;
 import com.ydy.model.Order;
 import com.ydy.model.User;
@@ -58,6 +60,14 @@ public class OrderController extends BaseController {
 	}
 
 	@UserToken
+	@PostMapping("bill")
+	@ResponseBody
+	public ResponseEntity<BillDTO> bill(@RequestBody BillDTO dto) {
+		dto.setUserId(getUser().getId());
+		return ResponseEntity.ok(orderService.calculateBill(dto));
+	}
+
+	@UserToken
 	@PostMapping("create")
 	@ResponseBody
 	public ResponseEntity<Order> create(@RequestBody OrderDTO dto) {
@@ -94,6 +104,20 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	public ResponseEntity<OrderVo> selectById(@CtrlParam("订单ID") Long orderId) {
 		return ResponseEntity.ok(orderService.selectById(orderId));
+	}
+
+	@AdminToken
+	@DeleteMapping("delete")
+	@ResponseBody
+	public ResponseEntity<BaseVo> delete(@CtrlParam("订单ID") Long orderId) {
+		return ResponseEntity.ok(orderService.delete(orderId));
+	}
+
+	@AdminToken
+	@DeleteMapping("deleteUserOrderById")
+	@ResponseBody
+	public ResponseEntity<BaseVo> deleteUserOrderById(@CtrlParam("订单ID") Long orderId) {
+		return ResponseEntity.ok(orderService.delete(orderId, getUser().getId()));
 	}
 
 	@UserToken

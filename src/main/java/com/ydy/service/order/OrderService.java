@@ -6,6 +6,7 @@ package com.ydy.service.order;
 import java.util.Date;
 import java.util.List;
 
+import com.ydy.dto.BillDTO;
 import com.ydy.dto.OrderDTO;
 import com.ydy.model.Order;
 import com.ydy.model.OrderStatus;
@@ -24,6 +25,8 @@ public interface OrderService {
 
 	Long createOrderId();
 
+	BillDTO calculateBill(BillDTO bill);
+
 	Order createOrder(OrderDTO dto);
 
 	BaseVo updateOrderStatusClosed(Long orderId);
@@ -37,6 +40,10 @@ public interface OrderService {
 	BaseVo updateOrderStatusConfirm(Long orderId, Long userId);
 
 	BaseVo updateOrderStatusComment(Long orderId);
+
+	BaseVo delete(Long orderId);
+
+	BaseVo delete(Long orderId, Long userId);
 
 	List<OrderStatus> selectStatusCommit(Date createTime);
 

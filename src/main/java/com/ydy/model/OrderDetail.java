@@ -40,6 +40,7 @@ public class OrderDetail {
 	 * 商品单价
 	 */
 	private Long price;
+	private Long totalPrice;
 
 	/**
 	 * 图片
@@ -51,6 +52,21 @@ public class OrderDetail {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * @return the totalPrice
+	 */
+	public Long getTotalPrice() {
+		return totalPrice;
+	}
+
+	/**
+	 * @param totalPrice
+	 *            the totalPrice to set
+	 */
+	public void setTotalPrice(Long totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	/**

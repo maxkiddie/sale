@@ -4,11 +4,11 @@
 package com.ydy.service.order.impl;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,16 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ydy.constant.OrderStatusEnum;
+import com.ydy.dto.BillDTO;
+import com.ydy.dto.ItemDTO;
 import com.ydy.dto.OrderDTO;
 import com.ydy.exception.MyException;
 import com.ydy.exception.ValidateException;
 import com.ydy.mapper.OrderDetailMapper;
 import com.ydy.mapper.OrderMapper;
 import com.ydy.mapper.OrderStatusMapper;
+import com.ydy.mapper.ReductionMapper;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.model.Order;
 import com.ydy.model.OrderDetail;
 import com.ydy.model.OrderStatus;
+import com.ydy.model.Reduction;
 import com.ydy.model.Sku;
 import com.ydy.service.order.OrderService;
 import com.ydy.utils.DateUtil;
@@ -56,11 +60,13 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDetailMapper orderDetailMapper;
 	@Autowired
 	private SkuMapper skuMapper;
+	@Autowired
+	private ReductionMapper reductionMapper;
 
 	@Override
 	public PageVo<Order> select(Order order, Integer page, Integer size) {
 		PageVo<Order> vo = new PageVo<Order>(page, size);
-		Page<Order> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "id desc");
+		Page<Order> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "order_id desc");
 		List<Order> list = orderMapper.select(order);
 		vo.setTotal(pageBean.getTotal());
 		vo.setList(list);
@@ -77,39 +83,91 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order createOrder(OrderDTO dto) {
-		List<OrderDetail> details = dto.getOrderDetails();
-		if (CollectionUtils.isEmpty(details)) {
-			throw new MyException(EnumOrder.ORDER_DETAIL_EMPTY);
+	public BillDTO calculateBill(BillDTO bill) {
+		// 校验数据有效
+		Map<String, String> validateInfo = ValidateUtil.validateEntity(bill);
+		if (!validateInfo.isEmpty()) {
+			throw new ValidateException(validateInfo);
 		}
+		List<ItemDTO> items = bill.getItems();
+		for (ItemDTO dto : items) {
+			validateInfo = ValidateUtil.validateEntity(dto);
+			if (!validateInfo.isEmpty()) {
+				throw new ValidateException(validateInfo);
+			}
+		}
+		return calculate(bill);
+	}
+
+	private BillDTO calculate(BillDTO bill) {
+		if (bill == null) {
+			throw new NullPointerException();
+		}
+		Long totalPay = 0L;
+		Long actualPay = 0L;
+		totalPay += bill.getPostFee();// 邮费
+		actualPay += bill.getPostFee();// 邮费
+		Sku sku = null;
+		for (ItemDTO item : bill.getItems()) {
+			sku = skuMapper.selectByPrimaryKey(item.getSkuId());
+			if (sku == null) {
+				throw new MyException(EnumGood.SKU_NOT_FOUND);
+			}
+			Reduction reduction = null;
+			if (item.getReductionId() != null) {
+				reduction = reductionMapper.selectByPrimaryKey(item.getReductionId());
+			}
+			Long itemActualTotal = 0L;
+			if (reduction != null && item.getNum() >= reduction.getLimitNum()) {
+				itemActualTotal = reduction.getPrice() * item.getNum();
+			} else {
+				itemActualTotal = sku.getNowPrice() * item.getNum();
+			}
+			Long itemTotal = (sku.getNowPrice() * item.getNum());
+			actualPay += itemActualTotal;
+			totalPay += itemTotal;
+			item.setSku(sku);
+			item.setItemActualTotal(itemActualTotal);
+			item.setItemTotal(itemTotal);
+			item.setUnitPrice(sku.getNowPrice());
+		}
+		bill.setActualPay(actualPay);
+		bill.setTotalPay(totalPay);
+		return bill;
+	}
+
+	@Override
+	public Order createOrder(OrderDTO dto) {
 		// 校验数据有效
 		Map<String, String> validateInfo = ValidateUtil.validateEntity(dto);
 		if (!validateInfo.isEmpty()) {
 			throw new ValidateException(validateInfo);
 		}
-		Long total = 0L;
-		Sku sku = null;
 		Long orderId = createOrderId();
-		for (OrderDetail detail : details) {
-			sku = skuMapper.selectByPrimaryKey(detail.getSkuId());
-			if (sku == null) {
-				throw new MyException(EnumGood.SKU_NOT_FOUND);
-			}
+		BillDTO billDTO = calculate(dto);
+		List<ItemDTO> items = billDTO.getItems();
+		List<OrderDetail> detailList = new LinkedList<OrderDetail>();
+		OrderDetail detail = null;
+		for (ItemDTO data : items) {
+			detail = new OrderDetail();
 			detail.setOrderId(orderId);
-			detail.setTitle(sku.getSpuSpecs());
-			detail.setPrice(sku.getPrice());
-			detail.setImage(sku.getMainImage());
-			total = total + (sku.getPrice() * detail.getNum());
+			detail.setSkuId(data.getSkuId());
+			detail.setNum(data.getNum());
+			detail.setPrice(data.getUnitPrice());
+			detail.setTotalPrice(data.getItemActualTotal());
+			detail.setTitle(data.getSku().getSpuSpecs());
+			detail.setImage(data.getSku().getMainImage());
+			detailList.add(detail);
 		}
 		Date now = new Date();
 		Order order = new Order();
 		order.setOrderId(orderId);
-		order.setTotalPay(total);
-		order.setActualPay(total);
-		order.setPaymentType(dto.getPaymentType());
-		order.setPostFee(0L);
+		order.setTotalPay(billDTO.getTotalPay());
+		order.setActualPay(billDTO.getActualPay());
+		order.setPaymentType(billDTO.getPaymentType());
+		order.setPostFee(billDTO.getPostFee());
 		order.setCreateTime(now);
-		order.setUserId(dto.getUserId());
+		order.setUserId(billDTO.getUserId());
 		order.setBuyerNick(dto.getBuyerNick());
 		order.setBuyerMessage(dto.getBuyerMessage());
 		order.setBuyerRate(0);
@@ -122,11 +180,13 @@ public class OrderServiceImpl implements OrderService {
 		order.setReceiverAddress(dto.getReceiverAddress());
 		order.setReceiverZip(dto.getReceiverZip());
 		orderMapper.insertSelective(order);
-		orderDetailMapper.insertList(details);
+		orderDetailMapper.insertList(detailList);
+		order.setOrderDetails(detailList);
 		OrderStatus status = new OrderStatus();
 		status.setOrderStatus(OrderStatusEnum.COMMIT.getCode());
 		status.setOrderId(orderId);
 		status.setCreateTime(now);
+		status.setOrderStatus(status.getOrderStatus());
 		orderStatusMapper.insertSelective(status);
 		return order;
 	}
@@ -236,6 +296,43 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public BaseVo delete(Long id) {
+		if (id == null) {
+			throw new NullPointerException();
+		}
+		Order order = orderMapper.selectByPrimaryKey(id);
+		if (order == null) {
+			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+		}
+		orderMapper.deleteByPrimaryKey(id);
+		orderStatusMapper.deleteByPrimaryKey(id);
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setOrderId(id);
+		orderDetailMapper.delete(orderDetail);
+		return new ResultVo();
+	}
+
+	@Override
+	public BaseVo delete(Long orderId, Long userId) {
+		if (orderId == null) {
+			throw new NullPointerException();
+		}
+		Order order = orderMapper.selectByPrimaryKey(orderId);
+		if (order == null) {
+			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+		}
+		if (!Objects.equals(order.getUserId(), userId)) {
+			throw new MyException(EnumSystem.NO_AUTH);
+		}
+		orderMapper.deleteByPrimaryKey(orderId);
+		orderStatusMapper.deleteByPrimaryKey(orderId);
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setOrderId(orderId);
+		orderDetailMapper.delete(orderDetail);
+		return new ResultVo();
+	}
+
+	@Override
 	public OrderVo selectById(Long id) {
 		if (id == null) {
 			throw new NullPointerException();
@@ -285,4 +382,5 @@ public class OrderServiceImpl implements OrderService {
 		vo.setOrderDetails(list);
 		return vo;
 	}
+
 }
