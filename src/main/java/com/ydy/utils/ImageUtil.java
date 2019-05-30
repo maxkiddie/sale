@@ -3,16 +3,21 @@
  */
 package com.ydy.utils;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Random;
@@ -24,7 +29,7 @@ import javax.imageio.ImageIO;
  *
  *         2018年8月3日 下午3:47:24
  */
-public class VelidateImageUtil {
+public class ImageUtil {
 	// 使用到'楷体'字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
 	public static final String VERIFY_CODES = "23456789abcdefghjkmnprstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
 	private static Random random = new Random();
@@ -256,9 +261,7 @@ public class VelidateImageUtil {
 	}
 
 	private static void shearY(Graphics g, int w1, int h1, Color color) {
-
 		int period = random.nextInt(40) + 10; // 50;
-
 		boolean borderGap = true;
 		int frames = 20;
 		int phase = 7;
@@ -276,13 +279,74 @@ public class VelidateImageUtil {
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		File dir = new File("F:/verifies");
-		int w = 200, h = 80;
-		for (int i = 0; i < 50; i++) {
-			String verifyCode = generateVerifyCode(4);
-			File file = new File(dir, verifyCode + ".jpg");
-			outputImage(w, h, file, verifyCode);
+	/**
+	 * 给图片添加水印文字、可设置水印文字的旋转角度
+	 * 
+	 * @param logoText
+	 *            要写入的文字
+	 * @param srcImgPath
+	 *            源图片路径
+	 * @param newImagePath
+	 *            新图片路径
+	 * @param degree
+	 *            旋转角度
+	 * @param color
+	 *            字体颜色
+	 * @param formaName
+	 *            图片后缀
+	 */
+	public static byte[] markImageByText(String logoText, byte[] source, Integer degree, Color color,
+			String formaName) {
+		InputStream is = null;
+		ByteArrayOutputStream os = null;
+		try {
+			// 1、源图片
+			Image srcImg = ImageIO.read(new ByteArrayInputStream(source));
+			BufferedImage buffImg = new BufferedImage(srcImg.getWidth(null), srcImg.getHeight(null),
+					BufferedImage.TYPE_INT_RGB);
+			System.out.println(buffImg.getHeight());
+			System.out.println(buffImg.getWidth());
+			// 2、得到画笔对象
+			Graphics2D g = buffImg.createGraphics();
+			// 3、设置对线段的锯齿状边缘处理
+			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g.drawImage(srcImg.getScaledInstance(srcImg.getWidth(null), srcImg.getHeight(null), Image.SCALE_SMOOTH), 0,
+					0, null);
+			// 4、设置水印旋转
+			if (null != degree) {
+				g.rotate(Math.toRadians(degree), buffImg.getWidth() / 2, buffImg.getHeight() / 2);
+			}
+			// 5、设置水印文字颜色
+			g.setColor(color);
+			// 6、设置水印文字Font
+			g.setFont(new Font("宋体", Font.BOLD, 50));
+			// 7、设置水印文字透明度
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.8f));
+			// 8、第一参数->设置的内容，后面两个参数->文字在图片上的坐标位置(x,y)
+			g.drawString(logoText, 10, buffImg.getHeight() - 10);
+			// 9、释放资源
+			g.dispose();
+			// 10、生成图片
+			os = new ByteArrayOutputStream();
+			ImageIO.write(buffImg, "png", os);
+			return os.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != is)
+					is.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				if (null != os)
+					os.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		return source;
 	}
+
 }

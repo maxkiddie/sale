@@ -26,7 +26,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "1",
+									"value": "14",
 									"description": "商品id，有则更改，无则新增",
 									"disabled": true
 								},

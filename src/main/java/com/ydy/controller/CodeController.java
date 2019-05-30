@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ydy.constant.SystemConstant;
-import com.ydy.utils.VelidateImageUtil;
+import com.ydy.utils.ImageUtil;
 
 @Controller
 @RequestMapping("code")
@@ -23,11 +23,11 @@ public class CodeController {
 		response.setDateHeader("Expires", 0);
 		response.setContentType("image/jpeg");
 		// 生成随机字串
-		String verifyCode = VelidateImageUtil.generateVerifyCode(4);
+		String verifyCode = ImageUtil.generateVerifyCode(4);
 		request.getSession().setAttribute(SystemConstant.SESSION_CODE, verifyCode);
 		// 生成图片
 		try {
-			VelidateImageUtil.outputImage(response.getOutputStream(), verifyCode);
+			ImageUtil.outputImage(response.getOutputStream(), verifyCode);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

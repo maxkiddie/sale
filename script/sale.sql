@@ -11,7 +11,7 @@
  Target Server Version : 50557
  File Encoding         : 65001
 
- Date: 30/05/2019 12:40:00
+ Date: 30/05/2019 17:58:18
 */
 
 SET NAMES utf8mb4;
@@ -166,7 +166,7 @@ CREATE TABLE `person_info`  (
   `middle_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `birth_date` datetime NOT NULL,
-  `state` tinyint(200) NOT NULL,
+  `state` tinyint(2) NOT NULL,
   `height_feet` double NOT NULL,
   `height_inches` double NOT NULL,
   `weight` double NOT NULL,
@@ -181,13 +181,21 @@ CREATE TABLE `person_info`  (
   `signature` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `additional` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of person_info
 -- ----------------------------
 INSERT INTO `person_info` VALUES (5, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
 INSERT INTO `person_info` VALUES (6, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (7, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (8, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (9, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (10, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (11, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (12, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (13, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
+INSERT INTO `person_info` VALUES (14, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:26', 123, 20, 30, 54, 'Blue', 'Black', 1, 'Guangdong', 'ddddddd', 'guangzhou', '511300', '图片0', '签名', NULL);
 
 -- ----------------------------
 -- Table structure for r_order_person
@@ -264,7 +272,7 @@ CREATE TABLE `spu`  (
   `create_time` datetime NOT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`spu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of spu
@@ -277,8 +285,8 @@ INSERT INTO `spu` VALUES (13, 0, 'IPhoneX', '苹果手机便宜卖', '图片', 2
 DROP TABLE IF EXISTS `spu_detail`;
 CREATE TABLE `spu_detail`  (
   `spu_id` int(11) NOT NULL,
-  `images` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `detail` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `images` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `detail` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`spu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -318,7 +326,7 @@ CREATE TABLE `web_info`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `detail` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `detail` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime NOT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
