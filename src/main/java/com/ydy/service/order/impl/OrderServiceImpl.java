@@ -108,6 +108,7 @@ public class OrderServiceImpl implements OrderService {
 		totalPay += bill.getPostFee();// 邮费
 		actualPay += bill.getPostFee();// 邮费
 		Sku sku = null;
+		Date now = new Date();
 		for (ItemDTO item : bill.getItems()) {
 			sku = skuMapper.selectByPrimaryKey(item.getSkuId());
 			if (sku == null) {
@@ -118,7 +119,14 @@ public class OrderServiceImpl implements OrderService {
 				reduction = reductionMapper.selectByPrimaryKey(item.getReductionId());
 			}
 			Long itemActualTotal = 0L;
+			boolean reductionFlag = false;
 			if (reduction != null && item.getNum() >= reduction.getLimitNum()) {
+				if (now.getTime() > reduction.getStartTime().getTime()
+						&& now.getTime() < reduction.getEndTime().getTime()) {// 处于优惠活动期间
+					reductionFlag = true;
+				}
+			}
+			if (reductionFlag) {
 				itemActualTotal = reduction.getPrice() * item.getNum();
 			} else {
 				itemActualTotal = sku.getNowPrice() * item.getNum();

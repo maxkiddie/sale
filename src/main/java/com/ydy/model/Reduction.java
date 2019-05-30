@@ -35,7 +35,10 @@ public class Reduction implements Comparable<Reduction> {
 	private Long price;
 	@NotNull
 	private Integer limitNum;
-
+	@NotNull
+	private Date startTime;
+	@NotNull
+	private Date endTime;
 	private Date createTime;
 
 	/**
@@ -51,6 +54,36 @@ public class Reduction implements Comparable<Reduction> {
 	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	/**
+	 * @return the startTime
+	 */
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * @param startTime
+	 *            the startTime to set
+	 */
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	/**
+	 * @return the endTime
+	 */
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * @param endTime
+	 *            the endTime to set
+	 */
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	/**

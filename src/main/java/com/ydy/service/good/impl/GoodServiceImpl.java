@@ -34,6 +34,8 @@ import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
 
+import tk.mybatis.mapper.entity.Example;
+
 /**
  * @author xuzhaojie
  *
@@ -80,11 +82,15 @@ public class GoodServiceImpl implements GoodService {
 		spu.setSpuStatus(SystemConstant.SPU_ON);
 		List<Spu> list = spuMapper.select(spu);
 		vo.setTotal(pageBean.getTotal());
+		Date now = new Date();
 		if (!CollectionUtils.isEmpty(list)) {
-			Reduction reduction = new Reduction();
 			for (Spu data : list) {
-				reduction.setSpuId(data.getSpuId());
-				data.setReductions(reductionMapper.select(reduction));
+				Example example = new Example(Reduction.class);
+				Example.Criteria criteria = example.createCriteria();
+				criteria.andEqualTo("spuId", data.getSpuId());
+				criteria.andLessThan("startTime", now);
+				criteria.andGreaterThan("endTime", now);
+				data.setReductions(reductionMapper.selectByExample(example));
 			}
 		}
 		vo.setList(list);

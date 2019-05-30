@@ -11,7 +11,7 @@
  Target Server Version : 50557
  File Encoding         : 65001
 
- Date: 30/05/2019 11:58:19
+ Date: 30/05/2019 12:40:00
 */
 
 SET NAMES utf8mb4;
@@ -212,6 +212,8 @@ CREATE TABLE `reduction`  (
   `detail` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `price` decimal(10, 2) NOT NULL,
   `limit_num` int(11) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
@@ -219,8 +221,8 @@ CREATE TABLE `reduction`  (
 -- ----------------------------
 -- Records of reduction
 -- ----------------------------
-INSERT INTO `reduction` VALUES (3, 13, 11, '优惠很大', '3部手机每部1499', 149900.00, 3, '2019-05-30 10:54:05');
-INSERT INTO `reduction` VALUES (4, 13, 11, '优惠很大', '2部手机每部1699', 169900.00, 2, '2019-05-30 11:47:50');
+INSERT INTO `reduction` VALUES (3, 13, 11, '优惠很大', '3部手机每部1499', 149900.00, 3, '2019-05-09 12:11:23', '2019-06-09 12:11:27', '2019-05-30 10:54:05');
+INSERT INTO `reduction` VALUES (4, 13, 11, '优惠很大', '2部手机每部1699', 169900.00, 2, '2019-05-30 00:15:00', '2019-06-30 20:15:00', '2019-05-30 11:47:50');
 
 -- ----------------------------
 -- Table structure for sku
