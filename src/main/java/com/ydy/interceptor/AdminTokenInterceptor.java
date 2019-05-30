@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.entity.ContentType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -35,7 +33,7 @@ import com.ydy.vo.other.ResultVo;
 @Component
 public class AdminTokenInterceptor extends BaseInterceptor {
 
-	private final static Logger log = LoggerFactory.getLogger(AdminTokenInterceptor.class);
+	//private final static Logger log = LoggerFactory.getLogger(AdminTokenInterceptor.class);
 
 	// 在控制器执行前调用
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -70,7 +68,6 @@ public class AdminTokenInterceptor extends BaseInterceptor {
 			out = response.getWriter();
 			BaseVo vo = new ResultVo(EnumSystem.TOKEN_NOT_MATCH);
 			out.append(JSONObject.toJSONString(vo));
-			log.error("token被篡改");
 			return false;
 		}
 	}

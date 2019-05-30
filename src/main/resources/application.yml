@@ -33,6 +33,7 @@ spring:
     redis:
       host: ${redis_ip}
       port: ${redis_port}
+      password: ${redis_password}
       pool:
         max-idle: 100
         min-idle: 8

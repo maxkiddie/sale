@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydy.annotation.AdminToken;
+import com.ydy.annotation.CheckFormRepeat;
 import com.ydy.annotation.CtrlParam;
 import com.ydy.annotation.UserToken;
 import com.ydy.controller.base.BaseController;
@@ -55,6 +56,7 @@ public class PersonInfoController extends BaseController {
 	}
 
 	@UserToken
+	@CheckFormRepeat
 	@PostMapping("save")
 	@ResponseBody
 	public ResponseEntity<PersonInfo> create(@RequestBody PersonInfo personInfo) {
