@@ -16,15 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ydy.constant.SystemConstant;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumUser;
 import com.ydy.mapper.UserMapper;
 import com.ydy.model.User;
 import com.ydy.service.user.UserService;
 import com.ydy.utils.Md5Util;
 import com.ydy.utils.TokenUtil;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumUser;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.token.UserTokenVo;
 
@@ -56,17 +57,17 @@ public class UserServiceImpl implements UserService {
 		example.setUsername(user.getUsername());
 		if (userMapper.selectCount(example) == 0) {
 			log.info("找不到该用户:" + user.getUsername());
-			throw new MyException(EnumUser.NOT_FOUND);
+			throw new DataNotFoundException(EnumUser.NOT_FOUND);
 		}
 		example.setPassword(Md5Util.getMD5(user.getPassword()));
 		User temp = userMapper.selectOne(example);
 		if (temp == null) {
 			log.info("用户登录密码错误:" + user.getUsername());
-			throw new MyException(EnumUser.PWD_ERROR);
+			throw new BusinessException(EnumUser.PWD_ERROR);
 		}
 		if (SystemConstant.USE_STATUS_OFF.equals(temp.getUseStatus())) {
 			log.info("用户不可用:" + user.getUsername());
-			throw new MyException(EnumUser.CAN_NOT_USE_STATUS);
+			throw new BusinessException(EnumUser.CAN_NOT_USE_STATUS);
 		}
 		String token = TokenUtil.createUserToken(temp);
 		UserTokenVo vo = new UserTokenVo();
@@ -85,7 +86,7 @@ public class UserServiceImpl implements UserService {
 		example.setUsername(user.getUsername());
 		if (userMapper.selectCount(example) > 0) {
 			log.info("该用户名已存在:" + user.getUsername());
-			throw new MyException(EnumUser.USERNAME_EXSIT);
+			throw new BusinessException(EnumUser.USERNAME_EXSIT);
 		}
 		user.setPassword(Md5Util.getMD5(user.getPassword()));
 		user.setRegTime(new Date());
@@ -101,7 +102,7 @@ public class UserServiceImpl implements UserService {
 		}
 		User temp = userMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumUser.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumUser.DATA_NOT_FOUND);
 		}
 		return temp;
 	}

@@ -15,13 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ydy.constant.SystemConstant;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumBanner;
 import com.ydy.mapper.BannerMapper;
 import com.ydy.model.Banner;
 import com.ydy.service.banner.BannerService;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumBanner;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -77,7 +78,7 @@ public class BannerServiceImpl implements BannerService {
 		} else {// 根据id更新信息
 			Banner temp = bannerMapper.selectByPrimaryKey(banner.getId());
 			if (temp == null) {
-				throw new MyException(EnumBanner.DATA_NOT_FOUND);
+				throw new DataNotFoundException(EnumBanner.DATA_NOT_FOUND);
 			}
 			bannerMapper.updateByPrimaryKeySelective(banner);
 		}
@@ -91,7 +92,7 @@ public class BannerServiceImpl implements BannerService {
 		}
 		Banner temp = bannerMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumBanner.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumBanner.DATA_NOT_FOUND);
 		}
 		bannerMapper.deleteByPrimaryKey(id);
 		return new ResultVo();
@@ -104,7 +105,7 @@ public class BannerServiceImpl implements BannerService {
 		}
 		Banner temp = bannerMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumBanner.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumBanner.DATA_NOT_FOUND);
 		}
 		Banner banner = new Banner();
 		banner.setId(id);
@@ -124,7 +125,7 @@ public class BannerServiceImpl implements BannerService {
 		}
 		Banner temp = bannerMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumBanner.DATA_NOT_FOUND);
+			throw new BusinessException(EnumBanner.DATA_NOT_FOUND);
 		}
 		return temp;
 	}

@@ -3,8 +3,8 @@
  */
 package com.ydy.vo.other;
 
-import com.ydy.vo.ienum.EnumSystem;
-import com.ydy.vo.ienum.base.IErrorEnum;
+import com.ydy.ienum.EnumSystem;
+import com.ydy.ienum.base.IErrorEnum;
 
 /**
  * @author xuzhaojie

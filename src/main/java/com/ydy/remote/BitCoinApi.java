@@ -4,10 +4,10 @@
 package com.ydy.remote;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.remote.vo.BitCoinVo;
 import com.ydy.utils.HttpUtil;
-import com.ydy.vo.ienum.EnumSystem;
 
 /**
  * @author xuzhaojie
@@ -24,7 +24,7 @@ public class BitCoinApi {
 	public static BitCoinVo requestBitCoinInfo() {
 		String result = HttpUtil.doGet("https://api.coindesk.com/v1/bpi/currentprice.json");
 		if (result == null) {
-			throw new MyException(EnumSystem.REMOTE_IP_ERROR);
+			throw new BusinessException(EnumSystem.REMOTE_IP_ERROR);
 		}
 		JSONObject json = JSONObject.parseObject(result);
 		BitCoinVo vo = new BitCoinVo();

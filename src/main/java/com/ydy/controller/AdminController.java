@@ -22,12 +22,12 @@ import com.ydy.annotation.CheckFormRepeat;
 import com.ydy.annotation.CtrlParam;
 import com.ydy.constant.SystemConstant;
 import com.ydy.controller.base.BaseController;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.model.Admin;
 import com.ydy.service.admin.AdminService;
 import com.ydy.service.redis.RedisService;
 import com.ydy.utils.StringUtils;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -75,7 +75,7 @@ public class AdminController extends BaseController {
 	public ResponseEntity<TokenVo> login(@CtrlParam("用户名") String username, @CtrlParam("密码") String password,
 			@CtrlParam("验证码") String code, HttpServletRequest request, HttpServletResponse response) {
 		if (!compareCode(code, request)) {
-			throw new MyException(EnumSystem.CODE_ERROR);
+			throw new BusinessException(EnumSystem.CODE_ERROR);
 		}
 		Admin admin = new Admin(username, password);
 		AdminTokenVo vo = adminService.checkAdmin(admin);
@@ -145,7 +145,7 @@ public class AdminController extends BaseController {
 	public ResponseEntity<BaseVo> modifyPassword(@CtrlParam("原密码") String password,
 			@CtrlParam("新密码") String newPassword, @CtrlParam("密码确认") String confirmPassword) {
 		if (!Objects.equals(newPassword, confirmPassword)) {
-			throw new MyException(EnumSystem.PWD_NOT_FIT);
+			throw new BusinessException(EnumSystem.PWD_NOT_FIT);
 		}
 		Admin admin = getAdmin();
 		return ResponseEntity

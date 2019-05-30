@@ -16,8 +16,10 @@ import org.springframework.util.CollectionUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ydy.constant.SystemConstant;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumGood;
 import com.ydy.mapper.ReductionMapper;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.mapper.SpuDetailMapper;
@@ -29,7 +31,6 @@ import com.ydy.model.SpuDetail;
 import com.ydy.service.good.GoodService;
 import com.ydy.utils.ValidateUtil;
 import com.ydy.vo.SpuVo;
-import com.ydy.vo.ienum.EnumGood;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -125,7 +126,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		SpuVo vo = spuMapper.selectSpuById(spuId, SystemConstant.SPU_ON);
 		if (vo == null) {
-			throw new MyException(EnumGood.SPU_OFF);
+			throw new BusinessException(EnumGood.SPU_OFF);
 		}
 		Sku sku = new Sku();
 		sku.setSpuId(spuId);
@@ -167,7 +168,7 @@ public class GoodServiceImpl implements GoodService {
 				detail.setImages(spu.getImages());
 				spuDetailMapper.updateByPrimaryKeySelective(detail);
 			} else {
-				throw new MyException(EnumGood.SPU_NOT_FOUND);
+				throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 			}
 		}
 		return spu;
@@ -185,7 +186,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu spu = spuMapper.selectByPrimaryKey(sku.getSpuId());
 		if (spu == null) {
-			throw new MyException(EnumGood.SPU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		Date now = new Date();
 		if (sku.getSkuId() == null) {
@@ -198,7 +199,7 @@ public class GoodServiceImpl implements GoodService {
 				sku.setUpdateTime(now);
 				skuMapper.updateByPrimaryKeySelective(sku);
 			} else {
-				throw new MyException(EnumGood.SKU_NOT_FOUND);
+				throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 			}
 		}
 		Sku example = new Sku();
@@ -247,7 +248,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu temp = spuMapper.selectByPrimaryKey(spuId);
 		if (temp == null) {
-			throw new MyException(EnumGood.SPU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		Spu spu = new Spu();
 		spu.setSpuId(spuId);
@@ -267,7 +268,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Spu temp = spuMapper.selectByPrimaryKey(spuId);
 		if (temp == null) {
-			throw new MyException(EnumGood.SPU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		spuMapper.deleteByPrimaryKey(spuId);
 		spuDetailMapper.deleteByPrimaryKey(spuId);
@@ -287,7 +288,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Sku temp = skuMapper.selectByPrimaryKey(skuId);
 		if (temp == null) {
-			throw new MyException(EnumGood.SKU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 		}
 		skuMapper.deleteByPrimaryKey(skuId);
 		Sku example = new Sku();
@@ -307,7 +308,7 @@ public class GoodServiceImpl implements GoodService {
 		}
 		Sku temp = skuMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumGood.SKU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 		}
 		return temp;
 	}

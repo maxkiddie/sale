@@ -14,8 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumGood;
+import com.ydy.ienum.EnumReduction;
 import com.ydy.mapper.ReductionMapper;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.mapper.SpuMapper;
@@ -24,8 +27,6 @@ import com.ydy.model.Sku;
 import com.ydy.model.Spu;
 import com.ydy.service.reduction.ReductionService;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumGood;
-import com.ydy.vo.ienum.EnumReduction;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -70,14 +71,14 @@ public class ReductionServiceImpl implements ReductionService {
 		}
 		Spu spu = spuMapper.selectByPrimaryKey(reduction.getSpuId());
 		if (spu == null) {
-			throw new MyException(EnumGood.SPU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SPU_NOT_FOUND);
 		}
 		Sku sku = skuMapper.selectByPrimaryKey(reduction.getSkuId());
 		if (sku == null) {
-			throw new MyException(EnumGood.SKU_NOT_FOUND);
+			throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 		}
 		if (!Objects.equals(sku.getSpuId(), spu.getSpuId())) {
-			throw new MyException(EnumGood.SPU_SKU_NOT_RELATION);
+			throw new BusinessException(EnumGood.SPU_SKU_NOT_RELATION);
 		}
 		// 新增信息
 		if (reduction.getId() == null) {
@@ -86,7 +87,7 @@ public class ReductionServiceImpl implements ReductionService {
 		} else {// 根据id更新信息
 			Reduction temp = reductionMapper.selectByPrimaryKey(reduction.getId());
 			if (temp == null) {
-				throw new MyException(EnumReduction.DATA_NOT_FOUND);
+				throw new DataNotFoundException(EnumReduction.DATA_NOT_FOUND);
 			}
 			reductionMapper.updateByPrimaryKeySelective(reduction);
 		}
@@ -100,7 +101,7 @@ public class ReductionServiceImpl implements ReductionService {
 		}
 		Reduction temp = reductionMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumReduction.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumReduction.DATA_NOT_FOUND);
 		}
 		reductionMapper.deleteByPrimaryKey(id);
 		return new ResultVo();
@@ -130,7 +131,7 @@ public class ReductionServiceImpl implements ReductionService {
 		}
 		Reduction temp = reductionMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumReduction.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumReduction.DATA_NOT_FOUND);
 		}
 		return temp;
 	}

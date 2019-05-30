@@ -19,8 +19,8 @@ import org.springframework.web.method.HandlerMethod;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ydy.annotation.CtrlParam;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.interceptor.base.BaseInterceptor;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.ErrorVo;
 
 /**

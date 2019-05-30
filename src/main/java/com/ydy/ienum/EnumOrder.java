@@ -1,9 +1,9 @@
 /**
  * 
  */
-package com.ydy.vo.ienum;
+package com.ydy.ienum;
 
-import com.ydy.vo.ienum.base.IErrorEnum;
+import com.ydy.ienum.base.IErrorEnum;
 
 /**
  * @author xuzhaojie
@@ -11,11 +11,10 @@ import com.ydy.vo.ienum.base.IErrorEnum;
  *         2018年11月12日 上午9:41:48
  */
 public enum EnumOrder implements IErrorEnum {
-	ORDER_DETAIL_EMPTY(8000, "订单条目不能为空"),
-	ORDER_NOT_FOUND(8001, "订单不存在"),
-	ORDER_STATUS_NOT_FOUND(8001, "订单状态不存在"),
-	ORDER_STATUS_ERROR(8002, "订单流程有误"),
-	ADMIN_NOT_FOUND(9004, "管理员不存在");
+	ORDER_DETAIL_EMPTY(6000, "订单条目不能为空"),
+	ORDER_NOT_FOUND(6001, "订单不存在"),
+	ORDER_STATUS_NOT_FOUND(6002, "订单状态不存在"),
+	ORDER_STATUS_ERROR(6003, "订单流程有误");
 
 	private Integer code;
 	private String msg;

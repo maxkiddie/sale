@@ -13,10 +13,10 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.model.Admin;
 import com.ydy.model.User;
-import com.ydy.vo.ienum.EnumSystem;
 
 /**
  * @author xuzhaojie
@@ -75,14 +75,14 @@ public class TokenUtil {
 	 */
 	public static Map<String, Claim> verifyToken(String token) {
 		if (token == null || "".equals(token)) {
-			throw new MyException("token is empty");
+			throw new BusinessException("token is empty");
 		}
 		DecodedJWT jwt = null;
 		try {
 			JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
 			jwt = verifier.verify(token);
 		} catch (Exception e) {
-			throw new MyException(EnumSystem.TOKEN_NOT_MATCH);
+			throw new BusinessException(EnumSystem.TOKEN_NOT_MATCH);
 		}
 		return jwt.getClaims();
 	}

@@ -20,8 +20,12 @@ import com.ydy.constant.OrderStatusEnum;
 import com.ydy.dto.BillDTO;
 import com.ydy.dto.ItemDTO;
 import com.ydy.dto.OrderDTO;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumGood;
+import com.ydy.ienum.EnumOrder;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.mapper.OrderDetailMapper;
 import com.ydy.mapper.OrderMapper;
 import com.ydy.mapper.OrderStatusMapper;
@@ -36,9 +40,6 @@ import com.ydy.service.order.OrderService;
 import com.ydy.utils.DateUtil;
 import com.ydy.utils.ValidateUtil;
 import com.ydy.vo.OrderVo;
-import com.ydy.vo.ienum.EnumGood;
-import com.ydy.vo.ienum.EnumOrder;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -112,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 		for (ItemDTO item : bill.getItems()) {
 			sku = skuMapper.selectByPrimaryKey(item.getSkuId());
 			if (sku == null) {
-				throw new MyException(EnumGood.SKU_NOT_FOUND);
+				throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 			}
 			Reduction reduction = null;
 			if (item.getReductionId() != null) {
@@ -245,10 +246,10 @@ public class OrderServiceImpl implements OrderService {
 	public BaseVo updateOrderStatusConfirm(Long orderId, Long userId) {
 		Order order = orderMapper.selectByPrimaryKey(orderId);
 		if (order == null) {
-			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(userId, order.getUserId())) {
-			throw new MyException(EnumSystem.NO_AUTH);
+			throw new BusinessException(EnumSystem.NO_AUTH);
 		}
 		OrderStatus status = createOrderStatus(orderId, OrderStatusEnum.CONFIRM);
 		orderStatusMapper.updateByPrimaryKeySelective(status);
@@ -265,7 +266,7 @@ public class OrderServiceImpl implements OrderService {
 	private OrderStatus createOrderStatus(Long orderId, OrderStatusEnum statusEnum) {
 		OrderStatus temp = orderStatusMapper.selectByPrimaryKey(orderId);
 		if (temp == null) {
-			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		OrderStatus status = new OrderStatus();
 		status.setOrderId(orderId);
@@ -275,22 +276,22 @@ public class OrderServiceImpl implements OrderService {
 			status.setCloseTime(now);
 		} else if (OrderStatusEnum.PAY.equals(statusEnum)) {
 			if (!Objects.equals(OrderStatusEnum.COMMIT.getCode(), temp.getOrderStatus())) {
-				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+				throw new BusinessException(EnumOrder.ORDER_STATUS_ERROR);
 			}
 			status.setPaymentTime(now);
 		} else if (OrderStatusEnum.SEND.equals(statusEnum)) {
 			if (!Objects.equals(OrderStatusEnum.PAY.getCode(), temp.getOrderStatus())) {
-				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+				throw new BusinessException(EnumOrder.ORDER_STATUS_ERROR);
 			}
 			status.setConsignTime(now);
 		} else if (OrderStatusEnum.CONFIRM.equals(statusEnum)) {
 			if (!Objects.equals(OrderStatusEnum.SEND.getCode(), temp.getOrderStatus())) {
-				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+				throw new BusinessException(EnumOrder.ORDER_STATUS_ERROR);
 			}
 			status.setEndTime(now);
 		} else if (OrderStatusEnum.COMMENT.equals(statusEnum)) {
 			if (!Objects.equals(OrderStatusEnum.CONFIRM.getCode(), temp.getOrderStatus())) {
-				throw new MyException(EnumOrder.ORDER_STATUS_ERROR);
+				throw new BusinessException(EnumOrder.ORDER_STATUS_ERROR);
 			}
 			status.setCommentTime(now);
 		}
@@ -310,7 +311,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(id);
 		if (order == null) {
-			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		orderMapper.deleteByPrimaryKey(id);
 		orderStatusMapper.deleteByPrimaryKey(id);
@@ -327,10 +328,10 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(orderId);
 		if (order == null) {
-			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(order.getUserId(), userId)) {
-			throw new MyException(EnumSystem.NO_AUTH);
+			throw new BusinessException(EnumSystem.NO_AUTH);
 		}
 		orderMapper.deleteByPrimaryKey(orderId);
 		orderStatusMapper.deleteByPrimaryKey(orderId);
@@ -347,13 +348,13 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(id);
 		if (order == null) {
-			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(order, vo);
 		OrderStatus status = orderStatusMapper.selectByPrimaryKey(order.getOrderId());
 		if (status == null) {
-			throw new MyException(EnumOrder.ORDER_STATUS_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_STATUS_NOT_FOUND);
 		}
 		vo.setOrderStatus(status);
 		vo.setStatus(status.getOrderStatus());
@@ -371,16 +372,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Order order = orderMapper.selectByPrimaryKey(id);
 		if (order == null) {
-			throw new MyException(EnumOrder.ORDER_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_NOT_FOUND);
 		}
 		if (!Objects.equals(userId, order.getUserId())) {
-			throw new MyException(EnumSystem.NO_AUTH);
+			throw new BusinessException(EnumSystem.NO_AUTH);
 		}
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(order, vo);
 		OrderStatus status = orderStatusMapper.selectByPrimaryKey(order.getOrderId());
 		if (status == null) {
-			throw new MyException(EnumOrder.ORDER_STATUS_NOT_FOUND);
+			throw new DataNotFoundException(EnumOrder.ORDER_STATUS_NOT_FOUND);
 		}
 		vo.setOrderStatus(status);
 		vo.setStatus(status.getOrderStatus());

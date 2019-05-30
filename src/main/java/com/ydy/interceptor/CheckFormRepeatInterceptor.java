@@ -19,9 +19,9 @@ import org.springframework.web.method.HandlerMethod;
 import com.alibaba.fastjson.JSONObject;
 import com.ydy.annotation.CheckFormRepeat;
 import com.ydy.constant.RedisConstant;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.interceptor.base.BaseInterceptor;
 import com.ydy.service.redis.RedisService;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.ResultVo;
 

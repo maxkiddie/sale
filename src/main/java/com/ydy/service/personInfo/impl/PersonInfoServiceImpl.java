@@ -13,14 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumPersonInfo;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.mapper.PersonInfoMapper;
 import com.ydy.model.PersonInfo;
 import com.ydy.service.personInfo.PersonInfoService;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumPersonInfo;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.PageVo;
 
 /**
@@ -61,10 +62,10 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 		} else {// 根据id更新信息
 			PersonInfo temp = personInfoMapper.selectByPrimaryKey(personInfo.getId());
 			if (temp == null) {
-				throw new MyException(EnumPersonInfo.DATA_NOT_FOUND);
+				throw new DataNotFoundException(EnumPersonInfo.DATA_NOT_FOUND);
 			}
 			if (!Objects.equals(temp.getUserId(), personInfo.getUserId())) {
-				throw new MyException(EnumSystem.NO_AUTH);
+				throw new BusinessException(EnumSystem.NO_AUTH);
 			}
 			personInfoMapper.updateByPrimaryKeySelective(personInfo);
 		}
@@ -82,10 +83,10 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 			if (Objects.equals(info.getUserId(), userId)) {
 				return info;
 			} else {
-				throw new MyException(EnumSystem.NO_AUTH);
+				throw new BusinessException(EnumSystem.NO_AUTH);
 			}
 		} else {
-			throw new MyException(EnumPersonInfo.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumPersonInfo.DATA_NOT_FOUND);
 		}
 	}
 
@@ -96,7 +97,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 		}
 		PersonInfo temp = personInfoMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumPersonInfo.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumPersonInfo.DATA_NOT_FOUND);
 		}
 		return temp;
 	}

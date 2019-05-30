@@ -3,7 +3,7 @@
  */
 package com.ydy.vo.other;
 
-import com.ydy.vo.ienum.base.IErrorEnum;
+import com.ydy.ienum.base.IErrorEnum;
 
 /**
  * @author xuzhaojie

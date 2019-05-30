@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.utils.DateUtil;
 import com.ydy.utils.FileUtil;
-import com.ydy.vo.ienum.EnumSystem;
 
 /**
  * @author xuzhaojie
@@ -48,7 +48,7 @@ public class FileController {
 			throws Exception {
 		String fileName = file.getOriginalFilename(); // 图片名字
 		if (!FileUtil.isFitFormat(fileName, IMG_FORMAT)) {
-			throw new MyException(EnumSystem.FILE_TYPE_NOT_FIT);
+			throw new BusinessException(EnumSystem.FILE_TYPE_NOT_FIT);
 		}
 		// 文件存放路径
 		String filePath = File.separator + DateUtil.getTodatDate();

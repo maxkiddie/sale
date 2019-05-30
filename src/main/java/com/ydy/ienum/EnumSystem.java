@@ -1,9 +1,9 @@
 /**
  * 
  */
-package com.ydy.vo.ienum;
+package com.ydy.ienum;
 
-import com.ydy.vo.ienum.base.IErrorEnum;
+import com.ydy.ienum.base.IErrorEnum;
 
 /**
  * @author xuzhaojie
@@ -19,17 +19,17 @@ public enum EnumSystem implements IErrorEnum{
 	DATA_NOT_FOUND111(1004, "找不到数据"),
 	TOKEN_NOT_MATCH(1005, "token不匹配"),
 	TOKEN_NOT_EXSIT(1006, "token是必须参数"),
-	USER_TOKEN_NOT_EXSIT(1006, "utoken是必须参数"),
-	USER_CAN_NOT_GET(1006, "系统获取不到用户信息"),
-	ADMIN_CAN_NOT_GET(1007, "系统获取不到管理员信息"),
-	CODE_EXPIRED(1007, "验证码已过期"),
-	CODE_ERROR(1008, "验证码不匹配"),
-	DATA_REPEAT(1009, "表单重复提交"),
-	NO_AUTH(1010, "没权限"),
-	PWD_NOT_FIT(1010, "两次密码不匹配"),
-	FILE_TYPE_NOT_FIT(1011, "文件类型不匹配"),
-	CODE_PRD_ERROR(1011, "系统错误,获取后台验证码"),
-	REMOTE_IP_ERROR(1012, "远程网络出现问题");
+	USER_TOKEN_NOT_EXSIT(1007, "utoken是必须参数"),
+	USER_CAN_NOT_GET(1008, "系统获取不到用户信息"),
+	ADMIN_CAN_NOT_GET(1009, "系统获取不到管理员信息"),
+	CODE_EXPIRED(1010, "验证码已过期"),
+	CODE_ERROR(1011, "验证码不匹配"),
+	DATA_REPEAT(1012, "表单重复提交"),
+	NO_AUTH(1013, "没权限"),
+	PWD_NOT_FIT(1014, "两次密码不匹配"),
+	FILE_TYPE_NOT_FIT(1015, "文件类型不匹配"),
+	CODE_PRD_ERROR(1016, "系统错误,获取后台验证码"),
+	REMOTE_IP_ERROR(1017, "远程网络出现问题");
 	private Integer code;
 	private String msg;
 

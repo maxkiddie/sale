@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ydy.vo.ienum.base;
+package com.ydy.ienum.base;
 
 /**
  * @author xuzhaojie

@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
-import com.ydy.vo.ienum.EnumSystem;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.ErrorVo;
 import com.ydy.vo.other.ResultVo;
@@ -40,9 +41,17 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(vo);
 	}
 
-	@ExceptionHandler(value = MyException.class)
+	@ExceptionHandler(value = BusinessException.class)
 	@ResponseBody
-	public ResponseEntity<BaseVo> exceptionMyHandler(HttpServletRequest req, MyException e) {
+	public ResponseEntity<BaseVo> exceptionMyHandler(HttpServletRequest req, BusinessException e) {
+		ResultVo vo = new ResultVo();
+		vo.setErrorEnum(e.getErrorEnum());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(vo);
+	}
+
+	@ExceptionHandler(value = DataNotFoundException.class)
+	@ResponseBody
+	public ResponseEntity<BaseVo> exceptionMyHandler(HttpServletRequest req, DataNotFoundException e) {
 		ResultVo vo = new ResultVo();
 		vo.setErrorEnum(e.getErrorEnum());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vo);

@@ -14,16 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ydy.constant.SystemConstant;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumAdmin;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.mapper.AdminMapper;
 import com.ydy.model.Admin;
 import com.ydy.service.admin.AdminService;
 import com.ydy.utils.Md5Util;
 import com.ydy.utils.TokenUtil;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumAdmin;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -56,16 +57,16 @@ public class AdminServiceImpl implements AdminService {
 	public AdminTokenVo checkAdmin(Admin admin) {
 		if (adminMapper.exsitUsername(admin.getUsername()) <= 0) {
 			log.info("找不到该管理员:" + admin.getUsername());
-			throw new MyException(EnumAdmin.NOT_FOUND);
+			throw new DataNotFoundException(EnumAdmin.NOT_FOUND);
 		}
 		Admin temp = adminMapper.checkAdminByUsernameAndPwd(admin.getUsername(), Md5Util.getMD5(admin.getPassword()));
 		if (temp == null) {
 			log.info("管理员登录密码错误:" + admin.getUsername());
-			throw new MyException(EnumAdmin.PWD_ERROR);
+			throw new BusinessException(EnumAdmin.PWD_ERROR);
 		}
 		if (SystemConstant.USE_STATUS_OFF.equals(temp.getUseStatus())) {
 			log.info("管理员不可用:" + admin.getUsername());
-			throw new MyException(EnumAdmin.CAN_NOT_USE_STATUS);
+			throw new BusinessException(EnumAdmin.CAN_NOT_USE_STATUS);
 		}
 		String token = TokenUtil.createAdminToken(temp);
 		AdminTokenVo vo = new AdminTokenVo();
@@ -89,7 +90,7 @@ public class AdminServiceImpl implements AdminService {
 		if (admin.getId() == null) {
 			flag = adminMapper.exsitUsername(admin.getUsername());
 			if (flag > 0) {// 用户名已存在
-				throw new MyException(EnumAdmin.USERNAME_EXSIT);
+				throw new BusinessException(EnumAdmin.USERNAME_EXSIT);
 			}
 			admin.setPassword(Md5Util.getMD5(SystemConstant.MANAGER_DEFAULT_PWD));// 设置默认密码
 			admin.setUseStatus(SystemConstant.USE_STATUS_ON);
@@ -99,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
 		} else {// 根据id更新信息
 			flag = adminMapper.selectCountByIdAndUsername(admin.getId(), admin.getUsername());
 			if (flag <= 0) {// 不存在该id信息
-				throw new MyException(EnumAdmin.ADMIN_NOT_FOUND);
+				throw new DataNotFoundException(EnumAdmin.ADMIN_NOT_FOUND);
 			}
 			admin.setPassword(null);
 			admin.setRegTime(null);
@@ -116,11 +117,11 @@ public class AdminServiceImpl implements AdminService {
 		}
 		Admin admin = adminMapper.selectByPrimaryKey(id);
 		if (admin == null) {
-			throw new MyException(EnumAdmin.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumAdmin.DATA_NOT_FOUND);
 		}
 		if (!(Objects.equals(username, admin.getUsername())
 				&& Objects.equals(Md5Util.getMD5(password), admin.getPassword()))) {
-			throw new MyException(EnumAdmin.PWD_ERROR);
+			throw new BusinessException(EnumAdmin.PWD_ERROR);
 		}
 		Admin update = new Admin();
 		update.setId(id);
@@ -140,7 +141,7 @@ public class AdminServiceImpl implements AdminService {
 			adminMapper.updateByPrimaryKeySelective(temp);
 			vo = new ResultVo(EnumSystem.SUSS);
 		} else {
-			throw new MyException(EnumAdmin.ADMIN_NOT_FOUND);
+			throw new DataNotFoundException(EnumAdmin.ADMIN_NOT_FOUND);
 		}
 		return vo;
 	}
@@ -160,7 +161,7 @@ public class AdminServiceImpl implements AdminService {
 			adminMapper.updateByPrimaryKeySelective(temp);
 			vo = new ResultVo(EnumSystem.SUSS);
 		} else {
-			throw new MyException(EnumAdmin.ADMIN_NOT_FOUND);
+			throw new BusinessException(EnumAdmin.ADMIN_NOT_FOUND);
 		}
 		return vo;
 	}
@@ -174,7 +175,7 @@ public class AdminServiceImpl implements AdminService {
 		if (admin != null) {
 			return admin;
 		} else {
-			throw new MyException(EnumAdmin.DATA_NOT_FOUND);
+			throw new BusinessException(EnumAdmin.DATA_NOT_FOUND);
 		}
 	}
 

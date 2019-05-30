@@ -3,14 +3,14 @@
  */
 package com.ydy.exception;
 
-import com.ydy.vo.ienum.base.IErrorEnum;
+import com.ydy.ienum.base.IErrorEnum;
 
 /**
  * @author xuzhaojie
  *
  *         2018年8月3日 上午11:54:23
  */
-public class MyException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 	/**
 	 * 
 	 */
@@ -18,15 +18,15 @@ public class MyException extends RuntimeException {
 
 	private IErrorEnum errorEnum;
 
-	public MyException(String message) {
+	public BusinessException(String message) {
 		this(message, null);
 	}
 
-	public MyException(String message, Throwable cause) {
+	public BusinessException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public MyException(IErrorEnum errorEnum) {
+	public BusinessException(IErrorEnum errorEnum) {
 		this.errorEnum = errorEnum;
 	}
 

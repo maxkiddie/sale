@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.ydy.exception.MyException;
+import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumWebInfo;
 import com.ydy.mapper.WebInfoMapper;
 import com.ydy.model.WebInfo;
 import com.ydy.service.webInfo.WebInfoService;
 import com.ydy.utils.ValidateUtil;
-import com.ydy.vo.ienum.EnumWebInfo;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -66,7 +66,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		} else {// 根据id更新信息
 			WebInfo temp = webInfoMapper.selectByPrimaryKey(webInfo.getId());
 			if (temp == null) {
-				throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
+				throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 			}
 			webInfo.setUpdateTime(now);
 			webInfoMapper.updateByPrimaryKeySelective(webInfo);
@@ -81,7 +81,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		}
 		WebInfo temp = webInfoMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		webInfoMapper.deleteByPrimaryKey(id);
 		return new ResultVo();
@@ -94,7 +94,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		info.setType(type);
 		info = webInfoMapper.selectOne(info);
 		if (info == null) {
-			throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		return info;
 	}
@@ -106,7 +106,7 @@ public class WebInfoServiceImpl implements WebInfoService {
 		}
 		WebInfo temp = webInfoMapper.selectByPrimaryKey(id);
 		if (temp == null) {
-			throw new MyException(EnumWebInfo.DATA_NOT_FOUND);
+			throw new DataNotFoundException(EnumWebInfo.DATA_NOT_FOUND);
 		}
 		return temp;
 	}

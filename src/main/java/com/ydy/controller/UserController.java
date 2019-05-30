@@ -21,11 +21,11 @@ import com.ydy.annotation.CheckFormRepeat;
 import com.ydy.annotation.CtrlParam;
 import com.ydy.constant.SystemConstant;
 import com.ydy.controller.base.BaseController;
-import com.ydy.exception.MyException;
+import com.ydy.exception.BusinessException;
+import com.ydy.ienum.EnumSystem;
 import com.ydy.model.User;
 import com.ydy.service.user.UserService;
 import com.ydy.utils.StringUtils;
-import com.ydy.vo.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
@@ -63,10 +63,10 @@ public class UserController extends BaseController {
 	public ResponseEntity<User> register(User user, @CtrlParam("二次密码") String repeatpwd, @CtrlParam("验证码") String code,
 			HttpServletRequest request) {
 		if (!compareCode(code, request)) {
-			throw new MyException(EnumSystem.CODE_ERROR);
+			throw new BusinessException(EnumSystem.CODE_ERROR);
 		}
 		if (!Objects.equals(repeatpwd, user.getPassword())) {
-			throw new MyException(EnumSystem.PWD_NOT_FIT);
+			throw new BusinessException(EnumSystem.PWD_NOT_FIT);
 		}
 		return ResponseEntity.ok(userService.register(user));
 	}
@@ -84,7 +84,7 @@ public class UserController extends BaseController {
 	public ResponseEntity<TokenVo> login(@CtrlParam("用户名") String username, @CtrlParam("密码") String password,
 			@CtrlParam("验证码") String code, HttpServletRequest request, HttpServletResponse response) {
 		if (!compareCode(code, request)) {
-			throw new MyException(EnumSystem.CODE_ERROR);
+			throw new BusinessException(EnumSystem.CODE_ERROR);
 		}
 		User user = new User(username, password);
 		UserTokenVo vo = userService.checkUser(user);
