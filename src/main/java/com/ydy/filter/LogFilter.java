@@ -9,6 +9,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ import com.ydy.utils.IpUtil;
  *         2018年11月13日 下午4:19:57
  */
 @Component
+@WebFilter(urlPatterns = "/*", filterName = "LogFilter")
 public class LogFilter extends BaseFilter {
 
 	public final static String REQUEST_ID = "Q";

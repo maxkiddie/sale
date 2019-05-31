@@ -16,7 +16,7 @@ spring:
         password: ${mysql_pwd}
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         filters: stat
         maxActive: 50
         initialSize: 10
@@ -47,8 +47,9 @@ mybatis:
          map-underscore-to-camel-case: true
   
 mapper:
-    mappers: com.ydy.basic.BaseMapper
-    identity: MYSQL
+    identity: mysql
+    not-empty: true
+    enum-as-simple-type: true
     
 #pagehelper
 pagehelper:

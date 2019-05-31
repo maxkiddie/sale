@@ -6,8 +6,7 @@ package com.ydy.dto;
 import java.util.List;
 
 import javax.persistence.Transient;
-
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import com.ydy.model.OrderDetail;
 

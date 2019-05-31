@@ -6,9 +6,8 @@ package com.ydy.dto;
 import java.util.List;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author xuzhaojie

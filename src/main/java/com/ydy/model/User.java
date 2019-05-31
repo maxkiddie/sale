@@ -7,8 +7,7 @@ import java.util.Date;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author xuzhaojie
