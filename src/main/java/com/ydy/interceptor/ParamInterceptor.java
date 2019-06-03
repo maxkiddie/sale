@@ -38,42 +38,46 @@ public class ParamInterceptor extends BaseInterceptor {
 	// 在控制器执行前调用
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		HandlerMethod m = (HandlerMethod) handler;// 强转原来的类型
-		// 用java原来的反射是反射不出参数名称，现在依靠spring的工具来获取(备注：java8编译器可以，不过默认是关闭的)
-		LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-		String[] paramNames = u.getParameterNames(m.getMethod());// 获取参数的具体名称
-		MethodParameter[] mp = m.getMethodParameters();// 用jdk自带反射出参数对象数组
-		int i = 0;// 数组坐标
-		ErrorVo errorVo = null;
-		for (MethodParameter p : mp) {// 循环数组
-			CtrlParam annotation = p.getParameterAnnotation(CtrlParam.class);// 判断该参数上是否有这个注解
-			if (annotation != null) {// 如果注解不为空
-				String value = request.getParameter(paramNames[i]);// 根据参数名称从request获取请求参数值
-				if (value == null || "".equals(value)) {// 判断request参数值是否为空
-					if (errorVo == null) {
-						errorVo = new ErrorVo();
-						errorVo.setErrorEnum(EnumSystem.PARAM_ERROR);
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod m = (HandlerMethod) handler;// 强转原来的类型
+			// 用java原来的反射是反射不出参数名称，现在依靠spring的工具来获取(备注：java8编译器可以，不过默认是关闭的)
+			LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
+			String[] paramNames = u.getParameterNames(m.getMethod());// 获取参数的具体名称
+			MethodParameter[] mp = m.getMethodParameters();// 用jdk自带反射出参数对象数组
+			int i = 0;// 数组坐标
+			ErrorVo errorVo = null;
+			for (MethodParameter p : mp) {// 循环数组
+				CtrlParam annotation = p.getParameterAnnotation(CtrlParam.class);// 判断该参数上是否有这个注解
+				if (annotation != null) {// 如果注解不为空
+					String value = request.getParameter(paramNames[i]);// 根据参数名称从request获取请求参数值
+					if (value == null || "".equals(value)) {// 判断request参数值是否为空
+						if (errorVo == null) {
+							errorVo = new ErrorVo();
+							errorVo.setErrorEnum(EnumSystem.PARAM_ERROR);
+						}
+						if ("".equals(annotation.value())) {
+							errorVo.putError(paramNames[i], paramNames[i] + "不能为空;");
+						} else {
+							errorVo.putError(paramNames[i], annotation.value() + "(" + paramNames[i] + ")不能为空;");
+						}
+						log.error(request.getRequestURI().toString() + "->" + paramNames[i] + "不能为空");
 					}
-					if ("".equals(annotation.value())) {
-						errorVo.putError(paramNames[i], paramNames[i] + "不能为空;");
-					} else {
-						errorVo.putError(paramNames[i], annotation.value() + "(" + paramNames[i] + ")不能为空;");
-					}
-					log.error(request.getRequestURI().toString() + "->" + paramNames[i] + "不能为空");
 				}
+				i++;
 			}
-			i++;
+			if (errorVo != null) {
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+				response.setStatus(HttpStatus.BAD_REQUEST.value());
+				PrintWriter out = null;
+				out = response.getWriter();
+				out.append(JSONObject.toJSONString(errorVo));
+				return false;
+			}
+			return true;
+		} else {
+			return true;
 		}
-		if (errorVo != null) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
-			response.setStatus(HttpStatus.BAD_REQUEST.value());
-			PrintWriter out = null;
-			out = response.getWriter();
-			out.append(JSONObject.toJSONString(errorVo));
-			return false;
-		}
-		return true;
 	}
 
 }

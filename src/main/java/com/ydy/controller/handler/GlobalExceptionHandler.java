@@ -57,10 +57,9 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vo);
 	}
 
-	@ExceptionHandler(value = Exception.class)
+	@ExceptionHandler
 	@ResponseBody
 	public ResponseEntity<BaseVo> exceptionHandler(HttpServletRequest req, Exception e) {
-		log.error(e.getMessage(), e);
 		String requestURI = req.getRequestURI();
 		String msg = requestURI + "出现异常:" + e.getMessage();
 		log.error(msg);

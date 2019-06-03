@@ -33,42 +33,47 @@ import com.ydy.vo.other.ResultVo;
 @Component
 public class AdminTokenInterceptor extends BaseInterceptor {
 
-	//private final static Logger log = LoggerFactory.getLogger(AdminTokenInterceptor.class);
+	// private final static Logger log =
+	// LoggerFactory.getLogger(AdminTokenInterceptor.class);
 
 	// 在控制器执行前调用
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		HandlerMethod m = (HandlerMethod) handler;// 强转原来的类型
-		AdminToken an = m.getMethod().getAnnotation(AdminToken.class);// 查看该方法有无权限注解
-		if (an == null) {// 没有该注解，放行
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod m = (HandlerMethod) handler;// 强转原来的类型
+			AdminToken an = m.getMethod().getAnnotation(AdminToken.class);// 查看该方法有无权限注解
+			if (an == null) {// 没有该注解，放行
+				return true;
+			}
+			String token = request.getParameter("token");
+			if (token == null || "".equals(token)) {
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+				response.setStatus(HttpStatus.BAD_REQUEST.value());
+				PrintWriter out = null;
+				out = response.getWriter();
+				BaseVo vo = new ResultVo(EnumSystem.TOKEN_NOT_EXSIT);
+				out.append(JSONObject.toJSONString(vo));
+				return false;
+			}
+			try {
+				Admin admin = TokenUtil.getAdmin(token);// 解释cookie,获取admin信息
+				request.setAttribute(SystemConstant.ADM_TOKEN, admin);
+				// 后续涉及权限等级再完善
+				admin.toString();
+				return true;
+			} catch (Exception e) {
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+				response.setStatus(HttpStatus.BAD_REQUEST.value());
+				PrintWriter out = null;
+				out = response.getWriter();
+				BaseVo vo = new ResultVo(EnumSystem.TOKEN_NOT_MATCH);
+				out.append(JSONObject.toJSONString(vo));
+				return false;
+			}
+		} else {
 			return true;
-		}
-		String token = request.getParameter("token");
-		if (token == null || "".equals(token)) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
-			response.setStatus(HttpStatus.BAD_REQUEST.value());
-			PrintWriter out = null;
-			out = response.getWriter();
-			BaseVo vo = new ResultVo(EnumSystem.TOKEN_NOT_EXSIT);
-			out.append(JSONObject.toJSONString(vo));
-			return false;
-		}
-		try {
-			Admin admin = TokenUtil.getAdmin(token);// 解释cookie,获取admin信息
-			request.setAttribute(SystemConstant.ADM_TOKEN, admin);
-			// 后续涉及权限等级再完善
-			admin.toString();
-			return true;
-		} catch (Exception e) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
-			response.setStatus(HttpStatus.BAD_REQUEST.value());
-			PrintWriter out = null;
-			out = response.getWriter();
-			BaseVo vo = new ResultVo(EnumSystem.TOKEN_NOT_MATCH);
-			out.append(JSONObject.toJSONString(vo));
-			return false;
 		}
 	}
 
