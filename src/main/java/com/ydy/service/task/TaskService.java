@@ -11,4 +11,6 @@ package com.ydy.service.task;
 public interface TaskService {
 
 	public void orderClose();
+
+	public void fileDel();
 }

@@ -22,8 +22,6 @@ public interface GoodService {
 
 	PageVo<Spu> list(Spu spu, Integer page, Integer size);
 
-	PageVo<Spu> listWithReduction(Spu spu, Integer page, Integer size);
-
 	PageVo<Sku> select(Sku sku, Integer page, Integer size);
 
 	PageVo<Sku> list(Sku sku, Integer page, Integer size);

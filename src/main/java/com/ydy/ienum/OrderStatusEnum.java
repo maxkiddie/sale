@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ydy.constant;
+package com.ydy.ienum;
 
 /**
  * @author xuzhaojie

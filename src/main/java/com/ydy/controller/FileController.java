@@ -4,6 +4,7 @@
 package com.ydy.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Base64;
@@ -11,9 +12,11 @@ import java.util.Base64;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +64,16 @@ public class FileController {
 		return ResponseEntity.ok(httpUrl);
 	}
 
+	@GetMapping("download")
+	@ResponseBody
+	public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		File file = new File("C:\\Users\\Wellson\\Desktop\\mysql.txt");
+		if (file.exists()) {
+			setDownloadFile(file.getName(), request, response);
+			IOUtils.copy(new FileInputStream(file), response.getOutputStream());
+		}
+	}
+
 	/**
 	 * 设置http响应头，下载文件
 	 * 
@@ -69,7 +82,6 @@ public class FileController {
 	 * @param response
 	 * @throws UnsupportedEncodingException
 	 */
-	@SuppressWarnings("unused")
 	private void setDownloadFile(String filename, HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 		response.setContentType("application/force-download");// 设置强制下载不打开

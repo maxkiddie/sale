@@ -15,7 +15,7 @@ import com.ydy.model.OrderDetail;
  *
  *         2019年5月27日 下午4:42:21
  */
-public class OrderDTO extends BillDTO{
+public class OrderDTO extends BillDTO {
 	/**
 	 * 买家留言
 	 */
@@ -32,6 +32,11 @@ public class OrderDTO extends BillDTO{
 	 */
 	@NotBlank
 	private String receiverMobile;
+	/**
+	 * 邮箱
+	 */
+	@NotBlank
+	private String receiverEmail;
 	/**
 	 * 国家
 	 */
@@ -82,6 +87,21 @@ public class OrderDTO extends BillDTO{
 	 */
 	public String getBuyerNick() {
 		return buyerNick;
+	}
+
+	/**
+	 * @return the receiverEmail
+	 */
+	public String getReceiverEmail() {
+		return receiverEmail;
+	}
+
+	/**
+	 * @param receiverEmail
+	 *            the receiverEmail to set
+	 */
+	public void setReceiverEmail(String receiverEmail) {
+		this.receiverEmail = receiverEmail;
 	}
 
 	/**

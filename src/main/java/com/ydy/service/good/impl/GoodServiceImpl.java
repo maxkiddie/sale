@@ -22,11 +22,9 @@ import com.ydy.exception.BusinessException;
 import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
 import com.ydy.ienum.EnumGood;
-import com.ydy.mapper.ReductionMapper;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.mapper.SpuDetailMapper;
 import com.ydy.mapper.SpuMapper;
-import com.ydy.model.Reduction;
 import com.ydy.model.Sku;
 import com.ydy.model.Spu;
 import com.ydy.model.SpuDetail;
@@ -36,8 +34,6 @@ import com.ydy.vo.SpuVo;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 import com.ydy.vo.other.ResultVo;
-
-import tk.mybatis.mapper.entity.Example;
 
 /**
  * @author xuzhaojie
@@ -52,8 +48,6 @@ public class GoodServiceImpl implements GoodService {
 	private SpuMapper spuMapper;
 	@Autowired
 	private SpuDetailMapper spuDetailMapper;
-	@Autowired
-	private ReductionMapper reductionMapper;
 	@Autowired
 	private SkuMapper skuMapper;
 
@@ -76,29 +70,6 @@ public class GoodServiceImpl implements GoodService {
 		vo.setTotal(pageBean.getTotal());
 		vo.setList(list);
 		return vo;
-	}
-
-	@Override
-	public PageVo<Spu> listWithReduction(Spu spu, Integer page, Integer size) {
-		PageVo<Spu> vo = new PageVo<Spu>(page, size);
-		Page<Spu> pageBean = PageHelper.startPage(vo.getPage(), vo.getSize(), "spu_id desc");
-		spu.setSpuStatus(SystemConstant.SPU_ON);
-		List<Spu> list = spuMapper.select(spu);
-		vo.setTotal(pageBean.getTotal());
-		Date now = new Date();
-		if (!CollectionUtils.isEmpty(list)) {
-			for (Spu data : list) {
-				Example example = new Example(Reduction.class);
-				Example.Criteria criteria = example.createCriteria();
-				criteria.andEqualTo("spuId", data.getSpuId());
-				criteria.andLessThan("startTime", now);
-				criteria.andGreaterThan("endTime", now);
-				data.setReductions(reductionMapper.selectByExample(example));
-			}
-		}
-		vo.setList(list);
-		return vo;
-
 	}
 
 	@Override
@@ -294,9 +265,6 @@ public class GoodServiceImpl implements GoodService {
 		Sku sku = new Sku();
 		sku.setSpuId(spuId);
 		skuMapper.delete(sku);
-		Reduction red = new Reduction();
-		red.setSpuId(spuId);
-		reductionMapper.delete(red);
 		log.info("删除SPU成功:" + spuId);
 		return new ResultVo();
 	}
@@ -316,9 +284,6 @@ public class GoodServiceImpl implements GoodService {
 		example.setSpuId(temp.getSpuId());
 		List<Sku> listSku = skuMapper.select(example);
 		spuMapper.updateByPrimaryKeySelective(computePrice(temp.getSpuId(), listSku));
-		Reduction red = new Reduction();
-		red.setSkuId(skuId);
-		reductionMapper.delete(red);
 		log.info("删除SKU成功:" + skuId);
 		return new ResultVo();
 	}

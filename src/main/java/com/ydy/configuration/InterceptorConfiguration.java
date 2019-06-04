@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ydy.interceptor.AdminTokenInterceptor;
-import com.ydy.interceptor.CheckFormRepeatInterceptor;
 import com.ydy.interceptor.ParamInterceptor;
 import com.ydy.interceptor.UserTokenInterceptor;
 
@@ -23,8 +22,8 @@ import com.ydy.interceptor.UserTokenInterceptor;
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {
 
-	@Autowired
-	private CheckFormRepeatInterceptor checkFormRepeatInterceptor;
+	// @Autowired
+	// private CheckFormRepeatInterceptor checkFormRepeatInterceptor;
 
 	@Autowired
 	private ParamInterceptor paramInterceptor;
@@ -38,7 +37,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 这里可以添加多个拦截器
-		registry.addInterceptor(checkFormRepeatInterceptor).addPathPatterns("/**");
+		// registry.addInterceptor(checkFormRepeatInterceptor).addPathPatterns("/**");
 		registry.addInterceptor(paramInterceptor).addPathPatterns("/**");
 		registry.addInterceptor(adminTokenInterceptor).addPathPatterns("/**");
 		registry.addInterceptor(userTokenInterceptor).addPathPatterns("/**");

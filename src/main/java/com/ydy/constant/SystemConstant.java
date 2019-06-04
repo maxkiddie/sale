@@ -13,7 +13,7 @@ package com.ydy.constant;
 public class SystemConstant {
 
 	public static final String MANAGER_DEFAULT_PWD = "123456a";// 管理员cookies
-	
+
 	public static final String DEFAULT_CODE = "1234";// 管理员cookies
 
 	public static final String ADM_TOKEN = "ADM_TOKEN";// 管理员cookies
@@ -21,6 +21,8 @@ public class SystemConstant {
 	public static final String USER_TOKEN = "USER_TOKEN";// 用户cookies
 
 	public static final String SESSION_CODE = "V_CODE";// 验证码key
+
+	public static final String LOCAL_COIN_TYPE = "USD";// 本地币种，美元
 
 	public static final Integer NOT_DELETE = 0;// 没删除状态
 
@@ -37,7 +39,11 @@ public class SystemConstant {
 	public static final Short USE_STATUS_OFF = 0;
 	// 状态
 	public static final Integer SPU_ON = 1;
-	
+
 	public static final Integer SPU_OFF = 0;
+	// 状态
+	public static final Integer NEWS_TOP_ON = 1;
+
+	public static final Integer NEWS_TOP_OFF = 0;
 
 }

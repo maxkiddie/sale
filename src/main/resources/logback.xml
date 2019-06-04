@@ -93,6 +93,9 @@
 	<logger name="com.ydy.utils" level="INFO">
 		<appender-ref ref="FILE" />
 	</logger>
+	<logger name="com.ydy.remote" level="INFO">
+		<appender-ref ref="FILE" />
+	</logger>
 	<logger name="com.ydy.mapper" level="DEBUG">
 		<appender-ref ref="SQL_FILE" />
 	</logger>

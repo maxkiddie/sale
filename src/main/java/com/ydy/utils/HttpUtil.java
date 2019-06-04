@@ -48,9 +48,9 @@ public class HttpUtil {
 	// 默认编码UTF8
 	private static String CHARSET = "UTF-8";
 	// 连接上一个url,获取response的返回等待时间
-	public static final int SOCKET_TIMEOUT = 20 * 1000;
+	public static final int SOCKET_TIMEOUT = 15 * 1000;
 	// 连接一个url的连接等待时间
-	public static final int CONNECT_TIMEOUT = 10 * 1000;
+	public static final int CONNECT_TIMEOUT = 8 * 1000;
 
 	/**
 	 * post请求,并使用body传输数据

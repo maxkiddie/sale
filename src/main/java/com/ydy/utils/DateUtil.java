@@ -102,6 +102,11 @@ public class DateUtil {
 		return df.format(new Date());
 	}
 
+	public static String getDateFile(Date date) {
+		DateFormat df = df_date.get();
+		return df.format(date);
+	}
+
 	public static long formatTimeLong(String fmt) {
 		if (fmt == null || "".equals(fmt)) {
 			throw new NullPointerException("时间格式为空");

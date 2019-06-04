@@ -26,7 +26,6 @@ import com.ydy.exception.BusinessException;
 import com.ydy.ienum.EnumSystem;
 import com.ydy.model.Admin;
 import com.ydy.service.admin.AdminService;
-import com.ydy.service.redis.RedisService;
 import com.ydy.utils.StringUtils;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
@@ -46,8 +45,6 @@ public class AdminController extends BaseController {
 	@Autowired
 	private AdminService adminService;
 
-	@Autowired
-	private RedisService redisService;
 
 	/**
 	 * 筛选管理员信息
@@ -83,7 +80,6 @@ public class AdminController extends BaseController {
 			Cookie cookie = new Cookie(SystemConstant.ADM_TOKEN, vo.getToken());
 			cookie.setPath("/");
 			response.addCookie(cookie);
-			redisService.delCode(request.getSession().getId());
 		}
 		return ResponseEntity.ok(vo);
 	}

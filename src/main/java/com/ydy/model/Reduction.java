@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,20 +20,18 @@ import javax.validation.constraints.NotNull;
  *         2019年5月29日 下午6:00:21
  */
 @Table(name = "reduction")
-public class Reduction implements Comparable<Reduction> {
+public class Reduction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
-	private Long spuId;
-	@NotNull
-	private Long skuId;
 	@NotBlank
 	private String name;
 	@NotBlank
 	private String detail;
 	@NotNull
-	private Long price;
+	@Max(value=100)
+	@Min(value=1)
+	private Long discount;
 	@NotNull
 	private Integer limitNum;
 	@NotNull
@@ -39,51 +39,6 @@ public class Reduction implements Comparable<Reduction> {
 	@NotNull
 	private Date endTime;
 	private Date createTime;
-
-	/**
-	 * @return the createTime
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	/**
-	 * @param createTime
-	 *            the createTime to set
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	/**
-	 * @return the startTime
-	 */
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	/**
-	 * @param startTime
-	 *            the startTime to set
-	 */
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	/**
-	 * @return the endTime
-	 */
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	/**
-	 * @param endTime
-	 *            the endTime to set
-	 */
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
 
 	/**
 	 * @return the id
@@ -98,36 +53,6 @@ public class Reduction implements Comparable<Reduction> {
 	 */
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the spuId
-	 */
-	public Long getSpuId() {
-		return spuId;
-	}
-
-	/**
-	 * @param spuId
-	 *            the spuId to set
-	 */
-	public void setSpuId(Long spuId) {
-		this.spuId = spuId;
-	}
-
-	/**
-	 * @return the skuId
-	 */
-	public Long getSkuId() {
-		return skuId;
-	}
-
-	/**
-	 * @param skuId
-	 *            the skuId to set
-	 */
-	public void setSkuId(Long skuId) {
-		this.skuId = skuId;
 	}
 
 	/**
@@ -161,18 +86,18 @@ public class Reduction implements Comparable<Reduction> {
 	}
 
 	/**
-	 * @return the price
+	 * @return the discount
 	 */
-	public Long getPrice() {
-		return price;
+	public Long getDiscount() {
+		return discount;
 	}
 
 	/**
-	 * @param price
-	 *            the price to set
+	 * @param discount
+	 *            the discount to set
 	 */
-	public void setPrice(Long price) {
-		this.price = price;
+	public void setDiscount(Long discount) {
+		this.discount = discount;
 	}
 
 	/**
@@ -190,9 +115,49 @@ public class Reduction implements Comparable<Reduction> {
 		this.limitNum = limitNum;
 	}
 
-	@Override
-	public int compareTo(Reduction r) {
-		return this.limitNum - r.getLimitNum();
+	/**
+	 * @return the startTime
+	 */
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * @param startTime
+	 *            the startTime to set
+	 */
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	/**
+	 * @return the endTime
+	 */
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * @param endTime
+	 *            the endTime to set
+	 */
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	/**
+	 * @return the createTime
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * @param createTime
+	 *            the createTime to set
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 }

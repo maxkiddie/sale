@@ -3,6 +3,8 @@
  */
 package com.ydy.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,15 @@ public class ReductionController {
 		return ResponseEntity.ok(vo);
 	}
 
+	@GetMapping("list")
+	@ResponseBody
+	public ResponseEntity<PageVo<Reduction>> select() {
+		List<Reduction> list = reductionService.listReductionOn();
+		PageVo<Reduction> vo = new PageVo<>(1, list.size());
+		vo.setList(list);
+		return ResponseEntity.ok(vo);
+	}
+
 	@AdminToken
 	@CheckFormRepeat
 	@PostMapping("save")
@@ -56,12 +67,6 @@ public class ReductionController {
 	@ResponseBody
 	public ResponseEntity<BaseVo> delete(@CtrlParam("id") Long id) {
 		return ResponseEntity.ok(reductionService.delete(id));
-	}
-
-	@GetMapping("selectBySkuId")
-	@ResponseBody
-	public ResponseEntity<PageVo<Reduction>> selectByskuId(@CtrlParam("skuId") Long skuId, Integer page, Integer size) {
-		return ResponseEntity.ok(reductionService.selectByskuId(skuId, page, size));
 	}
 
 	@AdminToken

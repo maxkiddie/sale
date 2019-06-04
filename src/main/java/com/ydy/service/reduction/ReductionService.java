@@ -3,6 +3,8 @@
  */
 package com.ydy.service.reduction;
 
+import java.util.List;
+
 import com.ydy.model.Reduction;
 import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
@@ -20,7 +22,7 @@ public interface ReductionService {
 
 	BaseVo delete(Long id);
 
-	PageVo<Reduction> selectByskuId(Long skuId, Integer page, Integer size);
-
 	Reduction selectById(Long id);
+
+	List<Reduction> listReductionOn();
 }

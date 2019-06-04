@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydy.exception.BusinessException;
 import com.ydy.exception.DataNotFoundException;
+import com.ydy.exception.RemoteApiException;
 import com.ydy.exception.ValidateException;
 import com.ydy.ienum.EnumSystem;
 import com.ydy.vo.other.BaseVo;
@@ -55,6 +56,15 @@ public class GlobalExceptionHandler {
 		ResultVo vo = new ResultVo();
 		vo.setErrorEnum(e.getErrorEnum());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vo);
+	}
+
+	@ExceptionHandler(value = RemoteApiException.class)
+	@ResponseBody
+	public ResponseEntity<BaseVo> exceptionMyHandler(HttpServletRequest req, RemoteApiException e) {
+		ErrorVo vo = new ErrorVo();
+		vo.setErrorEnum(EnumSystem.REMOTE_IP_ERROR);
+		vo.putError("error", e.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(vo);
 	}
 
 	@ExceptionHandler

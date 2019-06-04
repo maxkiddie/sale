@@ -22,7 +22,6 @@ public class ItemDTO {
 	@NotNull
 	@Min(value = 1)
 	private Integer num;
-	private Long reductionId;
 	private Long itemTotal;
 	private Long itemActualTotal;
 
@@ -99,21 +98,6 @@ public class ItemDTO {
 	 */
 	public void setNum(Integer num) {
 		this.num = num;
-	}
-
-	/**
-	 * @return the reductionId
-	 */
-	public Long getReductionId() {
-		return reductionId;
-	}
-
-	/**
-	 * @param reductionId
-	 *            the reductionId to set
-	 */
-	public void setReductionId(Long reductionId) {
-		this.reductionId = reductionId;
 	}
 
 	/**

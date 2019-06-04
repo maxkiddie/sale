@@ -13,33 +13,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.ydy.constant.OrderStatusEnum;
+import com.ydy.constant.SystemConstant;
 import com.ydy.dto.BillDTO;
 import com.ydy.dto.ItemDTO;
 import com.ydy.dto.OrderDTO;
 import com.ydy.exception.BusinessException;
 import com.ydy.exception.DataNotFoundException;
 import com.ydy.exception.ValidateException;
+import com.ydy.ienum.EnumCoin;
 import com.ydy.ienum.EnumGood;
 import com.ydy.ienum.EnumOrder;
 import com.ydy.ienum.EnumSystem;
+import com.ydy.ienum.OrderStatusEnum;
 import com.ydy.mapper.OrderDetailMapper;
 import com.ydy.mapper.OrderMapper;
 import com.ydy.mapper.OrderStatusMapper;
-import com.ydy.mapper.ReductionMapper;
 import com.ydy.mapper.SkuMapper;
 import com.ydy.model.Order;
 import com.ydy.model.OrderDetail;
 import com.ydy.model.OrderStatus;
 import com.ydy.model.Reduction;
 import com.ydy.model.Sku;
+import com.ydy.remote.coin.CoinApi;
+import com.ydy.remote.coin.vo.base.CoinVo;
 import com.ydy.service.order.OrderService;
+import com.ydy.service.reduction.ReductionService;
+import com.ydy.utils.BigDecimalUtil;
 import com.ydy.utils.DateUtil;
+import com.ydy.utils.RateUtil;
 import com.ydy.utils.ValidateUtil;
 import com.ydy.vo.OrderVo;
 import com.ydy.vo.other.BaseVo;
@@ -64,7 +72,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private SkuMapper skuMapper;
 	@Autowired
-	private ReductionMapper reductionMapper;
+	private ReductionService reductionService;
+	@Value("${CoinTpye:BTC,LTC}")
+	private String coinType;// 币种
 
 	@Override
 	public PageVo<Order> select(Order order, Integer page, Integer size) {
@@ -92,6 +102,10 @@ public class OrderServiceImpl implements OrderService {
 		if (!validateInfo.isEmpty()) {
 			throw new ValidateException(validateInfo);
 		}
+		if (!coinType.contains(bill.getPayCoinType().toUpperCase())) {
+			log.info("不支持该币种支付:" + bill.getPayCoinType().toLowerCase());
+			throw new BusinessException(EnumCoin.NOT_SUP_COIN_TYPE);
+		}
 		List<ItemDTO> items = bill.getItems();
 		for (ItemDTO dto : items) {
 			validateInfo = ValidateUtil.validateEntity(dto);
@@ -108,30 +122,36 @@ public class OrderServiceImpl implements OrderService {
 		}
 		Long totalPay = 0L;
 		Long actualPay = 0L;
+		// TODO 计算邮费
+		bill.setPostFee(100L);// 默认一美元
 		totalPay += bill.getPostFee();// 邮费
 		actualPay += bill.getPostFee();// 邮费
 		Sku sku = null;
-		Date now = new Date();
+		Integer itemNumTotal = 0;
+		for (ItemDTO item : bill.getItems()) {
+			itemNumTotal += item.getNum();
+		}
+		List<Reduction> reductions = reductionService.listReductionOn();
+		Reduction fitReduction = null;
+		if (!CollectionUtils.isEmpty(reductions)) {
+			for (Reduction r : reductions) {
+				if (itemNumTotal >= r.getLimitNum()) {
+					fitReduction = r;
+					break;
+				}
+			}
+		}
 		for (ItemDTO item : bill.getItems()) {
 			sku = skuMapper.selectByPrimaryKey(item.getSkuId());
 			if (sku == null) {
 				log.info("找不到SKU信息:" + item.getSkuId());
 				throw new DataNotFoundException(EnumGood.SKU_NOT_FOUND);
 			}
-			Reduction reduction = null;
-			if (item.getReductionId() != null) {
-				reduction = reductionMapper.selectByPrimaryKey(item.getReductionId());
-			}
 			Long itemActualTotal = 0L;
-			boolean reductionFlag = false;
-			if (reduction != null && item.getNum() >= reduction.getLimitNum()) {
-				if (now.getTime() > reduction.getStartTime().getTime()
-						&& now.getTime() < reduction.getEndTime().getTime()) {// 处于优惠活动期间
-					reductionFlag = true;
-				}
-			}
-			if (reductionFlag) {
-				itemActualTotal = reduction.getPrice() * item.getNum();
+			if (fitReduction != null) {
+				itemActualTotal = sku.getNowPrice() * item.getNum();
+				itemActualTotal = BigDecimalUtil.discount(itemActualTotal, fitReduction.getDiscount().doubleValue())
+						.longValue();
 			} else {
 				itemActualTotal = sku.getNowPrice() * item.getNum();
 			}
@@ -143,8 +163,23 @@ public class OrderServiceImpl implements OrderService {
 			item.setItemTotal(itemTotal);
 			item.setUnitPrice(sku.getNowPrice());
 		}
+		String payCoinType = bill.getPayCoinType().toUpperCase();
+		bill.setCoinType(SystemConstant.LOCAL_COIN_TYPE);// 设置本地币种
 		bill.setActualPay(actualPay);
 		bill.setTotalPay(totalPay);
+		// 处理币种信息
+		CoinVo vo = null;
+		if ("BTC".equalsIgnoreCase(payCoinType)) {
+			vo = CoinApi.requestBitCoinInfo();
+		} else if ("LTC".equalsIgnoreCase(payCoinType)) {
+			vo = CoinApi.requestLiteCoinInfo();
+		} else {
+			log.info("不支持该币种支付:" + payCoinType);
+			throw new BusinessException(EnumCoin.NOT_SUP_COIN_TYPE);
+		}
+		bill.setPayCoinType(payCoinType);// 设置支付币种，大写
+		bill.setRate(vo.getPrice().toString());
+		bill.setMoneyPay(RateUtil.calculate(bill.getActualPay(), vo.getPrice()).toString());
 		return bill;
 	}
 
@@ -178,6 +213,10 @@ public class OrderServiceImpl implements OrderService {
 		order.setActualPay(billDTO.getActualPay());
 		order.setPaymentType(billDTO.getPaymentType());
 		order.setPostFee(billDTO.getPostFee());
+		order.setMoneyPay(billDTO.getMoneyPay());
+		order.setCoinType(billDTO.getCoinType());
+		order.setPayCoinType(billDTO.getPayCoinType());
+		order.setRate(billDTO.getRate());
 		order.setCreateTime(now);
 		order.setUserId(billDTO.getUserId());
 		order.setBuyerNick(dto.getBuyerNick());
@@ -191,6 +230,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setReceiverDistrict(dto.getReceiverDistrict());
 		order.setReceiverAddress(dto.getReceiverAddress());
 		order.setReceiverZip(dto.getReceiverZip());
+		order.setReceiverEmail(dto.getReceiverEmail());
 		orderMapper.insertSelective(order);
 		orderDetailMapper.insertList(detailList);
 		order.setOrderDetails(detailList);

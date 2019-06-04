@@ -61,6 +61,57 @@ public class FileUtil {
 		return true;
 	}
 
+	public static boolean deletePath(String dirpath) {
+		File file = new File(dirpath);
+		if (!file.exists()) {
+			log.info("文件路径不存在:" + dirpath);
+			return false;
+		}
+		if (!file.isDirectory()) {
+			log.error(dirpath + "不是文件目录路径");
+			return false;
+		}
+		File[] sonFiles = file.listFiles();
+		for (File f : sonFiles) {
+			if (f.exists()) {
+				if (f.isDirectory()) {
+					deletePath(f.getAbsolutePath());
+				}
+				if (f.isFile()) {
+					deleteFile(f.getAbsolutePath());
+				}
+			} else {
+				log.info("文件不存在!");
+			}
+		}
+		boolean flag = file.delete();
+		if (flag) {
+			log.info("删除成功:" + dirpath);
+		} else {
+			log.error("删除失败:" + dirpath);
+		}
+		return flag;
+	}
+
+	public static boolean deleteFile(String abluFile) {
+		File file = new File(abluFile);
+		if (!file.exists()) {
+			log.info("文件不存在!");
+			return false;
+		}
+		if (!file.isFile()) {
+			log.error(abluFile + "不是文件");
+			return false;
+		}
+		boolean flag = file.delete();
+		if (flag) {
+			log.info("删除成功:" + abluFile);
+		} else {
+			log.error("删除失败:" + abluFile);
+		}
+		return flag;
+	}
+
 	/**
 	 * 判断是否符合文件后缀 xuzhaojie -2016-9-14 上午11:54:27
 	 */

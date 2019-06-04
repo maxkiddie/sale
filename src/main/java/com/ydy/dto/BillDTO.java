@@ -5,7 +5,7 @@ package com.ydy.dto;
 
 import java.util.List;
 
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +21,7 @@ public class BillDTO {
 
 	@NotNull
 	private Integer paymentType;
+	private String coinType;// 币种
 	/**
 	 * 总金额
 	 */
@@ -29,11 +30,15 @@ public class BillDTO {
 	 * 实付金额
 	 */
 	private Long actualPay;
+	private String moneyPay;// 付款数目
+
+	@NotBlank
+	private String payCoinType;// 付款 币种
+
+	private String rate;// 当天汇率
 	/**
 	 * 邮费
 	 */
-	@NotNull
-	@Min(value = 0)
 	private Long postFee;
 	@NotEmpty
 	List<ItemDTO> items;
@@ -51,6 +56,66 @@ public class BillDTO {
 	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	/**
+	 * @return the payCoinType
+	 */
+	public String getPayCoinType() {
+		return payCoinType;
+	}
+
+	/**
+	 * @param payCoinType
+	 *            the payCoinType to set
+	 */
+	public void setPayCoinType(String payCoinType) {
+		this.payCoinType = payCoinType;
+	}
+
+	/**
+	 * @return the coinType
+	 */
+	public String getCoinType() {
+		return coinType;
+	}
+
+	/**
+	 * @param coinType
+	 *            the coinType to set
+	 */
+	public void setCoinType(String coinType) {
+		this.coinType = coinType;
+	}
+
+	/**
+	 * @return the moneyPay
+	 */
+	public String getMoneyPay() {
+		return moneyPay;
+	}
+
+	/**
+	 * @param moneyPay
+	 *            the moneyPay to set
+	 */
+	public void setMoneyPay(String moneyPay) {
+		this.moneyPay = moneyPay;
+	}
+
+	/**
+	 * @return the rate
+	 */
+	public String getRate() {
+		return rate;
+	}
+
+	/**
+	 * @param rate
+	 *            the rate to set
+	 */
+	public void setRate(String rate) {
+		this.rate = rate;
 	}
 
 	/**

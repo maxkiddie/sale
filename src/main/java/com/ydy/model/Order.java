@@ -31,6 +31,12 @@ public class Order {
 	 */
 	private Long actualPay;
 
+	private String moneyPay;// 付款数目
+
+	private String coinType;// 币种
+	private String payCoinType;// 付款币种
+
+	private String rate;// 当天汇率
 	/**
 	 * 支付类型，1、在线支付，2、货到付款
 	 */
@@ -90,6 +96,11 @@ public class Order {
 	 */
 	@NotBlank
 	private String receiverMobile;
+	/**
+	 * 邮箱
+	 */
+	@NotBlank
+	private String receiverEmail;
 
 	/**
 	 * 国家
@@ -154,6 +165,36 @@ public class Order {
 	}
 
 	/**
+	 * @return the receiverEmail
+	 */
+	public String getReceiverEmail() {
+		return receiverEmail;
+	}
+
+	/**
+	 * @param receiverEmail
+	 *            the receiverEmail to set
+	 */
+	public void setReceiverEmail(String receiverEmail) {
+		this.receiverEmail = receiverEmail;
+	}
+
+	/**
+	 * @return the payCoinType
+	 */
+	public String getPayCoinType() {
+		return payCoinType;
+	}
+
+	/**
+	 * @param payCoinType
+	 *            the payCoinType to set
+	 */
+	public void setPayCoinType(String payCoinType) {
+		this.payCoinType = payCoinType;
+	}
+
+	/**
 	 * @param totalPay
 	 *            the totalPay to set
 	 */
@@ -196,6 +237,51 @@ public class Order {
 	 */
 	public Long getPostFee() {
 		return postFee;
+	}
+
+	/**
+	 * @return the coinType
+	 */
+	public String getCoinType() {
+		return coinType;
+	}
+
+	/**
+	 * @param coinType
+	 *            the coinType to set
+	 */
+	public void setCoinType(String coinType) {
+		this.coinType = coinType;
+	}
+
+	/**
+	 * @return the moneyPay
+	 */
+	public String getMoneyPay() {
+		return moneyPay;
+	}
+
+	/**
+	 * @param moneyPay
+	 *            the moneyPay to set
+	 */
+	public void setMoneyPay(String moneyPay) {
+		this.moneyPay = moneyPay;
+	}
+
+	/**
+	 * @return the rate
+	 */
+	public String getRate() {
+		return rate;
+	}
+
+	/**
+	 * @param rate
+	 *            the rate to set
+	 */
+	public void setRate(String rate) {
+		this.rate = rate;
 	}
 
 	/**

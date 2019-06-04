@@ -3,6 +3,7 @@
  */
 package com.ydy.controller;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import javax.servlet.http.Cookie;
@@ -24,6 +25,8 @@ import com.ydy.controller.base.BaseController;
 import com.ydy.exception.BusinessException;
 import com.ydy.ienum.EnumSystem;
 import com.ydy.model.User;
+import com.ydy.remote.wechat.WeChatApi;
+import com.ydy.remote.wechat.vo.WeChatUserInfo;
 import com.ydy.service.user.UserService;
 import com.ydy.utils.StringUtils;
 import com.ydy.vo.other.BaseVo;
@@ -95,6 +98,37 @@ public class UserController extends BaseController {
 			request.getSession().removeAttribute(SystemConstant.SESSION_CODE);
 		}
 		return ResponseEntity.ok(vo);
+	}
+
+	/**
+	 * 获取微信登录地址
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws IOException
+	 */
+	@GetMapping("wechatLoginUrl")
+	@ResponseBody
+	public ResponseEntity<Void> wechatLoginUrl(HttpServletResponse response) throws IOException {
+		response.sendRedirect(WeChatApi.getLoginUrl());
+		return ResponseEntity.ok().build();
+	}
+
+	/**
+	 * 微信登录
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@GetMapping("wechatLogin")
+	@CheckFormRepeat
+	@ResponseBody
+	public ResponseEntity<WeChatUserInfo> wechatLogin(@CtrlParam("微信登录码") String code, HttpServletRequest request,
+			HttpServletResponse response) {
+		WeChatUserInfo info = WeChatApi.getWebAccessToken(WeChatApi.getWebAccessToken(code));
+		return ResponseEntity.ok(info);
 	}
 
 	/**
