@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -23,8 +24,10 @@ import com.ydy.ienum.EnumPersonInfo;
 import com.ydy.ienum.EnumSystem;
 import com.ydy.mapper.PersonInfoMapper;
 import com.ydy.model.PersonInfo;
+import com.ydy.model.relation.RelationOrderPerson;
 import com.ydy.service.personInfo.PersonInfoService;
 import com.ydy.utils.ValidateUtil;
+import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
 /**
@@ -109,6 +112,21 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 			throw new DataNotFoundException(EnumPersonInfo.DATA_NOT_FOUND);
 		}
 		return temp;
+	}
+
+	@Override
+	public BaseVo bindRelationOrderPersons(List<RelationOrderPerson> list, Long userId) {
+		if (CollectionUtils.isEmpty(list)) {
+			log.error("订单-人物关系列表不能为空");
+			throw new BusinessException(EnumPersonInfo.PERSON_ORDER_RELATION_EMPTY);
+		}
+		for (RelationOrderPerson r : list) {
+			Map<String, String> validateInfo = ValidateUtil.validateEntity(r);
+			if (!validateInfo.isEmpty()) {
+				throw new ValidateException(validateInfo);
+			}
+		}
+		return null;
 	}
 
 }

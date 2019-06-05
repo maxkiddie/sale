@@ -11,7 +11,8 @@ import com.ydy.ienum.base.IErrorEnum;
  *         2018年11月12日 上午9:41:48
  */
 public enum EnumPersonInfo implements IErrorEnum {
-	DATA_NOT_FOUND(7000,"找不到人物信息");
+	DATA_NOT_FOUND(7000,"找不到人物信息"),
+	PERSON_ORDER_RELATION_EMPTY(7001,"订单-人物关系不能为空");
 
 	private Integer code;
 	private String msg;

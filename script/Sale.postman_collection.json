@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "good",
+			"name": "商品",
 			"item": [
 				{
 					"name": "保存商品信息",
@@ -14,7 +14,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/good/saveSpu?name=IPhoneX&title=苹果手机便宜卖&detail=苹果手机详情富文本&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&mainImage=图片&images=图片;图片;图片",
+							"raw": "http://localhost/good/saveSpu?name=华为P30&title=华为P30手机便宜卖&detail=华为P30详情富文本&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&mainImage=图片&images=图片;图片;图片",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -32,17 +32,17 @@
 								},
 								{
 									"key": "name",
-									"value": "IPhoneX",
+									"value": "华为P30",
 									"description": "商品名称"
 								},
 								{
 									"key": "title",
-									"value": "苹果手机便宜卖",
+									"value": "华为P30手机便宜卖",
 									"description": "商品子标题"
 								},
 								{
 									"key": "detail",
-									"value": "苹果手机详情富文本",
+									"value": "华为P30详情富文本",
 									"description": "商品详情"
 								},
 								{
@@ -71,7 +71,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/good/saveSku?spuId=13&spuSpecs=苹果手机黑色64G&stock=999&price=249900&nowPrice=199900&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&mainImage=主图",
+							"raw": "http://localhost/good/saveSku?spuId=20&spuSpecs=华为手机黑色64G&stock=999&price=249900&nowPrice=199900&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&mainImage=主图",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -89,12 +89,12 @@
 								},
 								{
 									"key": "spuId",
-									"value": "13",
+									"value": "20",
 									"description": "商品spuId，必填"
 								},
 								{
 									"key": "spuSpecs",
-									"value": "苹果手机黑色64G",
+									"value": "华为手机黑色64G",
 									"description": "sku描述"
 								},
 								{
@@ -165,7 +165,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/good/selectSku?spuId=13&page=1&size=10&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"raw": "http://localhost/good/selectSku?spuId=20&page=1&size=10&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -177,7 +177,7 @@
 							"query": [
 								{
 									"key": "spuId",
-									"value": "13",
+									"value": "20",
 									"description": "查找某个spu下的sku列表"
 								},
 								{
@@ -198,7 +198,7 @@
 					"response": []
 				},
 				{
-					"name": "用户筛选商品",
+					"name": "首页筛选商品",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -232,7 +232,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/good/spuDetail?spuId=13",
+							"raw": "http://localhost/good/spuDetail?spuId=20",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -244,7 +244,7 @@
 							"query": [
 								{
 									"key": "spuId",
-									"value": "13"
+									"value": "20"
 								}
 							]
 						}
@@ -257,7 +257,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/good/statusSpu?spuId=13&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"raw": "http://localhost/good/statusSpu?spuId=20&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -269,7 +269,7 @@
 							"query": [
 								{
 									"key": "spuId",
-									"value": "13"
+									"value": "20"
 								},
 								{
 									"key": "token",
@@ -366,40 +366,33 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "489a0e81-50b2-4f0e-b54a-dbd96a9046cf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "筛选商品带优惠信息",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost/good/listWithReduction?page=1&size=10",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"good",
-								"listWithReduction"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"id": "7ebfd709-5341-4732-b605-f3716e76831a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
 		{
-			"name": "order",
+			"name": "订单",
 			"item": [
 				{
 					"name": "后台订单筛选",
@@ -465,7 +458,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"items\": [\n        {\n            \"skuId\": 11,\n            \"num\": 4,\n            \"reductionId\": 3\n        }\n    ],\n    \"paymentType\": 1,\n    \"postFee\": 500,\n    \"buyerMessage\": \"一定要做好\",\n    \"receiver\": \"徐则林\",\n    \"receiverMobile\": \"+8615088132421\",\n    \"receiverCountry\": \"中国\",\n    \"receiverState\": \"广东省\",\n    \"receiverDistrict\": \"增城区\",\n    \"receiverCity\": \"广州市\",\n    \"receiverAddress\": \"荔城街府佑路1号\",\n    \"receiverZip\": \"511300\"\n}"
+							"raw": "{\n    \"items\": [\n        {\n            \"skuId\": 11,\n            \"num\": 2\n        },\n         {\n            \"skuId\": 13,\n            \"num\": 2\n        }\n    ],\n    \"payCoinType\": \"BTC\",\n    \"paymentType\": 1,\n    \"buyerMessage\": \"一定要做好\",\n    \"receiver\": \"徐则林\",\n    \"receiverMobile\": \"+8615088132421\",\n    \"receiverCountry\": \"中国\",\n    \"receiverState\": \"广东省\",\n    \"receiverDistrict\": \"增城区\",\n    \"receiverCity\": \"广州市\",\n    \"receiverAddress\": \"荔城街府佑路1号\",\n    \"receiverZip\": \"511300\",\n    \"receiverEmail\": \"531592003@qq.com\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost/order/create?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
@@ -654,7 +647,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"items\": [\n        {\n            \"skuId\": 11,\n            \"num\": 4,\n            \"reductionId\":3\n        }\n    ],\n    \"paymentType\": 1,\n    \"postFee\": 0\n}"
+							"raw": "{\n    \"items\": [\n        {\n            \"skuId\": 11,\n            \"num\": 2\n        },\n        {\n            \"skuId\": 13,\n            \"num\": 2\n        }\n    ],\n    \"paymentType\": 1,\n    \"payCoinType\": \"btc\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost/order/bill?utoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU19JRCI6MSwiZXhwIjoxNTU5ODcxMDMzLCJpYXQiOjE1NTkwMDcwMzMsIlVTX05BTUUiOiJLaWRkaWUifQ.5RXVyGseikiQO6NO_-sJJN1BH6LXO0u2izVLhUeJTw8",
@@ -734,10 +727,32 @@
 					},
 					"response": []
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cbf0c403-2c0f-45aa-90d8-cba14d46c9ce",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "80256f7b-a4dd-4888-965a-065be441c4fb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
-			"name": "faq",
+			"name": "FAQ",
 			"item": [
 				{
 					"name": "FAQ筛选",
@@ -902,7 +917,7 @@
 			]
 		},
 		{
-			"name": "user",
+			"name": "用户",
 			"item": [
 				{
 					"name": "用户登录",
@@ -998,7 +1013,7 @@
 			]
 		},
 		{
-			"name": "personinfo",
+			"name": "个人信息",
 			"item": [
 				{
 					"name": "保存人物信息",
@@ -1118,7 +1133,7 @@
 			]
 		},
 		{
-			"name": "admin",
+			"name": "管理员",
 			"item": [
 				{
 					"name": "管理员登录",
@@ -1396,6 +1411,244 @@
 			]
 		},
 		{
+			"name": "新闻",
+			"item": [
+				{
+					"name": "新闻后台筛选",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/select?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&page=1&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"select"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新闻保存",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/save?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&image=图片&detail=内容&title=标题",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"save"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								},
+								{
+									"key": "image",
+									"value": "图片"
+								},
+								{
+									"key": "detail",
+									"value": "内容"
+								},
+								{
+									"key": "title",
+									"value": "标题"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新闻删除",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/delete?id=1&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "首页新闻",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/list?page=1&szie=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "szie",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新闻置顶",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/status?id=2&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"status"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "banner信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/selectById?id=3&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"selectById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户查看新闻具体信息",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/news/detail?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"news",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5a8e0fd4-4526-481d-a42d-3f6c0b4c065c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3264e914-7376-4e22-9a01-16b07f16c8e1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "图片",
 			"item": [
 				{
@@ -1607,7 +1860,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/reduction/save?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&spuId=13&skuId=11&limitNum=2&price=169900&name=优惠很大&detail=2部手机每部1699&id=4&startTime=2019-05-30 00:15:00&endTime=2019-06-30 20:15:00",
+							"raw": "http://localhost/reduction/save?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE&limitNum=4&discount=85&name=满4就八五折&detail=满4就八五折&id=4&startTime=2019-05-30 00:15:00&endTime=2019-06-30 20:15:00",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1622,28 +1875,20 @@
 									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBRF9JRCI6MSwiQURfTkFNRSI6IktpZGRpZSIsImV4cCI6MTU1OTg4MjY3MSwiaWF0IjoxNTU5MDE4NjcxfQ._qbnheF4nkxTYiiCquKhhAK4ShChYxN_knKYqt3hjQE"
 								},
 								{
-									"key": "spuId",
-									"value": "13"
-								},
-								{
-									"key": "skuId",
-									"value": "11"
-								},
-								{
 									"key": "limitNum",
-									"value": "2"
+									"value": "4"
 								},
 								{
-									"key": "price",
-									"value": "169900"
+									"key": "discount",
+									"value": "85"
 								},
 								{
 									"key": "name",
-									"value": "优惠很大"
+									"value": "满4就八五折"
 								},
 								{
 									"key": "detail",
-									"value": "2部手机每部1699"
+									"value": "满4就八五折"
 								},
 								{
 									"key": "id",
@@ -1746,27 +1991,11 @@
 					"response": []
 				},
 				{
-					"name": "用户查找子商品优惠信息",
+					"name": "用户查找活动中的优惠信息",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost/reduction/selectBySkuId?skuId=11",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"reduction",
-								"selectBySkuId"
-							],
-							"query": [
-								{
-									"key": "skuId",
-									"value": "11"
-								}
-							]
-						}
+						"url": "http://localhost/reduction/list"
 					},
 					"response": []
 				}

@@ -3,7 +3,11 @@
  */
 package com.ydy.service.personInfo;
 
+import java.util.List;
+
 import com.ydy.model.PersonInfo;
+import com.ydy.model.relation.RelationOrderPerson;
+import com.ydy.vo.other.BaseVo;
 import com.ydy.vo.other.PageVo;
 
 /**
@@ -16,7 +20,9 @@ public interface PersonInfoService {
 
 	PersonInfo saveOrUpdate(PersonInfo personInfo);
 
-	PersonInfo selectById(Long id,Long userId);
-	
+	PersonInfo selectById(Long id, Long userId);
+
 	PersonInfo selectById(Long id);
+
+	BaseVo bindRelationOrderPersons(List<RelationOrderPerson> list, Long userId);
 }

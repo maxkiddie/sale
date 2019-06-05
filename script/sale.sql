@@ -11,7 +11,7 @@
  Target Server Version : 50557
  File Encoding         : 65001
 
- Date: 30/05/2019 20:52:36
+ Date: 05/06/2019 08:34:46
 */
 
 SET NAMES utf8mb4;
@@ -74,12 +74,38 @@ CREATE TABLE `faq`  (
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of faq
 -- ----------------------------
 INSERT INTO `faq` VALUES (6, '我的问题', '回答了', 0, NULL, '2019-05-30 20:08:51');
+INSERT INTO `faq` VALUES (7, '我的问题', '回答了', 0, NULL, '2019-05-31 09:45:23');
+INSERT INTO `faq` VALUES (8, '我的问题', '回答了', 0, NULL, '2019-05-31 09:45:31');
+INSERT INTO `faq` VALUES (9, '我的问题', '回答了', 0, NULL, '2019-05-31 09:45:35');
+
+-- ----------------------------
+-- Table structure for news
+-- ----------------------------
+DROP TABLE IF EXISTS `news`;
+CREATE TABLE `news`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `admin_id` int(10) NULL DEFAULT NULL,
+  `editor` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `detail` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `top_status` tinyint(2) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of news
+-- ----------------------------
+INSERT INTO `news` VALUES (2, '标题', '图片', 1, 'Kiddie', '内容', 1, '2019-06-04 08:37:16', '2019-06-04 08:37:16');
+INSERT INTO `news` VALUES (3, '标题', '图片', 1, 'Kiddie', '内容', 0, '2019-06-04 08:37:17', '2019-06-04 08:37:17');
 
 -- ----------------------------
 -- Table structure for o_order
@@ -87,8 +113,12 @@ INSERT INTO `faq` VALUES (6, '我的问题', '回答了', 0, NULL, '2019-05-30 2
 DROP TABLE IF EXISTS `o_order`;
 CREATE TABLE `o_order`  (
   `order_id` bigint(20) NOT NULL,
-  `total_pay` bigint(20) NOT NULL,
-  `actual_pay` bigint(20) NOT NULL,
+  `total_pay` bigint(20) NOT NULL COMMENT '总金额(分)',
+  `actual_pay` bigint(20) NOT NULL COMMENT '实际金额(分）',
+  `coin_type` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种(分)',
+  `money_pay` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '付款钱币金额（元）',
+  `pay_coin_type` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '付款币种',
+  `rate` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '当天汇率（元）',
   `payment_type` tinyint(2) NOT NULL,
   `post_fee` bigint(20) NULL DEFAULT NULL,
   `create_time` datetime NOT NULL,
@@ -104,6 +134,7 @@ CREATE TABLE `o_order`  (
   `receiver_district` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `receiver_address` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `receiver_mobile` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `receiver_email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `receiver_zip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `receiver` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`order_id`) USING BTREE
@@ -112,7 +143,7 @@ CREATE TABLE `o_order`  (
 -- ----------------------------
 -- Records of o_order
 -- ----------------------------
-INSERT INTO `o_order` VALUES (201905301056433031, 800100, 600100, 1, 500, '2019-05-30 10:56:43', '顺丰快递', '123465123456789', 1, 'Kiddie', '一定要做好', 0, '中国', '广东省', '广州市', '增城区', '荔城街府佑路1号', '+8615088132421', '511300', '徐则林');
+INSERT INTO `o_order` VALUES (201906041916544839, 799700, 679760, 'USD', '0.85451949', 'BTC', '7954.88', 1, 100, '2019-06-04 11:16:56', NULL, NULL, 1, 'Kiddie', '一定要做好', 0, '中国', '广东省', '广州市', '增城区', '荔城街府佑路1号', '+8615088132421', '531592003@qq.com', '511300', '徐则林');
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -128,12 +159,13 @@ CREATE TABLE `order_detail`  (
   `total_price` bigint(20) NOT NULL,
   `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (7, 201905301056433031, 11, 4, '苹果手机黑色64G', 199900, 599600, '主图');
+INSERT INTO `order_detail` VALUES (11, 201906041916544839, 11, 2, '苹果手机黑色64G', 199900, 339830, '主图');
+INSERT INTO `order_detail` VALUES (12, 201906041916544839, 13, 2, '华为手机黑色64G', 199900, 339830, '主图');
 
 -- ----------------------------
 -- Table structure for order_status
@@ -154,7 +186,7 @@ CREATE TABLE `order_status`  (
 -- ----------------------------
 -- Records of order_status
 -- ----------------------------
-INSERT INTO `order_status` VALUES (201905301056433031, 4, '2019-05-30 10:56:43', '2019-05-30 10:59:32', '2019-05-30 10:59:50', '2019-05-30 11:00:31', NULL, NULL);
+INSERT INTO `order_status` VALUES (201906041916544839, 1, '2019-06-04 11:16:56', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for person_info
@@ -204,11 +236,15 @@ INSERT INTO `person_info` VALUES (14, 1, 'Xu', 'Zhao', 'Jie', '2019-05-28 09:39:
 -- ----------------------------
 DROP TABLE IF EXISTS `r_order_person`;
 CREATE TABLE `r_order_person`  (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `order_id` bigint(20) NOT NULL,
+  `order_detail_id` bigint(20) NOT NULL,
+  `sku_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   `person_id` bigint(20) NOT NULL,
+  `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for reduction
@@ -216,11 +252,9 @@ CREATE TABLE `r_order_person`  (
 DROP TABLE IF EXISTS `reduction`;
 CREATE TABLE `reduction`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `spu_id` int(11) NOT NULL,
-  `sku_id` int(11) NOT NULL,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `detail` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `price` decimal(10, 2) NOT NULL,
+  `discount` decimal(10, 2) NOT NULL,
   `limit_num` int(11) NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
@@ -231,8 +265,8 @@ CREATE TABLE `reduction`  (
 -- ----------------------------
 -- Records of reduction
 -- ----------------------------
-INSERT INTO `reduction` VALUES (3, 13, 11, '优惠很大', '3部手机每部1499', 149900.00, 3, '2019-05-09 12:11:23', '2019-06-09 12:11:27', '2019-05-30 10:54:05');
-INSERT INTO `reduction` VALUES (4, 13, 11, '优惠很大', '2部手机每部1699', 169900.00, 2, '2019-05-30 00:15:00', '2019-06-30 20:15:00', '2019-05-30 11:47:50');
+INSERT INTO `reduction` VALUES (3, '优惠很大', '3部手机每部1499', 149900.00, 3, '2019-05-09 12:11:23', '2019-06-09 12:11:27', '2019-05-30 10:54:05');
+INSERT INTO `reduction` VALUES (4, '满4就八五折', '满4就八五折', 85.00, 4, '2019-05-29 16:15:00', '2019-06-30 12:15:00', '2019-05-30 11:47:50');
 
 -- ----------------------------
 -- Table structure for sku
@@ -249,12 +283,14 @@ CREATE TABLE `sku`  (
   `create_time` datetime NOT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`sku_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sku
 -- ----------------------------
 INSERT INTO `sku` VALUES (11, 13, '主图', '苹果手机黑色64G', '999', 249900.00, 199900.00, '2019-05-30 10:45:02', '2019-05-30 10:45:02');
+INSERT INTO `sku` VALUES (12, 18, '主图', '小米手机黑色64G', '999', 249900.00, 199900.00, '2019-05-31 09:28:09', '2019-05-31 09:28:09');
+INSERT INTO `sku` VALUES (13, 20, '主图', '华为手机黑色64G', '999', 249900.00, 199900.00, '2019-06-04 11:01:49', '2019-06-04 11:01:49');
 
 -- ----------------------------
 -- Table structure for spu
@@ -274,12 +310,15 @@ CREATE TABLE `spu`  (
   `create_time` datetime NOT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`spu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of spu
 -- ----------------------------
 INSERT INTO `spu` VALUES (13, 0, 'IPhoneX', '苹果手机便宜卖', '图片', 249900.00, 199900.00, 249900.00, 199900, 1, '2019-05-30 10:43:31', '2019-05-30 10:45:02');
+INSERT INTO `spu` VALUES (18, 0, '小米手机9', '小米手机便宜卖', '图片', 249900.00, 199900.00, 249900.00, 199900, 1, '2019-05-31 09:27:40', '2019-05-31 09:28:09');
+INSERT INTO `spu` VALUES (19, 0, '魅族MX', '魅族MX手机便宜卖', '图片', NULL, NULL, NULL, NULL, 0, '2019-06-03 03:13:51', '2019-06-03 03:13:51');
+INSERT INTO `spu` VALUES (20, 0, '华为P30', '华为P30手机便宜卖', '图片', 249900.00, 199900.00, 249900.00, 199900, 1, '2019-06-03 03:18:21', '2019-06-04 11:01:49');
 
 -- ----------------------------
 -- Table structure for spu_detail
@@ -296,6 +335,9 @@ CREATE TABLE `spu_detail`  (
 -- Records of spu_detail
 -- ----------------------------
 INSERT INTO `spu_detail` VALUES (13, '图片;图片;图片', '苹果手机详情富文本');
+INSERT INTO `spu_detail` VALUES (18, '图片;图片;图片', '苹果手机详情富文本');
+INSERT INTO `spu_detail` VALUES (19, '图片;图片;图片', '魅族MX详情富文本');
+INSERT INTO `spu_detail` VALUES (20, '图片;图片;图片', '华为P30详情富文本');
 
 -- ----------------------------
 -- Table structure for user
